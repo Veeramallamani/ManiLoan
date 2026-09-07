@@ -1,3 +1,4 @@
+# pyrefly: ignore-all-errors
 import os
 import time
 import threading

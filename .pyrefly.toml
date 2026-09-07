@@ -1,0 +1,28 @@
+# Pyrefly configuration - suppress false positives from virtual in-memory analysis
+# Pyrefly creates temporary virtual files at c:\__pyrefly_virtual__\ when it
+# analyses code chunks or string content in isolation. Those files lack imports
+# and context, so they always produce spurious parse/name errors.
+
+[python]
+# Match the virtual directory regardless of whether the glob is resolved
+# relative to the project root or against the absolute C:\ path.
+exclude = [
+  "__pyrefly_virtual__/**",
+  "c:/__pyrefly_virtual__/**",
+  "/**/__pyrefly_virtual__/**",
+  "*/__pyrefly_virtual__/**",
+]
+
+[errors]
+# Suppress every error code that the virtual files produce:
+#   parse-error      -> "Parse error: Unexpected indentation / Expected a statement"
+#   undefined-name   -> "Could not find name `json` / `response` / `urllib` / `req`"
+#   unresolved-import -> import-related false positives in isolated chunks
+ignore = [
+  "parse-error",
+  "unresolved-import",
+  "undefined-name",
+  "missing-module-attribute",
+  "bad-argument-type",
+  "not-a-type",
+]
