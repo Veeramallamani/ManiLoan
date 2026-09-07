@@ -116,6 +116,8 @@
             </button>
             <div class="lang-dropdown-menu" id="lang-dropdown-menu">
               <button class="lang-option-btn active" data-lang="English">🇬🇧 English</button>
+              <button class="lang-option-btn" data-lang="Telugu">🇮🇳 Telugu (తెలుగు)</button>
+              <button class="lang-option-btn" data-lang="Hindi">🇮🇳 Hindi (हिंदी)</button>
             </div>
           </div>
 
@@ -135,6 +137,8 @@
             <div class="menu-section-title">🌐 LANGUAGE</div>
             <div class="mobile-lang-options">
               <button class="mobile-lang-btn active" data-lang="English">🇬🇧 English</button>
+              <button class="mobile-lang-btn" data-lang="Telugu">🇮🇳 Telugu (తెలుగు)</button>
+              <button class="mobile-lang-btn" data-lang="Hindi">🇮🇳 Hindi (हिंदी)</button>
             </div>
 
             <div class="menu-section-divider"></div>
@@ -592,6 +596,8 @@
           <label for="openrouter-language-select">Response Language</label>
           <select id="openrouter-language-select" class="form-select">
             <option value="English" selected>🇬🇧 English (Simple Everyday Words)</option>
+            <option value="Telugu">🇮🇳 Telugu (తెలుగు - రోజువారీ పదాలు)</option>
+            <option value="Hindi">🇮🇳 Hindi (हिंदी - सरल आम शब्द)</option>
           </select>
         </div>
 
@@ -772,8 +778,16 @@
       function applyLanguage(lang, resetSession = false) {
         bot.setLanguage(lang);
 
-        if (langCurrentLabel) langCurrentLabel.textContent = 'English';
-        chatInput.placeholder = 'Type Your Message';
+        if (langCurrentLabel) {
+          if (lang === 'Telugu') langCurrentLabel.textContent = 'Telugu (తెలుగు)';
+          else if (lang === 'Hindi') langCurrentLabel.textContent = 'Hindi (हिंदी)';
+          else langCurrentLabel.textContent = 'English';
+        }
+        if (chatInput) {
+          if (lang === 'Telugu') chatInput.placeholder = 'మీ సందేశాన్ని ఇక్కడ టైప్ చేయండి...';
+          else if (lang === 'Hindi') chatInput.placeholder = 'अपना संदेश यहाँ लिखें...';
+          else chatInput.placeholder = 'Type Your Message...';
+        }
 
         langOptionBtns.forEach(btn => {
           btn.classList.toggle('active', btn.dataset.lang === lang);

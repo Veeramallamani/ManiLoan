@@ -209,8 +209,14 @@ class LoanChatbot {
       console.log('Backend API route unavailable, trying direct Groq endpoint...', e);
     }
 
-    // 2. Direct OpenRouter API call as fallback
-    let systemPrompt = `You are ManiLoan, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting & Credit Criteria (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
+    let langDirective = '';
+    if (this.language === 'Telugu') {
+      langDirective = `### LANGUAGE DIRECTIVE (MANDATORY):\n- You MUST respond strictly in TELUGU (తెలుగు) language.\n- Keep numbers, EMI calculations, amounts in ₹, and bank names (SBI, HDFC, ICICI, Axis, Cosmos) clear.\n\n`;
+    } else if (this.language === 'Hindi') {
+      langDirective = `### LANGUAGE DIRECTIVE (MANDATORY):\n- You MUST respond strictly in HINDI (हिंदी) language.\n- Keep numbers, EMI calculations, amounts in ₹, and bank names (SBI, HDFC, ICICI, Axis, Cosmos) clear.\n\n`;
+    }
+
+    let systemPrompt = langDirective + `You are ManiLoan, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting & Credit Criteria (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
 
 ### STRICT CONCISENESS DIRECTIVE (MANDATORY):
 - Keep all responses SHORT, CRISP, and TO THE POINT.
@@ -517,10 +523,16 @@ For MSME / Business Loan:
     ];
 
     for (const entry of LOAN_TYPE_MAP) {
-      // Check full-phrase exact keys (numbers, numbered items, full loan names)
+      let promptText = entry.prompt;
+      if (this.language === 'Telugu') {
+        promptText = 'దయచేసి త్వరిత పరిశీలన కోసం క్రింద బోర్రోవర్ వివరాలను నమోదు చేయండి:';
+      } else if (this.language === 'Hindi') {
+        promptText = 'कृपया त्वरित मूल्यांकन के लिए नीचे उधारकर्ता का विवरण भरें:';
+      }
+
       if (entry.exactKeys.includes(q)) {
         return {
-          text: entry.prompt + `[[LOAN_TYPE:${entry.type}]]`,
+          text: promptText + `[[LOAN_TYPE:${entry.type}]]`,
           source: 'local',
           quickActions: []
         };
@@ -528,7 +540,7 @@ For MSME / Business Loan:
       // Check short single-word keys ONLY when the whole message is that word
       if (entry.shortExact && entry.shortExact.includes(q)) {
         return {
-          text: entry.prompt + `[[LOAN_TYPE:${entry.type}]]`,
+          text: promptText + `[[LOAN_TYPE:${entry.type}]]`,
           source: 'local',
           quickActions: []
         };
@@ -967,8 +979,7 @@ ${checkLines}
   }
 
   handleGreeting() {
-    return {
-      text: `Hi! I'm **ManiLoan** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
+    let text = `Hi! I'm **ManiLoan** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
 
 Please select the type of Loan:
 1. 🏠 Home Loan
@@ -978,7 +989,36 @@ Please select the type of Loan:
 5. 📱 Consumer Durable Loan
 6. 💳 Personal Loan
 7. 🏢 LAP (Loan Against Property)
-8. 🏭 MSME / Business Loan`,
+8. 🏭 MSME / Business Loan`;
+
+    if (this.language === 'Telugu') {
+      text = `నమస్కారం! నేను **ManiLoan** 🤖 — మీ 2026 భారతీయ బ్యాంక్ లోన్ అండర్‌రైటింగ్ అసిస్టెంట్ (SBI, HDFC, ICICI, Axis, Cosmos & మరిన్ని).
+
+దయచేసి లోన్ రకాన్ని ఎంచుకోండి:
+1. 🏠 హోమ్ లోన్ (Home Loan)
+2. 🚗 వాహన లోన్ (Vehicle Loan)
+3. 🪙 గోల్డ్ లోన్ (Gold Loan)
+4. 🎓 ఎడ్యుకేషన్ లోన్ (Education Loan)
+5. 📱 కన్స్యూమర్ డ్యూరబుల్ లోన్ (Consumer Durable Loan)
+6. 💳 పర్సనల్ లోన్ (Personal Loan)
+7. 🏢 LAP (ఆస్తిపై రుణం / Loan Against Property)
+8. 🏭 MSME / బిజినెస్ లోన్ (Business Loan)`;
+    } else if (this.language === 'Hindi') {
+      text = `नमस्ते! मैं **ManiLoan** 🤖 — आपका 2026 भारतीय बैंक लोन अंडरराइटिंग असिस्टेंट (SBI, HDFC, ICICI, Axis, Cosmos & अधिक).
+
+कृपया लोन का प्रकार चुनें:
+1. 🏠 होम लोन (Home Loan)
+2. 🚗 वाहन लोन (Vehicle Loan)
+3. 🪙 गोल्ड लोन (Gold Loan)
+4. 🎓 एजुकेशन लोन (Education Loan)
+5. 📱 कंज्यूमर ड्यूरेबल लोन (Consumer Durable Loan)
+6. 💳 पर्सनल लोन (Personal Loan)
+7. 🏢 LAP (संपत्ति पर लोन / Loan Against Property)
+8. 🏭 MSME / बिजनेस लोन (Business Loan)`;
+    }
+
+    return {
+      text: text,
       source: 'local',
       quickActions: [
         'home loan',
@@ -994,30 +1034,7 @@ Please select the type of Loan:
   }
 
   handleGeneralInfo() {
-    return {
-      text: `Hi! I'm **ManiLoan** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
-
-Please select the type of Loan:
-1. 🏠 Home Loan
-2. 🚗 Vehicle Loan
-3. 🪙 Gold Loan
-4. 🎓 Education Loan
-5. 📱 Consumer Durable Loan
-6. 💳 Personal Loan
-7. 🏢 LAP (Loan Against Property)
-8. 🏭 MSME / Business Loan`,
-      source: 'local',
-      quickActions: [
-        'home loan',
-        'vehicle loan',
-        'gold loan',
-        'education loan',
-        'consumer durable',
-        'personal loan',
-        'lap',
-        'msme'
-      ]
-    };
+    return this.handleGreeting();
   }
 
   generateContextualQuickActions(userQuery) {
