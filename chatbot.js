@@ -210,7 +210,7 @@ class LoanChatbot {
     }
 
     // 2. Direct OpenRouter API call as fallback
-    let systemPrompt = `You are LoanMani, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting & Credit Criteria (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
+    let systemPrompt = `You are ManiLoan, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting & Credit Criteria (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
 
 ### STRICT CONCISENESS DIRECTIVE (MANDATORY):
 - Keep all responses SHORT, CRISP, and TO THE POINT.
@@ -290,7 +290,7 @@ For MSME / Business Loan:
           headers: {
             'Authorization': `Bearer ${this.apiKey}`,
             'Content-Type': 'application/json',
-            'User-Agent': 'LoanMani-App'
+            'User-Agent': 'ManiLoan-App'
           },
           body: JSON.stringify({
             model: testModel,
@@ -1011,7 +1011,7 @@ ${checkLines}
 
   handleGreeting() {
     return {
-      text: `Hi! I'm **LoanMani** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
+      text: `Hi! I'm **ManiLoan** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
 
 Please select the type of Loan:
 1. 🏠 Home Loan
@@ -1038,7 +1038,7 @@ Please select the type of Loan:
 
   handleGeneralInfo() {
     return {
-      text: `Hi! I'm **LoanMani** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
+      text: `Hi! I'm **ManiLoan** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
 
 Please select the type of Loan:
 1. 🏠 Home Loan

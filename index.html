@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>LoanMani - Smart Loan Prediction Assistant</title>
+  <title>ManiLoan - Smart Loan Prediction Assistant</title>
   <!-- Google Fonts: Hanken Grotesk & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,7 @@
           <div class="sidebar-brand-icon">
             <span class="brand-fallback-emoji">🤖</span>
           </div>
-          <span class="sidebar-brand-title">LoanMani</span>
+          <span class="sidebar-brand-title">ManiLoan</span>
         </div>
         <div class="sidebar-header-actions">
           <button class="sidebar-hdr-btn" id="sidebar-search-btn" title="Search">
@@ -88,7 +88,7 @@
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
         <div class="sidebar-footer-inner">
-          <span class="sidebar-footer-label">LoanMani <span class="sidebar-footer-ver">v2.0</span></span>
+          <span class="sidebar-footer-label">ManiLoan <span class="sidebar-footer-ver">v2.0</span></span>
           <span class="sidebar-footer-model" id="sidebar-model-tag">Multi-Model</span>
         </div>
       </div>
@@ -671,7 +671,7 @@
         // Update Topbar Title
         if (topbarTitle) {
           if (targetTabId === 'tab-chat') topbarTitle.textContent = 'Chat Assistant';
-          else if (targetTabId === 'tab-voice') topbarTitle.textContent = 'Speaking to LoanMani';
+          else if (targetTabId === 'tab-voice') topbarTitle.textContent = 'Speaking to ManiLoan';
           else if (targetTabId === 'tab-evaluator') topbarTitle.textContent = 'Risk Evaluator';
           else if (targetTabId === 'tab-dashboard') topbarTitle.textContent = 'Portfolio Dashboard';
         }
@@ -1210,7 +1210,7 @@
             <div class="typing-dots">
               <span></span><span></span><span></span>
             </div>
-            <span class="typing-label">LoanMani is analyzing...</span>
+            <span class="typing-label">ManiLoan is analyzing...</span>
           </div>
         `;
         chatMessages.appendChild(typingDiv);
@@ -1879,7 +1879,7 @@
           
           const opt = {
             margin:       0.5,
-            filename:     'LoanMani-Risk-Report.pdf',
+            filename:     'ManiLoan-Risk-Report.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2 },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }

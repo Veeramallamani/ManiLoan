@@ -38,7 +38,7 @@ if SUPABASE_URL and SUPABASE_KEY:
 
 
 def get_system_prompt_for_language(language):
-    return """You are LoanMani, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting & Credit Criteria (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
+    return """You are ManiLoan, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting & Credit Criteria (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
 
 ### STRICT CONCISENESS & PARAMETERS DIRECTIVE (MANDATORY):
 - Keep all responses SHORT, CRISP, and TO THE POINT.
@@ -70,7 +70,7 @@ Once the user provides their details, you MUST evaluate them and respond EXACTLY
 - Answer directly in 1–2 short sentences or concise bullet points with amounts in ₹ using 2026 Indian banking benchmarks. No filler.
 
 ### GREETING:
-"Hi! I'm your LoanMani assistant referencing 2026 Indian Bank Underwriting Criteria (SBI, HDFC, ICICI, Axis, Cooperative Banks). Please select the type of Loan:
+"Hi! I'm your ManiLoan assistant referencing 2026 Indian Bank Underwriting Criteria (SBI, HDFC, ICICI, Axis, Cooperative Banks). Please select the type of Loan:
 1. Home Loan
 2. Vehicle Loan
 3. Gold Loan
@@ -164,7 +164,7 @@ def test_openrouter_connection():
             headers={
                 'Authorization': f'Bearer {api_key}',
                 'Content-Type': 'application/json',
-                'User-Agent': 'LoanMani-App'
+                'User-Agent': 'ManiLoan-App'
             },
             data=json.dumps(payload).encode('utf-8')
         )
