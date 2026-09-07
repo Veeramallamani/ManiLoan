@@ -1324,220 +1324,330 @@
           if (ltMatch) loanType = ltMatch[1];
         }
 
+        const currentLang = (window.bot && window.bot.language) || 'English';
+
+        // Translation dictionary for Borrower Form UI labels and placeholders
+        const L = {
+          English: {
+            age: 'Age',
+            studentAge: 'Student Age',
+            applicantAge: 'Applicant Age',
+            monthlyIncome: 'Monthly Income (₹)',
+            annualIncome: 'Annual Income (₹)',
+            coappIncome: 'Co-applicant Monthly Income (₹)',
+            turnover: 'Annual Business Turnover (₹)',
+            propTypeLoc: 'Property Type & Location',
+            propType: 'Property Type',
+            propValue: 'Property Market Value (₹)',
+            vehMake: 'Vehicle Make',
+            vehModel: 'Vehicle Model',
+            onRoadPrice: 'On-road Price (₹)',
+            goldWeight: 'Gold Weight (grams)',
+            goldPurity: 'Gold Purity',
+            institution: 'Institution Name',
+            course: 'Course Name',
+            productName: 'Product Name',
+            productPrice: 'Product Price (₹)',
+            purpose: 'Purpose of Loan',
+            vintage: 'Business Vintage (Years)',
+            loanAmt: 'Loan Amount (₹)',
+            loanAmtReq: 'Loan Amount Required (₹)',
+            tenureYears: 'Tenure (Years)',
+            tenureMonths: 'Tenure (Months)',
+            repayTenureYears: 'Repayment Tenure (Years)',
+            cibil: 'CIBIL Score',
+            submit: 'Submit Details',
+            submitted: 'Submitted / Past',
+            edit: 'Edit',
+            eg: 'e.g.',
+            header: "Please fill in the borrower's details below:"
+          },
+          Telugu: {
+            age: 'వయస్సు (Age)',
+            studentAge: 'విద్యార్థి వయస్సు (Student Age)',
+            applicantAge: 'అప్లికెంట్ వయస్సు (Applicant Age)',
+            monthlyIncome: 'నెలవారీ ఆదాయం (₹)',
+            annualIncome: 'వార్షిక ఆదాయం (₹)',
+            coappIncome: 'కో-అప్లికెంట్ నెలవారీ ఆదాయం (₹)',
+            turnover: 'వార్షిక వ్యాపార టర్నోవర్ (₹)',
+            propTypeLoc: 'ఆస్తి రకం & ప్రాంతం',
+            propType: 'ఆస్తి రకం',
+            propValue: 'ఆస్తి మార్కెట్ విలువ (₹)',
+            vehMake: 'వాహన కంపెనీ (Make)',
+            vehModel: 'వాహన మోడల్ (Model)',
+            onRoadPrice: 'ఆన్-రోడ్ ధర (₹)',
+            goldWeight: 'బంగారం బరువు (గ్రాములు)',
+            goldPurity: 'బంగారం స్వచ్ఛత (Purity)',
+            institution: 'కళాశాల / సంస్థ పేరు',
+            course: 'కోర్సు పేరు',
+            productName: 'వస్తువు పేరు (Product Name)',
+            productPrice: 'వస్తువు ధర (₹)',
+            purpose: 'రుణం యొక్క ఉద్దేశం',
+            vintage: 'వ్యాపార అనుభవం (సంవత్సరాలు)',
+            loanAmt: 'లోన్ మొత్తం (₹)',
+            loanAmtReq: 'కావలసిన లోన్ మొత్తం (₹)',
+            tenureYears: 'వ్యవధి (సంవత్సరాలు)',
+            tenureMonths: 'వ్యవధి (నెలలు)',
+            repayTenureYears: 'తిరిగి చెల్లించే వ్యవధి (సంవత్సరాలు)',
+            cibil: 'సిబిల్ స్కోర్ (CIBIL Score)',
+            submit: 'వివరాలను సమర్పించండి',
+            submitted: 'సమర్పించబడింది / గత వివరాలు',
+            edit: 'సవరించు (Edit)',
+            eg: 'ఉదా:',
+            header: "దయచేసి త్వరిత పరిశీలన కోసం క్రింద బోర్రోవర్ వివరాలను నమోదు చేయండి:"
+          },
+          Hindi: {
+            age: 'आयु (Age)',
+            studentAge: 'छात्र की आयु (Student Age)',
+            applicantAge: 'आवेदक की आयु (Applicant Age)',
+            monthlyIncome: 'मासिक आय (Monthly Income ₹)',
+            annualIncome: 'वार्षिक आय (Annual Income ₹)',
+            coappIncome: 'सह-आवेदक मासिक आय (₹)',
+            turnover: 'वार्षिक व्यवसाय कारोबार (₹)',
+            propTypeLoc: 'संपत्ति प्रकार एवं स्थान',
+            propType: 'संपत्ति प्रकार',
+            propValue: 'संपत्ति बाजार मूल्य (₹)',
+            vehMake: 'वाहन कंपनी (Make)',
+            vehModel: 'वाहन मॉडल (Model)',
+            onRoadPrice: 'ऑन-रोड कीमत (₹)',
+            goldWeight: 'सोने का वजन (ग्राम)',
+            goldPurity: 'सोने की शुद्धता (Purity)',
+            institution: 'संस्थान का नाम',
+            course: 'कोर्स का नाम',
+            productName: 'उत्पाद का नाम (Product Name)',
+            productPrice: 'उत्पाद की कीमत (₹)',
+            purpose: 'ऋण का उद्देश्य',
+            vintage: 'व्यवसाय का अनुभव (वर्ष)',
+            loanAmt: 'ऋण राशि (Loan Amount ₹)',
+            loanAmtReq: 'आवश्यक ऋण राशि (₹)',
+            tenureYears: 'अवधि (वर्ष)',
+            tenureMonths: 'अवधि (महीने)',
+            repayTenureYears: 'पुनर्भुगतान अवधि (वर्ष)',
+            cibil: 'सिबिल स्कोर (CIBIL Score)',
+            submit: 'विवरण जमा करें',
+            submitted: 'जमा किया गया / पिछला',
+            edit: 'संपादित करें (Edit)',
+            eg: 'उदा:',
+            header: "कृपया त्वरित मूल्यांकन के लिए नीचे उधारकर्ता का विवरण भरें:"
+          }
+        };
+
+        const t = L[currentLang] || L.English;
         const disabledAttr = isHistory ? 'disabled' : '';
-        const btnText    = isHistory ? 'Submitted / Past' : 'Submit Details';
+        const btnText    = isHistory ? t.submitted : t.submit;
+        const editBtnText = t.edit;
 
         // ─── Loan-type-specific form fields ───────────────────────────────
         const LOAN_FORMS = {
           Home: `
             <div class="borrower-form-row">
-              <label>Age</label>
-              <input type="number" class="borrower-input bf-age" placeholder="e.g. 32" ${disabledAttr}>
+              <label>${t.age}</label>
+              <input type="number" class="borrower-input bf-age" placeholder="${t.eg} 32" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Monthly Income (₹)</label>
-              <input type="number" class="borrower-input bf-income" placeholder="e.g. 60000" ${disabledAttr}>
+              <label>${t.monthlyIncome}</label>
+              <input type="number" class="borrower-input bf-income" placeholder="${t.eg} 60000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Property Type &amp; Location</label>
-              <input type="text" class="borrower-input bf-property" placeholder="e.g. Flat, Mumbai Urban" ${disabledAttr}>
+              <label>${t.propTypeLoc}</label>
+              <input type="text" class="borrower-input bf-property" placeholder="${t.eg} Flat, Mumbai Urban" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Loan Amount (₹)</label>
-              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 5000000" ${disabledAttr}>
+              <label>${t.loanAmt}</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="${t.eg} 5000000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Tenure (Years)</label>
-              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 20" ${disabledAttr}>
+              <label>${t.tenureYears}</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="${t.eg} 20" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>CIBIL Score</label>
-              <input type="number" class="borrower-input bf-cibil" placeholder="e.g. 750" ${disabledAttr}>
+              <label>${t.cibil}</label>
+              <input type="number" class="borrower-input bf-cibil" placeholder="${t.eg} 750" ${disabledAttr}>
             </div>`,
 
           Car: `
             <div class="borrower-form-row">
-              <label>Age</label>
-              <input type="number" class="borrower-input bf-age" placeholder="e.g. 28" ${disabledAttr}>
+              <label>${t.age}</label>
+              <input type="number" class="borrower-input bf-age" placeholder="${t.eg} 28" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Annual Income (₹)</label>
-              <input type="number" class="borrower-input bf-income" placeholder="e.g. 600000" ${disabledAttr}>
+              <label>${t.annualIncome}</label>
+              <input type="number" class="borrower-input bf-income" placeholder="${t.eg} 600000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Vehicle Make</label>
-              <input type="text" class="borrower-input bf-vehicle-make" placeholder="e.g. Maruti Suzuki" ${disabledAttr}>
+              <label>${t.vehMake}</label>
+              <input type="text" class="borrower-input bf-vehicle-make" placeholder="${t.eg} Maruti Suzuki" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Vehicle Model</label>
-              <input type="text" class="borrower-input bf-vehicle-model" placeholder="e.g. Swift ZXI" ${disabledAttr}>
+              <label>${t.vehModel}</label>
+              <input type="text" class="borrower-input bf-vehicle-model" placeholder="${t.eg} Swift ZXI" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>On-road Price (₹)</label>
-              <input type="number" class="borrower-input bf-vehicle-price" placeholder="e.g. 950000" ${disabledAttr}>
+              <label>${t.onRoadPrice}</label>
+              <input type="number" class="borrower-input bf-vehicle-price" placeholder="${t.eg} 950000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Loan Amount (₹)</label>
-              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 800000" ${disabledAttr}>
+              <label>${t.loanAmt}</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="${t.eg} 800000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Tenure (Years)</label>
-              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 5" ${disabledAttr}>
+              <label>${t.tenureYears}</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="${t.eg} 5" ${disabledAttr}>
             </div>`,
 
           Gold: `
             <div class="borrower-form-row">
-              <label>Age</label>
-              <input type="number" class="borrower-input bf-age" placeholder="e.g. 35" ${disabledAttr}>
+              <label>${t.age}</label>
+              <input type="number" class="borrower-input bf-age" placeholder="${t.eg} 35" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Monthly Income (₹)</label>
-              <input type="number" class="borrower-input bf-income" placeholder="e.g. 40000" ${disabledAttr}>
+              <label>${t.monthlyIncome}</label>
+              <input type="number" class="borrower-input bf-income" placeholder="${t.eg} 40000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Gold Weight (grams)</label>
-              <input type="number" class="borrower-input bf-gold-weight" placeholder="e.g. 50" step="0.1" ${disabledAttr}>
+              <label>${t.goldWeight}</label>
+              <input type="number" class="borrower-input bf-gold-weight" placeholder="${t.eg} 50" step="0.1" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Gold Purity</label>
+              <label>${t.goldPurity}</label>
               <select class="borrower-input bf-gold-purity" ${disabledAttr}>
                 <option value="22K">22K</option>
                 <option value="18K">18K</option>
               </select>
             </div>
             <div class="borrower-form-row">
-              <label>Loan Amount Required (₹)</label>
-              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 150000" ${disabledAttr}>
+              <label>${t.loanAmtReq}</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="${t.eg} 150000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Tenure (Months)</label>
-              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 12" ${disabledAttr}>
+              <label>${t.tenureMonths}</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="${t.eg} 12" ${disabledAttr}>
             </div>`,
 
           Education: `
             <div class="borrower-form-row">
-              <label>Student Age</label>
-              <input type="number" class="borrower-input bf-age" placeholder="e.g. 20" ${disabledAttr}>
+              <label>${t.studentAge}</label>
+              <input type="number" class="borrower-input bf-age" placeholder="${t.eg} 20" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Co-applicant Monthly Income (₹)</label>
-              <input type="number" class="borrower-input bf-income" placeholder="e.g. 50000" ${disabledAttr}>
+              <label>${t.coappIncome}</label>
+              <input type="number" class="borrower-input bf-income" placeholder="${t.eg} 50000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Institution Name</label>
-              <input type="text" class="borrower-input bf-institution" placeholder="e.g. IIT Bombay" ${disabledAttr}>
+              <label>${t.institution}</label>
+              <input type="text" class="borrower-input bf-institution" placeholder="${t.eg} IIT Bombay" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Course Name</label>
-              <input type="text" class="borrower-input bf-course" placeholder="e.g. B.Tech CSE" ${disabledAttr}>
+              <label>${t.course}</label>
+              <input type="text" class="borrower-input bf-course" placeholder="${t.eg} B.Tech CSE" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Loan Amount (₹)</label>
-              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 800000" ${disabledAttr}>
+              <label>${t.loanAmt}</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="${t.eg} 800000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Repayment Tenure (Years)</label>
-              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 10" ${disabledAttr}>
+              <label>${t.repayTenureYears}</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="${t.eg} 10" ${disabledAttr}>
             </div>`,
 
           Durable: `
             <div class="borrower-form-row">
-              <label>Age</label>
-              <input type="number" class="borrower-input bf-age" placeholder="e.g. 30" ${disabledAttr}>
+              <label>${t.age}</label>
+              <input type="number" class="borrower-input bf-age" placeholder="${t.eg} 30" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Monthly Income (₹)</label>
-              <input type="number" class="borrower-input bf-income" placeholder="e.g. 45000" ${disabledAttr}>
+              <label>${t.monthlyIncome}</label>
+              <input type="number" class="borrower-input bf-income" placeholder="${t.eg} 45000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Product Name</label>
-              <input type="text" class="borrower-input bf-product" placeholder="e.g. Samsung 55&quot; TV" ${disabledAttr}>
+              <label>${t.productName}</label>
+              <input type="text" class="borrower-input bf-product" placeholder="${t.eg} Samsung 55&quot; TV" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Product Price (₹)</label>
-              <input type="number" class="borrower-input bf-product-price" placeholder="e.g. 80000" ${disabledAttr}>
+              <label>${t.productPrice}</label>
+              <input type="number" class="borrower-input bf-product-price" placeholder="${t.eg} 80000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Loan Amount (₹)</label>
-              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 70000" ${disabledAttr}>
+              <label>${t.loanAmt}</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="${t.eg} 70000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Tenure (Months)</label>
-              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 12" ${disabledAttr}>
+              <label>${t.tenureMonths}</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="${t.eg} 12" ${disabledAttr}>
             </div>`,
 
           Personal: `
             <div class="borrower-form-row">
-              <label>Age</label>
-              <input type="number" class="borrower-input bf-age" placeholder="e.g. 28" ${disabledAttr}>
+              <label>${t.age}</label>
+              <input type="number" class="borrower-input bf-age" placeholder="${t.eg} 28" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Monthly Income (₹)</label>
-              <input type="number" class="borrower-input bf-income" placeholder="e.g. 55000" ${disabledAttr}>
+              <label>${t.monthlyIncome}</label>
+              <input type="number" class="borrower-input bf-income" placeholder="${t.eg} 55000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Purpose of Loan</label>
-              <input type="text" class="borrower-input bf-purpose" placeholder="e.g. Medical, Travel, Renovation" ${disabledAttr}>
+              <label>${t.purpose}</label>
+              <input type="text" class="borrower-input bf-purpose" placeholder="${t.eg} Medical, Travel, Renovation" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Loan Amount (₹)</label>
-              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 300000" ${disabledAttr}>
+              <label>${t.loanAmt}</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="${t.eg} 300000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Tenure (Years)</label>
-              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 3" ${disabledAttr}>
+              <label>${t.tenureYears}</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="${t.eg} 3" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>CIBIL Score</label>
-              <input type="number" class="borrower-input bf-cibil" placeholder="e.g. 720" ${disabledAttr}>
+              <label>${t.cibil}</label>
+              <input type="number" class="borrower-input bf-cibil" placeholder="${t.eg} 720" ${disabledAttr}>
             </div>`,
 
           LAP: `
             <div class="borrower-form-row">
-              <label>Age</label>
-              <input type="number" class="borrower-input bf-age" placeholder="e.g. 42" ${disabledAttr}>
+              <label>${t.age}</label>
+              <input type="number" class="borrower-input bf-age" placeholder="${t.eg} 42" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Monthly Income (₹)</label>
-              <input type="number" class="borrower-input bf-income" placeholder="e.g. 80000" ${disabledAttr}>
+              <label>${t.monthlyIncome}</label>
+              <input type="number" class="borrower-input bf-income" placeholder="${t.eg} 80000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Property Type</label>
-              <input type="text" class="borrower-input bf-property" placeholder="e.g. Residential Flat" ${disabledAttr}>
+              <label>${t.propType}</label>
+              <input type="text" class="borrower-input bf-property" placeholder="${t.eg} Residential Flat" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Property Market Value (₹)</label>
-              <input type="number" class="borrower-input bf-property-value" placeholder="e.g. 8000000" ${disabledAttr}>
+              <label>${t.propValue}</label>
+              <input type="number" class="borrower-input bf-property-value" placeholder="${t.eg} 8000000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Loan Amount Required (₹)</label>
-              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 4000000" ${disabledAttr}>
+              <label>${t.loanAmtReq}</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="${t.eg} 4000000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Tenure (Years)</label>
-              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 10" ${disabledAttr}>
+              <label>${t.tenureYears}</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="${t.eg} 10" ${disabledAttr}>
             </div>`,
 
           MSME: `
             <div class="borrower-form-row">
-              <label>Applicant Age</label>
-              <input type="number" class="borrower-input bf-age" placeholder="e.g. 38" ${disabledAttr}>
+              <label>${t.applicantAge}</label>
+              <input type="number" class="borrower-input bf-age" placeholder="${t.eg} 38" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Annual Business Turnover (₹)</label>
-              <input type="number" class="borrower-input bf-income" placeholder="e.g. 5000000" ${disabledAttr}>
+              <label>${t.turnover}</label>
+              <input type="number" class="borrower-input bf-income" placeholder="${t.eg} 5000000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Business Vintage (Years)</label>
-              <input type="number" class="borrower-input bf-vintage" placeholder="e.g. 5" ${disabledAttr}>
+              <label>${t.vintage}</label>
+              <input type="number" class="borrower-input bf-vintage" placeholder="${t.eg} 5" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Loan Amount Required (₹)</label>
-              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 2000000" ${disabledAttr}>
+              <label>${t.loanAmtReq}</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="${t.eg} 2000000" ${disabledAttr}>
             </div>
             <div class="borrower-form-row">
-              <label>Tenure (Years)</label>
-              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 5" ${disabledAttr}>
+              <label>${t.tenureYears}</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="${t.eg} 5" ${disabledAttr}>
             </div>`
         };
 
@@ -1548,23 +1658,25 @@
             ${fieldsHtml}
             <div class="borrower-form-actions" style="display: flex; gap: 10px;">
               <button type="button" class="btn-primary borrower-submit-btn" onclick="submitBorrowerForm(this)" ${disabledAttr}>${btnText}</button>
-              <button type="button" class="btn-secondary borrower-edit-btn" onclick="editBorrowerForm(this)" style="display: ${isHistory ? 'inline-block' : 'none'};">Edit</button>
+              <button type="button" class="btn-secondary borrower-edit-btn" onclick="editBorrowerForm(this)" style="display: ${isHistory ? 'inline-block' : 'none'};">${editBtnText}</button>
             </div>
           </div>
         `;
 
-        // Strip all hidden markers and text lists so numbered questions never appear above the GUI form
+        // Strip text lists so numbered questions never appear above the GUI form
         let cleanedContent = htmlContent
           .replace(/\[\[BORROWER_FORM\]\]/gi, '')
           .replace(/\[\[LOAN_TYPE:[\w]+\]\]/gi, '')
           .replace(/<ol>[\s\S]*?<\/ol>/gi, '')
           .replace(/<ul>[\s\S]*?<\/ul>/gi, '')
           .replace(/(?:<p>)?\s*\d+\.\s+.*?(?:<\/p>|\n|<br\s*\/?>|$)/gi, '')
-          .replace(/Please share borrower's details for quick evaluation:?/gi, "Please fill in the borrower's details below:")
+          .replace(/Please (?:share|fill in).*?evaluation:?/gi, t.header)
+          .replace(/దయచేసి.*?:?/gi, t.header)
+          .replace(/कृपया.*?:?/gi, t.header)
           .trim();
 
         if (!cleanedContent) {
-          cleanedContent = "<p>Please fill in the borrower's details below:</p>";
+          cleanedContent = `<p>${t.header}</p>`;
         }
 
         return cleanedContent + formHtml;
@@ -1575,16 +1687,19 @@
         const inputs = container.querySelectorAll('.borrower-input');
         inputs.forEach(input => input.disabled = false);
 
+        const currentLang = (window.bot && window.bot.language) || 'English';
+        const submitText = currentLang === 'Telugu' ? 'వివరాలను సమర్పించండి' : (currentLang === 'Hindi' ? 'विवरण जमा करें' : 'Submit Details');
+
         const submitBtn = container.querySelector('.borrower-submit-btn');
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit Details';
+        submitBtn.textContent = submitText;
 
         btn.style.display = 'none';
       };
-
       window.submitBorrowerForm = function(btn) {
         const container = btn.closest('.borrower-form-container');
         const loanType = container.dataset.loanType || 'Home';
+        const currentLang = (window.bot && window.bot.language) || 'English';
 
         // Common fields
         const age    = container.querySelector('.bf-age')?.value || '';
@@ -1594,7 +1709,10 @@
         const cibil  = container.querySelector('.bf-cibil')?.value || '';
 
         if (!age || !income || !loan || !tenure) {
-          alert('Please fill in all required fields.');
+          const alertMsg = currentLang === 'Telugu'
+            ? 'దయచేసి అవసరమైన అన్ని వివరాలను భర్తీ చేయండి.'
+            : (currentLang === 'Hindi' ? 'कृपया सभी आवश्यक विवरण भरें।' : 'Please fill in all required fields.');
+          alert(alertMsg);
           return;
         }
 
@@ -1638,7 +1756,9 @@
         const inputs = container.querySelectorAll('.borrower-input');
         inputs.forEach(input => input.disabled = true);
         btn.disabled = true;
-        btn.textContent = 'Submitted';
+
+        const submittedText = currentLang === 'Telugu' ? 'సమర్పించబడింది' : (currentLang === 'Hindi' ? 'जमा किया गया' : 'Submitted');
+        btn.textContent = submittedText;
 
         const editBtn = container.querySelector('.borrower-edit-btn');
         if (editBtn) editBtn.style.display = 'inline-block';

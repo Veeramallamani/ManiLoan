@@ -469,53 +469,53 @@ For MSME / Business Loan:
     // so those queries reach the regular product-criteria handlers instead.
     const LOAN_TYPE_MAP = [
       {
-        exactKeys: ['1', '1.', 'home loan', '1. home loan', '1.home loan'],
-        shortExact: ['home'],          // only if the WHOLE message is this word
+        exactKeys: ['1', '1.', 'home loan', '1. home loan', '1.home loan', 'హోమ్ లోన్', '1. హోమ్ లోన్', 'होम लोन', '1. होम लोन'],
+        shortExact: ['home', 'హోమ్', 'होम'],          // only if the WHOLE message is this word
         type: 'Home',
         prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['2', '2.', 'vehicle loan', 'car loan', 'auto loan', 'two-wheeler loan', 'bike loan',
-                    '2. vehicle loan', '2.vehicle loan', '2. car loan'],
-        shortExact: ['vehicle', 'car'],
+                    '2. vehicle loan', '2.vehicle loan', '2. car loan', 'వాహన లోన్', '2. వాహన లోన్', 'वाहन लोन', '2. वाहन लोन'],
+        shortExact: ['vehicle', 'car', 'వాహన', 'वाहन'],
         type: 'Car',
         prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
-        exactKeys: ['3', '3.', 'gold loan', '3. gold loan', '3.gold loan'],
-        shortExact: ['gold'],
+        exactKeys: ['3', '3.', 'gold loan', '3. gold loan', '3.gold loan', 'గోల్డ్ లోన్', '3. గోల్డ్ లోన్', 'गोल्ड लोन', '3. गोल्ड लोन'],
+        shortExact: ['gold', 'గోల్డ్', 'गोल्ड'],
         type: 'Gold',
         prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
-        exactKeys: ['4', '4.', 'education loan', 'student loan', '4. education loan', '4.education loan'],
+        exactKeys: ['4', '4.', 'education loan', 'student loan', '4. education loan', '4.education loan', 'ఎడ్యుకేషన్ లోన్', '4. ఎడ్యుకేషన్ లోన్', 'एजुकेशन लोन', '4. एजुकेशन लोन'],
         shortExact: [],               // "education" alone is too ambiguous
         type: 'Education',
         prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['5', '5.', 'consumer durable loan', 'durable loan', '5. consumer durable loan',
-                    '5.consumer durable', 'consumer durable'],
+                    '5.consumer durable', 'consumer durable', 'కన్స్యూమర్ డ్యూరబుల్', '5. కన్స్యూమర్ డ్యూరబుల్', 'कंज्यूमर ड्यूरेबल', '5. कंज्यूमर ड्यूरेबल'],
         shortExact: [],
         type: 'Durable',
         prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
-        exactKeys: ['6', '6.', 'personal loan', '6. personal loan', '6.personal loan'],
+        exactKeys: ['6', '6.', 'personal loan', '6. personal loan', '6.personal loan', 'పర్సనల్ లోన్', '6. పర్సనల్ లోన్', 'पर्सनल लोन', '6. पर्सनल लोन'],
         shortExact: [],               // "personal" alone is too ambiguous
         type: 'Personal',
         prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['7', '7.', 'lap', 'loan against property', '7. lap', '7.lap',
-                    '7. loan against property'],
+                    '7. loan against property', 'ఆస్తిపై రుణం', '7. ఆస్తిపై రుణం', 'संपत्ति पर लोन', '7. संपत्ति पर लोन'],
         shortExact: [],
         type: 'LAP',
         prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['8', '8.', 'msme', 'business loan', 'msme / business loan',
-                    '8. msme', '8.msme', '8. business loan'],
+                    '8. msme', '8.msme', '8. business loan', 'బిజినెస్ లోన్', '8. బిజినెస్ లోన్', 'बिजनेस लोन', '8. बिजनेस लोन'],
         shortExact: [],
         type: 'MSME',
         prompt: `Please fill in the borrower's details below for quick evaluation:`
@@ -1017,19 +1017,44 @@ Please select the type of Loan:
 8. 🏭 MSME / बिजनेस लोन (Business Loan)`;
     }
 
+    let actions = [
+      '1. Home Loan',
+      '2. Vehicle Loan',
+      '3. Gold Loan',
+      '4. Education Loan',
+      '5. Consumer Durable',
+      '6. Personal Loan',
+      '7. LAP',
+      '8. MSME'
+    ];
+    if (this.language === 'Telugu') {
+      actions = [
+        '1. హోమ్ లోన్',
+        '2. వాహన లోన్',
+        '3. గోల్డ్ లోన్',
+        '4. ఎడ్యుకేషన్ లోన్',
+        '5. కన్స్యూమర్ డ్యూరబుల్',
+        '6. పర్సనల్ లోన్',
+        '7. LAP',
+        '8. MSME'
+      ];
+    } else if (this.language === 'Hindi') {
+      actions = [
+        '1. होम लोन',
+        '2. वाहन लोन',
+        '3. गोल्ड लोन',
+        '4. एजुकेशन लोन',
+        '5. कंज्यूमर ड्यूरेबल',
+        '6. पर्सनल लोन',
+        '7. LAP',
+        '8. MSME'
+      ];
+    }
+
     return {
       text: text,
       source: 'local',
-      quickActions: [
-        'home loan',
-        'vehicle loan',
-        'gold loan',
-        'education loan',
-        'consumer durable',
-        'personal loan',
-        'lap',
-        'msme'
-      ]
+      quickActions: actions
     };
   }
 
