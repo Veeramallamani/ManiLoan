@@ -116,8 +116,6 @@
             </button>
             <div class="lang-dropdown-menu" id="lang-dropdown-menu">
               <button class="lang-option-btn active" data-lang="English">🇬🇧 English</button>
-              <button class="lang-option-btn" data-lang="Hindi">🇮🇳 हिन्दी (Hindi)</button>
-              <button class="lang-option-btn" data-lang="Telugu">🇮🇳 తెలుగు (Telugu)</button>
             </div>
           </div>
 
@@ -134,11 +132,9 @@
 
             
             <div class="menu-section-divider"></div>
-            <div class="menu-section-title">🌐 LANGUAGE / భాష / भाषा</div>
+            <div class="menu-section-title">🌐 LANGUAGE</div>
             <div class="mobile-lang-options">
               <button class="mobile-lang-btn active" data-lang="English">🇬🇧 English</button>
-              <button class="mobile-lang-btn" data-lang="Hindi">🇮🇳 हिन्दी</button>
-              <button class="mobile-lang-btn" data-lang="Telugu">🇮🇳 తెలుగు</button>
             </div>
 
             <div class="menu-section-divider"></div>
@@ -593,11 +589,9 @@
         </div>
 
         <div class="form-group">
-          <label for="openrouter-language-select">Response Language / భాష / भाषा</label>
+          <label for="openrouter-language-select">Response Language</label>
           <select id="openrouter-language-select" class="form-select">
             <option value="English" selected>🇬🇧 English (Simple Everyday Words)</option>
-            <option value="Hindi">🇮🇳 हिन्दी - Hindi (सरल हिन्दी)</option>
-            <option value="Telugu">🇮🇳 తెలుగు - Telugu (సరళమైన తెలుగు)</option>
           </select>
         </div>
 
@@ -775,19 +769,11 @@
       const mobileLangBtns = document.querySelectorAll('.mobile-lang-btn');
       const openrouterLanguageSelect = document.getElementById('openrouter-language-select');
 
-      function applyLanguage(lang) {
+      function applyLanguage(lang, resetSession = false) {
         bot.setLanguage(lang);
 
-        if (lang === 'Telugu') {
-          if (langCurrentLabel) langCurrentLabel.textContent = 'తెలుగు';
-          chatInput.placeholder = 'మీ ప్రశ్నను తెలుగులో టైప్ చేయండి (ఉదా: జీతం ₹50k, లోన్ ₹15 లక్షలు)...';
-        } else if (lang === 'Hindi') {
-          if (langCurrentLabel) langCurrentLabel.textContent = 'हिन्दी';
-          chatInput.placeholder = 'अपना सवाल हिन्दी में टाइप करें (जैसे: वेतन ₹50k, लोन ₹15 लाख)...';
-        } else {
-          if (langCurrentLabel) langCurrentLabel.textContent = 'English';
-          chatInput.placeholder = 'Type Your Message';
-        }
+        if (langCurrentLabel) langCurrentLabel.textContent = 'English';
+        chatInput.placeholder = 'Type Your Message';
 
         langOptionBtns.forEach(btn => {
           btn.classList.toggle('active', btn.dataset.lang === lang);
@@ -798,6 +784,14 @@
         if (openrouterLanguageSelect) openrouterLanguageSelect.value = lang;
 
         if (langDropdownMenu) langDropdownMenu.classList.remove('active');
+
+        // When language is changed during an active session, reset chat history
+        // so old context in a different language doesn't confuse the LLM
+        if (resetSession) {
+          resetChat();
+          // Send a greeting in the new language
+          sendChatMessage('Hi');
+        }
       }
 
       if (topbarLangBtn && langDropdownMenu) {
@@ -815,13 +809,13 @@
 
       langOptionBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          applyLanguage(btn.dataset.lang);
+          applyLanguage(btn.dataset.lang, true);
         });
       });
 
       mobileLangBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          applyLanguage(btn.dataset.lang);
+          applyLanguage(btn.dataset.lang, true);
           closeMobileSidebar();
         });
       });
@@ -939,18 +933,29 @@
               const botDiv = document.createElement('div');
               botDiv.className = 'chat-message assistant';
 
-              let htmlContent = msg.content;
+              let rawMsgContent = msg.content;
+              // Extract [[LOAN_TYPE:X]] from raw content BEFORE markdown parsing
+              let histLoanType = null;
+              const histLtMatch = rawMsgContent.match(/\[\[LOAN_TYPE:(\w+)\]\]/i);
+              if (histLtMatch) {
+                histLoanType = histLtMatch[1];
+                rawMsgContent = rawMsgContent.replace(/\[\[LOAN_TYPE:\w+\]\]/gi, '').trim();
+              }
+              rawMsgContent = rawMsgContent.replace(/\[\[BORROWER_FORM\]\]/gi, '').trim();
+
+              let htmlContent = rawMsgContent;
               if (typeof marked !== 'undefined' && marked && typeof marked.parse === 'function') {
-                htmlContent = marked.parse(msg.content);
+                htmlContent = marked.parse(rawMsgContent);
               } else {
-                htmlContent = '<p>' + escapeHtml(msg.content).replace(/\n/g, '<br>') + '</p>';
+                htmlContent = '<p>' + escapeHtml(rawMsgContent).replace(/\n/g, '<br>') + '</p>';
               }
               
               if (msg.warning) {
                 htmlContent = '<div style="color: var(--warning-color); font-size: 0.85rem; margin-bottom: 8px; font-weight: bold;">' + escapeHtml(msg.warning) + '</div>' + htmlContent;
               }
 
-              htmlContent = checkAndInjectBorrowerForm(htmlContent, true);
+              htmlContent = checkAndInjectBorrowerForm(htmlContent, true, histLoanType);
+
 
               botDiv.innerHTML = `
                 <div class="chat-avatar">
@@ -1165,8 +1170,9 @@
 
       saveSettingsBtn.addEventListener('click', () => {
         const selectedLang = openrouterLanguageSelect ? openrouterLanguageSelect.value : bot.language;
+        const langChanged = selectedLang !== bot.language;
         bot.updateSettings(apiKeyInput.value, modelSelect.value, enableToggle.checked, selectedLang);
-        applyLanguage(selectedLang);
+        applyLanguage(selectedLang, langChanged);
         updateHeaderBadgeUI();
         openrouterModal.classList.remove('active');
       });
@@ -1219,18 +1225,33 @@
           const botDiv = document.createElement('div');
           botDiv.className = 'chat-message assistant';
 
-          let htmlContent = response.text;
+          let rawText = response.text;
+
+          // Extract [[LOAN_TYPE:X]] marker from raw text BEFORE markdown parsing
+          // (marked.js can mangle/strip [[...]] bracket syntax)
+          let detectedLoanType = null;
+          const ltRawMatch = rawText.match(/\[\[LOAN_TYPE:(\w+)\]\]/i);
+          if (ltRawMatch) {
+            detectedLoanType = ltRawMatch[1];
+            rawText = rawText.replace(/\[\[LOAN_TYPE:\w+\]\]/gi, '').trim();
+          }
+          // Also strip any [[BORROWER_FORM]] markers from raw text
+          rawText = rawText.replace(/\[\[BORROWER_FORM\]\]/gi, '').trim();
+
+          let htmlContent = rawText;
           if (typeof marked !== 'undefined' && marked && typeof marked.parse === 'function') {
-            htmlContent = marked.parse(response.text);
+            htmlContent = marked.parse(rawText);
           } else {
-            htmlContent = '<p>' + escapeHtml(response.text).replace(/\n/g, '<br>') + '</p>';
+            htmlContent = '<p>' + escapeHtml(rawText).replace(/\n/g, '<br>') + '</p>';
           }
 
           if (response.warning) {
             htmlContent = '<div style="color: var(--warning-color); font-size: 0.85rem; margin-bottom: 8px; font-weight: bold;">' + escapeHtml(response.warning) + '</div>' + htmlContent;
           }
 
-          htmlContent = checkAndInjectBorrowerForm(htmlContent, false);
+          // Inject borrower form — pass detectedLoanType so the right fields are shown
+          htmlContent = checkAndInjectBorrowerForm(htmlContent, false, detectedLoanType);
+
 
           botDiv.innerHTML = `
             <div class="chat-avatar">
@@ -1269,92 +1290,337 @@
 
       window.sendChatMessage = sendChatMessage;
 
-      function checkAndInjectBorrowerForm(htmlContent, isHistory) {
-        if (htmlContent.toLowerCase().includes("please share borrower")) {
-          const disabledAttr = isHistory ? 'disabled' : '';
-          const btnText = isHistory ? 'Submitted / Past' : 'Submit Details';
-          const formHtml = `
-            <div class="borrower-form-container">
-              <div class="borrower-form-row">
-                <label>Age</label>
-                <input type="number" class="borrower-input bf-age" placeholder="e.g. 25" ${disabledAttr}>
-              </div>
-              <div class="borrower-form-row">
-                <label>Monthly Income (₹)</label>
-                <input type="number" class="borrower-input bf-income" placeholder="e.g. 60000" ${disabledAttr}>
-              </div>
-              <div class="borrower-form-row">
-                <label>Loan Amount (₹)</label>
-                <input type="number" class="borrower-input bf-loan" placeholder="e.g. 1500000" ${disabledAttr}>
-              </div>
-              <div class="borrower-form-row">
-                <label>Tenure (Years)</label>
-                <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 5" ${disabledAttr}>
-              </div>
-              <div class="borrower-form-row">
-                <label>CIBIL Score</label>
-                <input type="number" class="borrower-input bf-cibil" placeholder="e.g. 750" ${disabledAttr}>
-              </div>
-              <div class="borrower-form-row">
-                <label>ITR Filed</label>
-                <select class="borrower-input bf-itr" ${disabledAttr}>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-              </div>
-              <div class="borrower-form-actions" style="display: flex; gap: 10px;">
-                <button type="button" class="btn-primary borrower-submit-btn" onclick="submitBorrowerForm(this)" ${disabledAttr}>${btnText}</button>
-                <button type="button" class="btn-secondary borrower-edit-btn" onclick="editBorrowerForm(this)" style="display: ${isHistory ? 'inline-block' : 'none'};">Edit</button>
-              </div>
-            </div>
-          `;
-          return htmlContent + formHtml;
+      function checkAndInjectBorrowerForm(htmlContent, isHistory, preDetectedLoanType) {
+        const lc = htmlContent.toLowerCase();
+
+        // Trigger injection if: pre-detected type passed in, OR text contains trigger phrase / marker
+        const shouldInject =
+          preDetectedLoanType ||
+          lc.includes("please share borrower") ||
+          htmlContent.includes("[[borrower_form]]") ||
+          /\[\[loan_type:/i.test(htmlContent);
+
+        if (!shouldInject) return htmlContent;
+
+        // Use pre-extracted loan type (from raw text before markdown) if available;
+        // otherwise fall back to scanning the already-parsed HTML
+        let loanType = preDetectedLoanType || 'Home';
+        if (!preDetectedLoanType) {
+          const ltMatch = htmlContent.match(/\[\[LOAN_TYPE:(\w+)\]\]/i);
+          if (ltMatch) loanType = ltMatch[1];
         }
-        return htmlContent;
+
+        const disabledAttr = isHistory ? 'disabled' : '';
+        const btnText    = isHistory ? 'Submitted / Past' : 'Submit Details';
+
+        // ─── Loan-type-specific form fields ───────────────────────────────
+        const LOAN_FORMS = {
+          Home: `
+            <div class="borrower-form-row">
+              <label>Age</label>
+              <input type="number" class="borrower-input bf-age" placeholder="e.g. 32" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Monthly Income (₹)</label>
+              <input type="number" class="borrower-input bf-income" placeholder="e.g. 60000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Property Type &amp; Location</label>
+              <input type="text" class="borrower-input bf-property" placeholder="e.g. Flat, Mumbai Urban" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Loan Amount (₹)</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 5000000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Tenure (Years)</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 20" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>CIBIL Score</label>
+              <input type="number" class="borrower-input bf-cibil" placeholder="e.g. 750" ${disabledAttr}>
+            </div>`,
+
+          Car: `
+            <div class="borrower-form-row">
+              <label>Age</label>
+              <input type="number" class="borrower-input bf-age" placeholder="e.g. 28" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Annual Income (₹)</label>
+              <input type="number" class="borrower-input bf-income" placeholder="e.g. 600000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Vehicle Make</label>
+              <input type="text" class="borrower-input bf-vehicle-make" placeholder="e.g. Maruti Suzuki" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Vehicle Model</label>
+              <input type="text" class="borrower-input bf-vehicle-model" placeholder="e.g. Swift ZXI" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>On-road Price (₹)</label>
+              <input type="number" class="borrower-input bf-vehicle-price" placeholder="e.g. 950000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Loan Amount (₹)</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 800000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Tenure (Years)</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 5" ${disabledAttr}>
+            </div>`,
+
+          Gold: `
+            <div class="borrower-form-row">
+              <label>Age</label>
+              <input type="number" class="borrower-input bf-age" placeholder="e.g. 35" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Monthly Income (₹)</label>
+              <input type="number" class="borrower-input bf-income" placeholder="e.g. 40000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Gold Weight (grams)</label>
+              <input type="number" class="borrower-input bf-gold-weight" placeholder="e.g. 50" step="0.1" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Gold Purity</label>
+              <select class="borrower-input bf-gold-purity" ${disabledAttr}>
+                <option value="22K">22K</option>
+                <option value="18K">18K</option>
+              </select>
+            </div>
+            <div class="borrower-form-row">
+              <label>Loan Amount Required (₹)</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 150000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Tenure (Months)</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 12" ${disabledAttr}>
+            </div>`,
+
+          Education: `
+            <div class="borrower-form-row">
+              <label>Student Age</label>
+              <input type="number" class="borrower-input bf-age" placeholder="e.g. 20" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Co-applicant Monthly Income (₹)</label>
+              <input type="number" class="borrower-input bf-income" placeholder="e.g. 50000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Institution Name</label>
+              <input type="text" class="borrower-input bf-institution" placeholder="e.g. IIT Bombay" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Course Name</label>
+              <input type="text" class="borrower-input bf-course" placeholder="e.g. B.Tech CSE" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Loan Amount (₹)</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 800000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Repayment Tenure (Years)</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 10" ${disabledAttr}>
+            </div>`,
+
+          Durable: `
+            <div class="borrower-form-row">
+              <label>Age</label>
+              <input type="number" class="borrower-input bf-age" placeholder="e.g. 30" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Monthly Income (₹)</label>
+              <input type="number" class="borrower-input bf-income" placeholder="e.g. 45000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Product Name</label>
+              <input type="text" class="borrower-input bf-product" placeholder="e.g. Samsung 55&quot; TV" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Product Price (₹)</label>
+              <input type="number" class="borrower-input bf-product-price" placeholder="e.g. 80000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Loan Amount (₹)</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 70000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Tenure (Months)</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 12" ${disabledAttr}>
+            </div>`,
+
+          Personal: `
+            <div class="borrower-form-row">
+              <label>Age</label>
+              <input type="number" class="borrower-input bf-age" placeholder="e.g. 28" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Monthly Income (₹)</label>
+              <input type="number" class="borrower-input bf-income" placeholder="e.g. 55000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Purpose of Loan</label>
+              <input type="text" class="borrower-input bf-purpose" placeholder="e.g. Medical, Travel, Renovation" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Loan Amount (₹)</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 300000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Tenure (Years)</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 3" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>CIBIL Score</label>
+              <input type="number" class="borrower-input bf-cibil" placeholder="e.g. 720" ${disabledAttr}>
+            </div>`,
+
+          LAP: `
+            <div class="borrower-form-row">
+              <label>Age</label>
+              <input type="number" class="borrower-input bf-age" placeholder="e.g. 42" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Monthly Income (₹)</label>
+              <input type="number" class="borrower-input bf-income" placeholder="e.g. 80000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Property Type</label>
+              <input type="text" class="borrower-input bf-property" placeholder="e.g. Residential Flat" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Property Market Value (₹)</label>
+              <input type="number" class="borrower-input bf-property-value" placeholder="e.g. 8000000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Loan Amount Required (₹)</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 4000000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Tenure (Years)</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 10" ${disabledAttr}>
+            </div>`,
+
+          MSME: `
+            <div class="borrower-form-row">
+              <label>Applicant Age</label>
+              <input type="number" class="borrower-input bf-age" placeholder="e.g. 38" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Annual Business Turnover (₹)</label>
+              <input type="number" class="borrower-input bf-income" placeholder="e.g. 5000000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Business Vintage (Years)</label>
+              <input type="number" class="borrower-input bf-vintage" placeholder="e.g. 5" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Loan Amount Required (₹)</label>
+              <input type="number" class="borrower-input bf-loan" placeholder="e.g. 2000000" ${disabledAttr}>
+            </div>
+            <div class="borrower-form-row">
+              <label>Tenure (Years)</label>
+              <input type="number" class="borrower-input bf-tenure" placeholder="e.g. 5" ${disabledAttr}>
+            </div>`
+        };
+
+        const fieldsHtml = LOAN_FORMS[loanType] || LOAN_FORMS['Home'];
+
+        const formHtml = `
+          <div class="borrower-form-container" data-loan-type="${loanType}">
+            ${fieldsHtml}
+            <div class="borrower-form-actions" style="display: flex; gap: 10px;">
+              <button type="button" class="btn-primary borrower-submit-btn" onclick="submitBorrowerForm(this)" ${disabledAttr}>${btnText}</button>
+              <button type="button" class="btn-secondary borrower-edit-btn" onclick="editBorrowerForm(this)" style="display: ${isHistory ? 'inline-block' : 'none'};">Edit</button>
+            </div>
+          </div>
+        `;
+
+        // Strip all hidden markers so they never appear to the user
+        let cleanedContent = htmlContent
+          .replace(/\[\[BORROWER_FORM\]\]/gi, '')
+          .replace(/\[\[LOAN_TYPE:[\w]+\]\]/gi, '')
+          .trim();
+        return cleanedContent + formHtml;
       }
-      
+
       window.editBorrowerForm = function(btn) {
         const container = btn.closest('.borrower-form-container');
         const inputs = container.querySelectorAll('.borrower-input');
         inputs.forEach(input => input.disabled = false);
-        
+
         const submitBtn = container.querySelector('.borrower-submit-btn');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Details';
-        
+
         btn.style.display = 'none';
       };
 
       window.submitBorrowerForm = function(btn) {
         const container = btn.closest('.borrower-form-container');
-        const age = container.querySelector('.bf-age').value;
-        const income = container.querySelector('.bf-income').value;
-        const loan = container.querySelector('.bf-loan').value;
-        const tenure = container.querySelector('.bf-tenure').value;
-        const cibil = container.querySelector('.bf-cibil').value;
-        const itr = container.querySelector('.bf-itr').value;
-        
-        if(!age || !income || !loan || !tenure || !cibil) {
-          alert('Please fill in all numerical fields.');
+        const loanType = container.dataset.loanType || 'Home';
+
+        // Common fields
+        const age    = container.querySelector('.bf-age')?.value || '';
+        const income = container.querySelector('.bf-income')?.value || '';
+        const loan   = container.querySelector('.bf-loan')?.value || '';
+        const tenure = container.querySelector('.bf-tenure')?.value || '';
+        const cibil  = container.querySelector('.bf-cibil')?.value || '';
+
+        if (!age || !income || !loan || !tenure) {
+          alert('Please fill in all required fields.');
           return;
         }
-        
-        const formattedMsg = `Age: ${age}, Monthly Income: ${income}, Loan Amount: ${loan}, Tenure: ${tenure} years, CIBIL Score: ${cibil}, ITR Filed: ${itr}`;
-        
-        // Disable form
+
+        // Build loan-type-specific message
+        let formattedMsg = '';
+        if (loanType === 'Car') {
+          const make  = container.querySelector('.bf-vehicle-make')?.value || '';
+          const model = container.querySelector('.bf-vehicle-model')?.value || '';
+          const price = container.querySelector('.bf-vehicle-price')?.value || '';
+          formattedMsg = `Age: ${age}, Annual Income: ₹${income}, Vehicle: ${make} ${model} (On-road ₹${price}), Loan Amount: ₹${loan}, Tenure: ${tenure} years`;
+        } else if (loanType === 'Gold') {
+          const weight = container.querySelector('.bf-gold-weight')?.value || '';
+          const purity = container.querySelector('.bf-gold-purity')?.value || '22K';
+          const tenureLabel = parseInt(tenure) <= 36 ? `${tenure} months` : `${tenure} months`;
+          formattedMsg = `Age: ${age}, Monthly Income: ₹${income}, Gold: ${weight}g ${purity}, Loan Amount: ₹${loan}, Tenure: ${tenureLabel}`;
+        } else if (loanType === 'Education') {
+          const institution = container.querySelector('.bf-institution')?.value || '';
+          const course      = container.querySelector('.bf-course')?.value || '';
+          formattedMsg = `Student Age: ${age}, Co-applicant Monthly Income: ₹${income}, Institution: ${institution}, Course: ${course}, Loan Amount: ₹${loan}, Tenure: ${tenure} years`;
+        } else if (loanType === 'Durable') {
+          const product      = container.querySelector('.bf-product')?.value || '';
+          const productPrice = container.querySelector('.bf-product-price')?.value || '';
+          formattedMsg = `Age: ${age}, Monthly Income: ₹${income}, Product: ${product} (Price ₹${productPrice}), Loan Amount: ₹${loan}, Tenure: ${tenure} months`;
+        } else if (loanType === 'Personal') {
+          const purpose = container.querySelector('.bf-purpose')?.value || '';
+          formattedMsg = `Age: ${age}, Monthly Income: ₹${income}, Purpose: ${purpose}, Loan Amount: ₹${loan}, Tenure: ${tenure} years, CIBIL Score: ${cibil}`;
+        } else if (loanType === 'LAP') {
+          const propType  = container.querySelector('.bf-property')?.value || '';
+          const propValue = container.querySelector('.bf-property-value')?.value || '';
+          formattedMsg = `Age: ${age}, Monthly Income: ₹${income}, Property: ${propType} (Market Value ₹${propValue}), Loan Amount: ₹${loan}, Tenure: ${tenure} years`;
+        } else if (loanType === 'MSME') {
+          const vintage = container.querySelector('.bf-vintage')?.value || '';
+          formattedMsg = `Applicant Age: ${age}, Annual Business Turnover: ₹${income}, Business Vintage: ${vintage} years, Loan Amount: ₹${loan}, Tenure: ${tenure} years`;
+        } else {
+          // Home (default)
+          const property = container.querySelector('.bf-property')?.value || '';
+          formattedMsg = `Age: ${age}, Monthly Income: ₹${income}, Property: ${property}, Loan Amount: ₹${loan}, Tenure: ${tenure} years, CIBIL Score: ${cibil}`;
+        }
+
+        // Disable form after submit
         const inputs = container.querySelectorAll('.borrower-input');
         inputs.forEach(input => input.disabled = true);
         btn.disabled = true;
         btn.textContent = 'Submitted';
-        
+
         const editBtn = container.querySelector('.borrower-edit-btn');
-        if (editBtn) {
-          editBtn.style.display = 'inline-block';
-        }
-        
-        if (window.sendChatMessage) {
-          window.sendChatMessage(formattedMsg);
-        }
+        if (editBtn) editBtn.style.display = 'inline-block';
+
+        if (window.sendChatMessage) window.sendChatMessage(formattedMsg);
       };
 
       if (sendBtn) {

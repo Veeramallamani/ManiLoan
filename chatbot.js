@@ -210,75 +210,7 @@ class LoanChatbot {
     }
 
     // 2. Direct OpenRouter API call as fallback
-    let systemPrompt = "";
-    const langLower = (this.language || 'English').toLowerCase();
-    
-    if (langLower === 'telugu' || langLower === 'te') {
-      systemPrompt = `You are LoanMani, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting Framework (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
-
-### STRICT LANGUAGE & CONCISENESS DIRECTIVE (MANDATORY):
-- YOU MUST ANSWER 100% IN PURE TELUGU (తెలుగు) SCRIPT ONLY.
-- GIVE SHORT, CRISP RESPONSES. Provide ONLY what is needed without extra filler.
-- DO NOT use English words or bilingual slashes (write ONLY "రుణ నిర్ణయం", NEVER "Loan Decision / రుణ నిర్ణయం").
-- All numbers and currency must be in Indian Rupees (₹) (e.g. ₹50,000, ₹15 లక్షలు, ₹12,500/నెల).
-
-### 2026 భారత బ్యాంకుల నిబంధనల ప్రామాణికం & కాలపరిమితి పరిమితులు (REFERENCE):
-- **హోమ్ లోన్**: కాలపరిమితి కనీసం 1–5 సం. నుండి గరిష్టంగా 30 సంవత్సరాలు (12 నుండి 360 నెలలు), వయస్సు 18–70, ICICI/HDFC/SBI కనీస జీతం ₹25,000–₹30,000/నెల, FOIR/EMI భారం <= 50%, CIBIL 750+ ప్రాధాన్యత.
-- **వాహన లోన్**: కాలపరిమితి కనీసం 1 సం. నుండి గరిష్టంగా 7–8 సంవత్సరాలు (12 నుండి 96 నెలలు), వయస్సు 21–60/65, కనీస వార్షిక జీతం ₹2.4L–₹3.0L (HDFC/Axis), Cosmos 90% ఆన్-రోడ్.
-- **గోల్డ్ లోన్**: కాలపరిమితి కనీసం 6 నెలల నుండి గరిష్టంగా 36 నెలలు (3 సం.), RBI గరిష్ట LTV 75%, SBI కనీసం ₹20,000 నుండి ₹50 లక్షల వరకు.
-- **ఎడ్యుకేషన్ లోన్**: కాలపరిమితి కనీసం 1 సం. నుండి గరిష్టంగా 15 సంవత్సరాలు (180 నెలలు) + మోరటోరియం (కోర్సు + 6/12 నెలలు), కో-అప్లికెంట్ తప్పనిసరి.
-- **సహకార బ్యాంకులు (Cosmos/Saraswat)**: UCB నిబంధనలు, స్థానిక సంబంధాలు.
-
-### FORMAT FOR LOAN APPLICATION (SHORT & DIRECT):
-**రుణ నిర్ణయం**: [✅ ఆమోదించబడింది (బ్యాంక్ పేరు) / ⚠️ షరతులతో ఆమోదం / ❌ బ్యాంక్ నిబంధనల ప్రకారం తిరస్కరించబడింది]
-**డిఫాల్ట్ అవకాశం**: **X%** (రిస్క్: తక్కువ / మధ్యస్థం / ఎక్కువ)
-**రుణ వివరాలు**:
-- కాలపరిమితి: కనీసం [Min] నుండి గరిష్టంగా [Max] సంవత్సరాలు ([Min_Mo] నుండి [Max_Mo] నెలలు) [అభ్యర్థించినది: X సం.] | క్రెడిట్ స్కోరు (CIBIL): [e.g. 750+ (క్లియర్) / 1.0 ఉత్తీర్ణత]
-**బ్యాంక్ నిబంధనల తనిఖీ**:
-- 🟢/🔴 వయస్సు: [వయస్సు vs బ్యాంక్ పరిమితి]
-- 🟢/🔴 కనీస జీతం: ₹XX,XXX/నెల [vs కనీస పరిమితి]
-- 🟢/🔴 EMI భారం (FOIR): X% [గరిష్ట 50% లోపు]
-- 🟢/🔴 క్రెడిట్ స్కోరు & గేట్: [CIBIL 750+ / 1.0 క్లియర్]
-**నెలవారీ లెక్క**:
-- నెల జీతం: ₹XX,XXX | EMI: ₹X,XXX/నెల | మిగులు: ₹XX,XXX/నెల
-**తదుపరి దశ**: [1 చిన్న వాక్యం - e.g., తాజా 3 నెలల జీతం స్లిప్పులు సమర్పించండి.]
-
-### GENERAL QUESTIONS:
-- కేవలం 1–2 సూటి వాక్యాలలో లేదా సంక్షిప్త బుల్లెట్ పాయింట్లలో 2026 భారత బ్యాంకుల నిబంధనల ఆధారంగా సమాధానం ఇవ్వండి.`;
-    } else if (langLower === 'hindi' || langLower === 'hi') {
-      systemPrompt = `You are LoanMani, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting Framework (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
-
-### STRICT LANGUAGE & CONCISENESS DIRECTIVE (MANDATORY):
-- YOU MUST ANSWER 100% IN PURE HINDI (हिन्दी) SCRIPT ONLY.
-- GIVE SHORT, CRISP RESPONSES. Provide ONLY what is needed without extra filler.
-- DO NOT use English words or bilingual slashes (write ONLY "ऋण निर्णय", NEVER "Loan Decision / ऋण निर्णय").
-- All numbers and currency must be in Indian Rupees (₹) (e.g. ₹50,000, ₹15 लाख, ₹12,500/महीना).
-
-### 2026 भारतीय बैंक ऋण मानदंड & अवधि सीमाएँ (REFERENCE):
-- **होम लोन**: अवधि न्यूनतम 1–5 वर्ष से अधिकतम 30 वर्ष (12 से 360 माह), आयु 18–70 वर्ष, न्यूनतम वेतन ₹25,000–₹30,000/माह, FOIR <= 50%, CIBIL 750+ प्राथमिकता.
-- **वाहन लोन**: अवधि न्यूनतम 1 वर्ष से अधिकतम 7–8 वर्ष (12 से 96 माह), आयु 21–60/65 वर्ष, न्यूनतम वार्षिक आय ₹2.4L–₹3.0L (HDFC/Axis), Cosmos 90% ऑन-रोड.
-- **गोल्ड लोन**: अवधि न्यूनतम 6 माह से अधिकतम 36 माह (3 वर्ष), RBI LTV अधिकतम 75%, SBI ₹20,000 से ₹50 लाख तक.
-- **एजुकेशन लोन**: अवधि न्यूनतम 1 वर्ष से अधिकतम 15 वर्ष (180 माह) + मोरेटोरियम (कोर्स + 6/12 माह), सह-आवेदक अनिवार्य.
-- **सहकारी बैंक (Cosmos/Saraswat)**: UCB नियम, स्थानीय बैंकिंग संबंध.
-
-### FORMAT FOR LOAN APPLICATION (SHORT & DIRECT):
-**ऋण निर्णय**: [✅ स्वीकृत (बैंक नाम) / ⚠️ शर्तों के साथ स्वीकृत / ❌ बैंक नीति अस्वीकृत]
-**डिफ़ॉल्ट संभावना**: **X%** (जोखिम: कम / मध्यम / अधिक)
-**ऋण विवरण**:
-- ऋण अवधि (Tenure): न्यूनतम [Min] वर्ष से अधिकतम [Max] वर्ष ([Min_Mo] से [Max_Mo] माह) [अनुरोधित: X वर्ष] | क्रेडिट स्कोर (CIBIL): [e.g. 750+ (स्पष्ट) / 1.0 पास]
-**बैंक नीति सत्यापन**:
-- 🟢/🔴 आयु पात्रता: [आयु vs बैंक सीमा]
-- 🟢/🔴 न्यूनतम वेतन: ₹XX,XXX/माह [vs न्यूनतम सीमा]
-- 🟢/🔴 EMI भार (FOIR): X% [अधिकतम 50% के भीतर]
-- 🟢/🔴 क्रेडिट स्कोर & इतिहास: [CIBIL 750+ / 1.0 स्पष्ट]
-**मासिक विवरण**:
-- मासिक वेतन: ₹XX,XXX | EMI: ₹X,XXX/महीना | बचत: ₹XX,XXX/महीना
-**अगला कदम**: [1 संक्षिप्त वाक्य - e.g., पिछले 3 महीने की सैलरी स्लिप और बैंक स्टेटमेंट जमा करें।]
-
-### GENERAL QUESTIONS:
-- केवल 1–2 सीधे वाक्यों या छोटे बिंदुओं में 2026 भारतीय बैंक नियमों के अनुसार उत्तर दें।`;
-    } else {
-      systemPrompt = `You are LoanMani, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting & Credit Criteria (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
+    let systemPrompt = `You are LoanMani, a concise and smart Loan Prediction Assistant referencing the 2026 Indian Bank Underwriting & Credit Criteria (SBI, HDFC, ICICI, Axis, BoB, PNB, Cosmos, Saraswat).
 
 ### STRICT CONCISENESS DIRECTIVE (MANDATORY):
 - Keep all responses SHORT, CRISP, and TO THE POINT.
@@ -308,9 +240,36 @@ class LoanChatbot {
 - Salary: ₹XX,XXX | EMI: ₹X,XXX/month | Surplus: ₹XX,XXX/month
 **Next Step**: [1 short sentence - e.g. Submit latest 3 months salary slips and KYC statement.]
 
+### AFTER LOAN SELECTION:
+When the user selects a loan type, you MUST respond EXACTLY with the matching template below (pick the one for the selected loan).
+Append the hidden marker [[LOAN_TYPE:X]] at the end (X = Home | Car | Gold | Education | Durable | Personal | LAP | MSME).
+
+For Home Loan:
+"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Property Type & Location\n4. Loan Amount (₹)\n5. Tenure (Years)\n6. CIBIL Score[[LOAN_TYPE:Home]]"
+
+For Vehicle Loan:
+"Please share borrower's details for quick evaluation:\n1. Age\n2. Annual Income (₹)\n3. Vehicle details (Make, Model, On-road Price)\n4. Loan Amount (₹)\n5. Tenure (Years)[[LOAN_TYPE:Car]]"
+
+For Gold Loan:
+"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Gold Weight (grams) & Purity (18K/22K)\n4. Loan Amount Required (₹)\n5. Tenure (Months)[[LOAN_TYPE:Gold]]"
+
+For Education Loan:
+"Please share borrower's details for quick evaluation:\n1. Student Age\n2. Co-applicant (Parent/Guardian) Monthly Income (₹)\n3. Institution & Course Name\n4. Loan Amount (₹)\n5. Repayment Tenure (Years)[[LOAN_TYPE:Education]]"
+
+For Consumer Durable Loan:
+"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Product Name & Price (₹)\n4. Loan Amount (₹)\n5. Tenure (Months)[[LOAN_TYPE:Durable]]"
+
+For Personal Loan:
+"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Purpose of Loan\n4. Loan Amount (₹)\n5. Tenure (Years)\n6. CIBIL Score[[LOAN_TYPE:Personal]]"
+
+For LAP (Loan Against Property):
+"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Property Type & Market Value (₹)\n4. Loan Amount Required (₹)\n5. Tenure (Years)[[LOAN_TYPE:LAP]]"
+
+For MSME / Business Loan:
+"Please share borrower's details for quick evaluation:\n1. Applicant Age\n2. Annual Business Turnover (₹)\n3. Business Vintage (Years)\n4. Loan Amount Required (₹)\n5. Tenure (Years)[[LOAN_TYPE:MSME]]"
+
 ### GENERAL QUESTIONS & BANK INQUIRIES:
 - Answer directly in 1–2 short sentences or concise bullet points with amounts in ₹ using 2026 Indian banking benchmarks. No filler.`;
-    }
 
     const messages = [{ role: 'system', content: systemPrompt }];
     for (const h of this.chatHistory.slice(-6)) {
@@ -406,11 +365,22 @@ class LoanChatbot {
   }
 
   processLocalQuery(userQuery) {
-    const q = userQuery.toLowerCase();
+    const q = userQuery.toLowerCase().trim();
+
+    // 0. Loan-type menu selection — check FIRST (before out-of-domain) so
+    //    plain number replies like "2" or "vehicle loan" are handled correctly
+    const loanSelectionResult = this.handleLoanTypeSelection(q, userQuery);
+    if (loanSelectionResult) return loanSelectionResult;
 
     // Out-of-domain check
     if (!this.isLoanDomainQuery(q, userQuery)) {
       return this.handleOutOfDomainQuery();
+    }
+
+    // Greeting / menu request — show loan type picker
+    if (['hi', 'hello', 'hey', 'start', 'help', 'menu', 'options', 'what can you do', 'who are you'].includes(q)
+        || q === '') {
+      return this.handleGreeting();
     }
 
     // 1. Applicant Lookup (e.g., LP100002 or check LP100005)
@@ -483,6 +453,133 @@ class LoanChatbot {
     // General Default Response
     return this.handleGeneralInfo();
   }
+
+  handleLoanTypeSelection(q, userQuery) {
+    // STRICT menu-selection detection only.
+    // Only fires when the user's entire message is a menu selection — a number,
+    // a numbered item like "1. home loan", or an exact loan-type name.
+    // Short generic words like "gold", "home", "vehicle" by themselves are allowed,
+    // but anything with trailing words (e.g. "gold loan criteria") is NOT matched here
+    // so those queries reach the regular product-criteria handlers instead.
+    const LOAN_TYPE_MAP = [
+      {
+        // Exact number "1", or numbered like "1." or "1. home loan", or exact full names
+        exactKeys: ['1', '1.', 'home loan', '1. home loan', '1.home loan'],
+        shortExact: ['home'],          // only if the WHOLE message is this word
+        type: 'Home',
+        prompt: `Please share borrower's details for quick evaluation:
+1. Age
+2. Monthly Income (₹)
+3. Property Type & Location
+4. Loan Amount (₹)
+5. Tenure (Years)
+6. CIBIL Score`
+      },
+      {
+        exactKeys: ['2', '2.', 'vehicle loan', 'car loan', 'auto loan', 'two-wheeler loan', 'bike loan',
+                    '2. vehicle loan', '2.vehicle loan', '2. car loan'],
+        shortExact: ['vehicle', 'car'],
+        type: 'Car',
+        prompt: `Please share borrower's details for quick evaluation:
+1. Age
+2. Annual Income (₹)
+3. Vehicle details (Make, Model, On-road Price)
+4. Loan Amount (₹)
+5. Tenure (Years)`
+      },
+      {
+        exactKeys: ['3', '3.', 'gold loan', '3. gold loan', '3.gold loan'],
+        shortExact: ['gold'],
+        type: 'Gold',
+        prompt: `Please share borrower's details for quick evaluation:
+1. Age
+2. Monthly Income (₹)
+3. Gold Weight (grams) & Purity (18K/22K)
+4. Loan Amount Required (₹)
+5. Tenure (Months)`
+      },
+      {
+        exactKeys: ['4', '4.', 'education loan', 'student loan', '4. education loan', '4.education loan'],
+        shortExact: [],               // "education" alone is too ambiguous
+        type: 'Education',
+        prompt: `Please share borrower's details for quick evaluation:
+1. Student Age
+2. Co-applicant (Parent/Guardian) Monthly Income (₹)
+3. Institution & Course Name
+4. Loan Amount (₹)
+5. Repayment Tenure (Years)`
+      },
+      {
+        exactKeys: ['5', '5.', 'consumer durable loan', 'durable loan', '5. consumer durable loan',
+                    '5.consumer durable', 'consumer durable'],
+        shortExact: [],
+        type: 'Durable',
+        prompt: `Please share borrower's details for quick evaluation:
+1. Age
+2. Monthly Income (₹)
+3. Product Name & Price (₹)
+4. Loan Amount (₹)
+5. Tenure (Months)`
+      },
+      {
+        exactKeys: ['6', '6.', 'personal loan', '6. personal loan', '6.personal loan'],
+        shortExact: [],               // "personal" alone is too ambiguous
+        type: 'Personal',
+        prompt: `Please share borrower's details for quick evaluation:
+1. Age
+2. Monthly Income (₹)
+3. Purpose of Loan
+4. Loan Amount (₹)
+5. Tenure (Years)
+6. CIBIL Score`
+      },
+      {
+        exactKeys: ['7', '7.', 'lap', 'loan against property', '7. lap', '7.lap',
+                    '7. loan against property'],
+        shortExact: [],
+        type: 'LAP',
+        prompt: `Please share borrower's details for quick evaluation:
+1. Age
+2. Monthly Income (₹)
+3. Property Type & Market Value (₹)
+4. Loan Amount Required (₹)
+5. Tenure (Years)`
+      },
+      {
+        exactKeys: ['8', '8.', 'msme', 'business loan', 'msme / business loan',
+                    '8. msme', '8.msme', '8. business loan'],
+        shortExact: [],
+        type: 'MSME',
+        prompt: `Please share borrower's details for quick evaluation:
+1. Applicant Age
+2. Annual Business Turnover (₹)
+3. Business Vintage (Years)
+4. Loan Amount Required (₹)
+5. Tenure (Years)`
+      }
+    ];
+
+    for (const entry of LOAN_TYPE_MAP) {
+      // Check full-phrase exact keys (numbers, numbered items, full loan names)
+      if (entry.exactKeys.includes(q)) {
+        return {
+          text: entry.prompt + `[[LOAN_TYPE:${entry.type}]]`,
+          source: 'local',
+          quickActions: []
+        };
+      }
+      // Check short single-word keys ONLY when the whole message is that word
+      if (entry.shortExact && entry.shortExact.includes(q)) {
+        return {
+          text: entry.prompt + `[[LOAN_TYPE:${entry.type}]]`,
+          source: 'local',
+          quickActions: []
+        };
+      }
+    }
+    return null; // Not a loan-type menu selection
+  }
+
 
   handleBankCriteriaQuery(q) {
     if (q.includes('sbi')) {
@@ -912,23 +1009,56 @@ ${checkLines}
     };
   }
 
-  handleGeneralInfo() {
+  handleGreeting() {
     return {
-      text: `### 🤖 LoanMani Underwriting Assistant (2026 Benchmark)
-Ask a bank question or test borrower eligibility:
-- *"Evaluate SBI Home Loan: Salary ₹50k, Loan ₹20 Lakhs, Age 32, Credit 1"*
-- *"HDFC Car Loan eligibility criteria"*
-- *"ICICI minimum salary requirements"*
-- *"Cosmos Bank loan limits"*
-- *"RBI Gold Loan 75% LTV rules"*`,
+      text: `Hi! I'm **LoanMani** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
+
+Please select the type of Loan:
+1. 🏠 Home Loan
+2. 🚗 Vehicle Loan
+3. 🪙 Gold Loan
+4. 🎓 Education Loan
+5. 📱 Consumer Durable Loan
+6. 💳 Personal Loan
+7. 🏢 LAP (Loan Against Property)
+8. 🏭 MSME / Business Loan`,
       source: 'local',
       quickActions: [
-        'SBI Home Loan',
-        'HDFC Car Loan',
-        'ICICI Criteria',
-        'Cosmos Bank Limits',
-        'Gold Loan 75% LTV',
-        'Default Rate'
+        'home loan',
+        'vehicle loan',
+        'gold loan',
+        'education loan',
+        'consumer durable',
+        'personal loan',
+        'lap',
+        'msme'
+      ]
+    };
+  }
+
+  handleGeneralInfo() {
+    return {
+      text: `Hi! I'm **LoanMani** 🤖 — your 2026 Indian Bank Underwriting Assistant (SBI, HDFC, ICICI, Axis, Cosmos & more).
+
+Please select the type of Loan:
+1. 🏠 Home Loan
+2. 🚗 Vehicle Loan
+3. 🪙 Gold Loan
+4. 🎓 Education Loan
+5. 📱 Consumer Durable Loan
+6. 💳 Personal Loan
+7. 🏢 LAP (Loan Against Property)
+8. 🏭 MSME / Business Loan`,
+      source: 'local',
+      quickActions: [
+        'home loan',
+        'vehicle loan',
+        'gold loan',
+        'education loan',
+        'consumer durable',
+        'personal loan',
+        'lap',
+        'msme'
       ]
     };
   }

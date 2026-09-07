@@ -2718,3 +2718,150 @@ body {
     overflow-x: auto;
   }
 }
+
+/* ==========================================================================
+   BORROWER DETAILS FORM  (injected dynamically per loan type in chatbot)
+   ========================================================================== */
+
+.borrower-form-container {
+  background: var(--bg-elevated, #242735);
+  border: 1px solid var(--border-color, #272B3B);
+  border-radius: var(--radius-md, 14px);
+  padding: 1.1rem 1.2rem 1rem;
+  margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 420px;
+}
+
+.borrower-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.borrower-form-row label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted, #8F9CAE);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.borrower-input {
+  width: 100%;
+  background: var(--bg-card, #1B1D26);
+  border: 1px solid var(--border-color, #272B3B);
+  border-radius: var(--radius-sm, 8px);
+  color: var(--text-main, #FFFFFF);
+  font-family: var(--font-sans, 'Hanken Grotesk', sans-serif);
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+  -moz-appearance: textfield;
+}
+
+.borrower-input:focus {
+  border-color: var(--primary, #54D6FF);
+  box-shadow: 0 0 0 3px var(--primary-glow, rgba(84,214,255,0.25));
+}
+
+.borrower-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--bg-secondary, #14161F);
+}
+
+/* Remove number spinners for cleaner look */
+.borrower-input[type=number]::-webkit-inner-spin-button,
+.borrower-input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Dropdown select */
+.borrower-input select,
+select.borrower-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238F9CAE' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+  cursor: pointer;
+}
+
+.borrower-form-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.borrower-submit-btn {
+  background: linear-gradient(135deg, var(--primary, #54D6FF), var(--primary-hover, #38c8f5));
+  color: var(--text-inverse, #0D1117);
+  border: none;
+  border-radius: var(--radius-sm, 8px);
+  font-family: var(--font-sans, 'Hanken Grotesk', sans-serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.52rem 1.2rem;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 2px 10px var(--primary-glow, rgba(84,214,255,0.3));
+}
+
+.borrower-submit-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--primary-glow-strong, rgba(84,214,255,0.45));
+}
+
+.borrower-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.borrower-submit-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.borrower-edit-btn {
+  background: transparent;
+  color: var(--primary, #54D6FF);
+  border: 1px solid var(--primary, #54D6FF);
+  border-radius: var(--radius-sm, 8px);
+  font-family: var(--font-sans, 'Hanken Grotesk', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.borrower-edit-btn:hover {
+  background: var(--primary-subtle, rgba(84,214,255,0.12));
+}
+
+/* Light theme overrides */
+body.light-theme .borrower-form-container {
+  background: #F3F2F1;
+  border-color: #D2D0CE;
+}
+
+body.light-theme .borrower-input {
+  background: #FFFFFF;
+  border-color: #D2D0CE;
+  color: #0D1117;
+}
+
+body.light-theme .borrower-form-row label {
+  color: #605E5C;
+}
+
