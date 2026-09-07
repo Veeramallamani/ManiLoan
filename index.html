@@ -1539,11 +1539,20 @@
           </div>
         `;
 
-        // Strip all hidden markers so they never appear to the user
+        // Strip all hidden markers and text lists so numbered questions never appear above the GUI form
         let cleanedContent = htmlContent
           .replace(/\[\[BORROWER_FORM\]\]/gi, '')
           .replace(/\[\[LOAN_TYPE:[\w]+\]\]/gi, '')
+          .replace(/<ol>[\s\S]*?<\/ol>/gi, '')
+          .replace(/<ul>[\s\S]*?<\/ul>/gi, '')
+          .replace(/(?:<p>)?\s*\d+\.\s+.*?(?:<\/p>|\n|<br\s*\/?>|$)/gi, '')
+          .replace(/Please share borrower's details for quick evaluation:?/gi, "Please fill in the borrower's details below:")
           .trim();
+
+        if (!cleanedContent) {
+          cleanedContent = "<p>Please fill in the borrower's details below:</p>";
+        }
+
         return cleanedContent + formHtml;
       }
 

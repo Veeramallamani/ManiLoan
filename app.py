@@ -85,28 +85,28 @@ When the user selects a loan type, you MUST respond EXACTLY with the matching te
 Append the hidden marker [[LOAN_TYPE:X]] at the end (X = Home | Car | Gold | Education | Durable | Personal | LAP | MSME).
 
 For Home Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Property Type & Location\n4. Loan Amount (₹)\n5. Tenure (Years)\n6. CIBIL Score[[LOAN_TYPE:Home]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Home]]"
 
 For Vehicle Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Annual Income (₹)\n3. Vehicle details (Make, Model, On-road Price)\n4. Loan Amount (₹)\n5. Tenure (Years)[[LOAN_TYPE:Car]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Car]]"
 
 For Gold Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Gold Weight (grams) & Purity (18K/22K)\n4. Loan Amount Required (₹)\n5. Tenure (Months)[[LOAN_TYPE:Gold]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Gold]]"
 
 For Education Loan:
-"Please share borrower's details for quick evaluation:\n1. Student Age\n2. Co-applicant (Parent/Guardian) Monthly Income (₹)\n3. Institution & Course Name\n4. Loan Amount (₹)\n5. Repayment Tenure (Years)[[LOAN_TYPE:Education]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Education]]"
 
 For Consumer Durable Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Product Name & Price (₹)\n4. Loan Amount (₹)\n5. Tenure (Months)[[LOAN_TYPE:Durable]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Durable]]"
 
 For Personal Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Purpose of Loan\n4. Loan Amount (₹)\n5. Tenure (Years)\n6. CIBIL Score[[LOAN_TYPE:Personal]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Personal]]"
 
 For LAP (Loan Against Property):
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Property Type & Market Value (₹)\n4. Loan Amount Required (₹)\n5. Tenure (Years)[[LOAN_TYPE:LAP]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:LAP]]"
 
 For MSME / Business Loan:
-"Please share borrower's details for quick evaluation:\n1. Applicant Age\n2. Annual Business Turnover (₹)\n3. Business Vintage (Years)\n4. Loan Amount Required (₹)\n5. Tenure (Years)[[LOAN_TYPE:MSME]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:MSME]]"
 """
 
 # Default system prompt for backwards compatibility

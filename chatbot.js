@@ -245,28 +245,28 @@ When the user selects a loan type, you MUST respond EXACTLY with the matching te
 Append the hidden marker [[LOAN_TYPE:X]] at the end (X = Home | Car | Gold | Education | Durable | Personal | LAP | MSME).
 
 For Home Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Property Type & Location\n4. Loan Amount (₹)\n5. Tenure (Years)\n6. CIBIL Score[[LOAN_TYPE:Home]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Home]]"
 
 For Vehicle Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Annual Income (₹)\n3. Vehicle details (Make, Model, On-road Price)\n4. Loan Amount (₹)\n5. Tenure (Years)[[LOAN_TYPE:Car]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Car]]"
 
 For Gold Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Gold Weight (grams) & Purity (18K/22K)\n4. Loan Amount Required (₹)\n5. Tenure (Months)[[LOAN_TYPE:Gold]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Gold]]"
 
 For Education Loan:
-"Please share borrower's details for quick evaluation:\n1. Student Age\n2. Co-applicant (Parent/Guardian) Monthly Income (₹)\n3. Institution & Course Name\n4. Loan Amount (₹)\n5. Repayment Tenure (Years)[[LOAN_TYPE:Education]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Education]]"
 
 For Consumer Durable Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Product Name & Price (₹)\n4. Loan Amount (₹)\n5. Tenure (Months)[[LOAN_TYPE:Durable]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Durable]]"
 
 For Personal Loan:
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Purpose of Loan\n4. Loan Amount (₹)\n5. Tenure (Years)\n6. CIBIL Score[[LOAN_TYPE:Personal]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:Personal]]"
 
 For LAP (Loan Against Property):
-"Please share borrower's details for quick evaluation:\n1. Age\n2. Monthly Income (₹)\n3. Property Type & Market Value (₹)\n4. Loan Amount Required (₹)\n5. Tenure (Years)[[LOAN_TYPE:LAP]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:LAP]]"
 
 For MSME / Business Loan:
-"Please share borrower's details for quick evaluation:\n1. Applicant Age\n2. Annual Business Turnover (₹)\n3. Business Vintage (Years)\n4. Loan Amount Required (₹)\n5. Tenure (Years)[[LOAN_TYPE:MSME]]"
+"Please fill in the borrower's details below for quick evaluation:[[LOAN_TYPE:MSME]]"
 
 ### GENERAL QUESTIONS & BANK INQUIRIES:
 - Answer directly in 1–2 short sentences or concise bullet points with amounts in ₹ using 2026 Indian banking benchmarks. No filler.`;
@@ -463,99 +463,56 @@ For MSME / Business Loan:
     // so those queries reach the regular product-criteria handlers instead.
     const LOAN_TYPE_MAP = [
       {
-        // Exact number "1", or numbered like "1." or "1. home loan", or exact full names
         exactKeys: ['1', '1.', 'home loan', '1. home loan', '1.home loan'],
         shortExact: ['home'],          // only if the WHOLE message is this word
         type: 'Home',
-        prompt: `Please share borrower's details for quick evaluation:
-1. Age
-2. Monthly Income (₹)
-3. Property Type & Location
-4. Loan Amount (₹)
-5. Tenure (Years)
-6. CIBIL Score`
+        prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['2', '2.', 'vehicle loan', 'car loan', 'auto loan', 'two-wheeler loan', 'bike loan',
                     '2. vehicle loan', '2.vehicle loan', '2. car loan'],
         shortExact: ['vehicle', 'car'],
         type: 'Car',
-        prompt: `Please share borrower's details for quick evaluation:
-1. Age
-2. Annual Income (₹)
-3. Vehicle details (Make, Model, On-road Price)
-4. Loan Amount (₹)
-5. Tenure (Years)`
+        prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['3', '3.', 'gold loan', '3. gold loan', '3.gold loan'],
         shortExact: ['gold'],
         type: 'Gold',
-        prompt: `Please share borrower's details for quick evaluation:
-1. Age
-2. Monthly Income (₹)
-3. Gold Weight (grams) & Purity (18K/22K)
-4. Loan Amount Required (₹)
-5. Tenure (Months)`
+        prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['4', '4.', 'education loan', 'student loan', '4. education loan', '4.education loan'],
         shortExact: [],               // "education" alone is too ambiguous
         type: 'Education',
-        prompt: `Please share borrower's details for quick evaluation:
-1. Student Age
-2. Co-applicant (Parent/Guardian) Monthly Income (₹)
-3. Institution & Course Name
-4. Loan Amount (₹)
-5. Repayment Tenure (Years)`
+        prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['5', '5.', 'consumer durable loan', 'durable loan', '5. consumer durable loan',
                     '5.consumer durable', 'consumer durable'],
         shortExact: [],
         type: 'Durable',
-        prompt: `Please share borrower's details for quick evaluation:
-1. Age
-2. Monthly Income (₹)
-3. Product Name & Price (₹)
-4. Loan Amount (₹)
-5. Tenure (Months)`
+        prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['6', '6.', 'personal loan', '6. personal loan', '6.personal loan'],
         shortExact: [],               // "personal" alone is too ambiguous
         type: 'Personal',
-        prompt: `Please share borrower's details for quick evaluation:
-1. Age
-2. Monthly Income (₹)
-3. Purpose of Loan
-4. Loan Amount (₹)
-5. Tenure (Years)
-6. CIBIL Score`
+        prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['7', '7.', 'lap', 'loan against property', '7. lap', '7.lap',
                     '7. loan against property'],
         shortExact: [],
         type: 'LAP',
-        prompt: `Please share borrower's details for quick evaluation:
-1. Age
-2. Monthly Income (₹)
-3. Property Type & Market Value (₹)
-4. Loan Amount Required (₹)
-5. Tenure (Years)`
+        prompt: `Please fill in the borrower's details below for quick evaluation:`
       },
       {
         exactKeys: ['8', '8.', 'msme', 'business loan', 'msme / business loan',
                     '8. msme', '8.msme', '8. business loan'],
         shortExact: [],
         type: 'MSME',
-        prompt: `Please share borrower's details for quick evaluation:
-1. Applicant Age
-2. Annual Business Turnover (₹)
-3. Business Vintage (Years)
-4. Loan Amount Required (₹)
-5. Tenure (Years)`
+        prompt: `Please fill in the borrower's details below for quick evaluation:`
       }
     ];
 
