@@ -7,7 +7,7 @@
   <!-- Google Fonts: Hanken Grotesk & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <!-- Chart.js for interactive analytics -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -99,50 +99,51 @@
     <!-- ================= MAIN WORKSPACE AREA ================= -->
     <main class="main-content">
 
-      <!-- Top Header Navigation Bar -->
+      <!-- Top Header / Profile Bar -->
       <header class="chat-topbar">
+        <!-- Profile Left -->
+        <div class="topbar-profile">
+          <div class="topbar-avatar">🏦</div>
+          <div class="topbar-welcome">
+            <span class="topbar-welcome-sub">Welcome 👋</span>
+            <span class="topbar-welcome-name">ManiLoan AI</span>
+          </div>
+        </div>
+
+        <!-- Right Actions -->
         <div class="topbar-right">
-          <!-- Theme Toggle Button -->
-          <button class="topbar-lang-btn" id="theme-toggle-btn" title="Toggle Theme" style="margin-right: 10px;">
-            <span class="lang-globe-icon" id="theme-icon">🌙</span>
+          <!-- Theme Toggle -->
+          <button class="topbar-icon-btn" id="theme-toggle-btn" title="Toggle Theme">
+            <span id="theme-icon">🌙</span>
           </button>
 
-          <!-- Language Selector Pill & Dropdown -->
-          <div class="topbar-lang-wrapper" id="topbar-lang-wrapper">
-            <button class="topbar-lang-btn" id="topbar-lang-btn" title="Choose Language / భాష / भाषा">
-              <span class="lang-globe-icon">🌐</span>
-              <span class="lang-text" id="lang-current-label">English</span>
-              <span class="lang-caret">▾</span>
-            </button>
+          <!-- Language (icon only) -->
+          <div class="topbar-lang-wrapper" id="topbar-lang-wrapper" style="position:relative;">
+            <button class="topbar-icon-btn" id="topbar-lang-btn" title="Language">🌐</button>
             <div class="lang-dropdown-menu" id="lang-dropdown-menu">
               <button class="lang-option-btn active" data-lang="English">🇬🇧 English</button>
-              <button class="lang-option-btn" data-lang="Telugu">🇮🇳 Telugu (తెలుగు)</button>
-              <button class="lang-option-btn" data-lang="Hindi">🇮🇳 Hindi (हिंदी)</button>
+              <button class="lang-option-btn" data-lang="Telugu">🇮🇳 Telugu</button>
+              <button class="lang-option-btn" data-lang="Hindi">🇮🇳 Hindi</button>
             </div>
           </div>
 
-
-          
-          <!-- Mobile 3-Dots Menu Button -->
-          <button class="topbar-menu-btn" id="topbar-menu-btn" title="Options">•••</button>
+          <!-- 3-dots menu -->
+          <button class="topbar-icon-btn" id="topbar-menu-btn" title="Options" style="font-size:1.2rem;letter-spacing:1px;">···</button>
 
           <!-- Mobile Dropdown Menu -->
           <div class="mobile-dropdown-menu" id="mobile-dropdown-menu">
-            <button class="menu-item" id="menu-new-chat">💬 Chat Assistant</button>
+            <button class="menu-item" id="menu-new-chat">💬 Chat Advisor</button>
             <button class="menu-item" id="menu-evaluator">⚡ Risk Evaluator</button>
-            <button class="menu-item" id="menu-dashboard">📊 Portfolio Dashboard</button>
-
-            
+            <button class="menu-item" id="menu-dashboard">🏠 Dashboard</button>
             <div class="menu-section-divider"></div>
-            <div class="menu-section-title">🌐 LANGUAGE</div>
+            <div class="menu-section-title">Language</div>
             <div class="mobile-lang-options">
               <button class="mobile-lang-btn active" data-lang="English">🇬🇧 English</button>
-              <button class="mobile-lang-btn" data-lang="Telugu">🇮🇳 Telugu (తెలుగు)</button>
-              <button class="mobile-lang-btn" data-lang="Hindi">🇮🇳 Hindi (हिंदी)</button>
+              <button class="mobile-lang-btn" data-lang="Telugu">🇮🇳 Telugu</button>
+              <button class="mobile-lang-btn" data-lang="Hindi">🇮🇳 Hindi</button>
             </div>
-
             <div class="menu-section-divider"></div>
-            <button class="menu-item" id="menu-settings">⚙️ OpenRouter API Settings</button>
+            <button class="menu-item" id="menu-settings">⚙️ API Settings</button>
             <button class="menu-item menu-item-danger" id="menu-clear">🗑️ Clear Chat</button>
           </div>
         </div>
@@ -153,30 +154,36 @@
 
 
 
-        <!-- ================= TAB 1: ACTIVE CHAT CONVERSATION VIEW (SCREEN 3) ================= -->
-        <section id="tab-chat" class="tab-view active">
+        <!-- ================= TAB 1: ACTIVE CHAT CONVERSATION VIEW ================= -->
+        <section id="tab-chat" class="tab-view">
           <div class="chat-container">
+
+            <!-- Chat-specific top header -->
+            <div class="chat-view-header">
+              <button class="chat-view-back" id="chat-back-btn" title="Back" onclick="if(window.switchTab)switchTab('tab-dashboard');">←</button>
+              <span class="chat-view-title">Advisor</span>
+              <button class="chat-view-options" id="chat-options-btn" title="Options">⋮</button>
+            </div>
 
             <!-- Messages Stream Area -->
             <div class="chat-messages-area" id="chat-messages">
-              <!-- Timeline Date Divider -->
-              <div class="date-divider">
-                <span>TODAY</span>
-              </div>
+              <div class="date-divider"><span>TODAY</span></div>
             </div>
 
             <!-- Empty State Greeting -->
             <div class="chat-empty-state" id="chat-empty-state">
-              <h2 class="empty-greeting">How Can I Help You</h2>
+              <h2 class="empty-greeting">How Can I Help?</h2>
+              <p class="empty-sub">Ask me about loan eligibility, risk analysis, or your portfolio.</p>
             </div>
 
-            <!-- Bottom Chat Dock (Capsule Input & Bank Quick-Bar) -->
+            <!-- Bottom Input Dock -->
             <div class="chat-dock-container">
               <form class="chat-input-area" id="chat-form" action="javascript:void(0);" onsubmit="if(window.sendChatMessage){window.sendChatMessage(document.getElementById('chat-input').value);} return false;">
-                <button type="button" class="input-attach-btn" id="input-templates-btn" title="New Chat Templates">➕</button>
-                <input type="text" id="chat-input" class="chat-input" placeholder="Type Your Message" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault(); if(window.sendChatMessage){window.sendChatMessage(this.value);} return false;}">
+                <button type="button" class="input-attach-btn" id="input-templates-btn" title="New Chat">➕</button>
+                <input type="text" id="chat-input" class="chat-input" placeholder="Write to Advisor" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault(); if(window.sendChatMessage){window.sendChatMessage(this.value);} return false;}">
+                <button type="button" class="chat-mic-btn" id="chat-mic-btn" title="Voice">🎙️</button>
                 <button type="button" class="send-btn" id="send-btn" onclick="if(window.sendChatMessage){window.sendChatMessage(document.getElementById('chat-input').value);}">
-                  <svg class="send-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="send-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                   </svg>
@@ -187,45 +194,50 @@
           </div>
         </section>
 
-        <!-- ================= TAB 2: SPEAKING TO AI BOT VIEW (SCREEN 2) ================= -->
+        <!-- ================= TAB 2: VOICE ADVISOR VIEW ================= -->
         <section id="tab-voice" class="tab-view">
           <div class="speaking-view-container">
+
+            <!-- Voice header -->
             <div class="speaking-header">
-              <span class="speaking-sub">Interactive Voice & AI Hub</span>
+              <button class="speaking-close-btn" onclick="if(window.switchTab)switchTab('tab-dashboard');" title="Close">✕</button>
+              <span class="speaking-header-title">Advisor Voice</span>
+              <button class="speaking-settings-btn" id="btn-voice-options" title="Settings">⇌</button>
             </div>
 
-            <!-- Large Centered 3D Mascot -->
+            <!-- 3D Organic Brain/Mascot -->
             <div class="speaking-mascot-container">
               <div class="mascot-ripple-ring ring-1"></div>
               <div class="mascot-ripple-ring ring-2"></div>
-              <div class="speaking-mascot-img" style="font-size: 80px; display: flex; align-items: center; justify-content: center;">🤖</div>
+              <div class="speaking-mascot-img" id="voice-mascot-img" style="font-size: 82px; display: flex; align-items: center; justify-content: center;">🧠</div>
             </div>
 
-            <!-- Animated Spoken Query Caption -->
+            <!-- Caption area -->
             <div class="speaking-caption-wrap">
+              <div class="speaking-status-tag" id="voice-status-tag">Listening…</div>
               <p class="speaking-caption" id="voice-caption-text">
-                "Predict default risk for an applicant earning <span class="highlight">₹70,000</span> requesting <span class="highlight">₹20 Lakhs</span>"
+                Always analysing your loan profile,
+                guiding you toward <span class="highlight">better decisions</span>.
               </p>
             </div>
 
-            <!-- Bottom Control Cluster -->
+            <!-- Controls row -->
             <div class="speaking-controls-row">
-              <button class="control-circle-btn" id="btn-voice-keyboard" title="Switch to Keyboard Chat">⌨️</button>
-              
-              <!-- Large Glowing Microphone Button -->
+              <button class="control-circle-btn" id="btn-voice-keyboard" title="Switch to Chat">⌨️</button>
               <div class="mic-button-outer">
-                <button class="big-mic-btn" id="btn-big-mic" title="Tap to Speak or Trigger Analysis">
+                <button class="big-mic-btn" id="btn-big-mic" title="Tap to Speak">
                   <span class="mic-icon">🎙️</span>
                 </button>
               </div>
-
-              <button class="control-circle-btn" id="btn-voice-options" title="More Options">•••</button>
+              <button class="control-circle-btn" title="More">···</button>
             </div>
+
           </div>
         </section>
 
         <!-- ================= TAB 3: UNDERWRITING RISK EVALUATOR ================= -->
         <section id="tab-evaluator" class="tab-view">
+          <div class="evaluator-scroll-wrap">
           <div class="evaluator-grid">
             <!-- Input Form -->
             <div class="card">
@@ -471,86 +483,182 @@
             </div>
           </div>
 
+          </div><!-- /.evaluator-scroll-wrap -->
         </section>
 
-        <!-- ================= TAB 4: EXECUTIVE DASHBOARD ================= -->
-        <section id="tab-dashboard" class="tab-view">
-          <div class="kpi-grid">
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span>TOTAL APPLICATIONS</span>
-                <div class="kpi-icon">📋</div>
-              </div>
-              <div class="kpi-value" id="kpi-total-apps">800</div>
-              <div class="kpi-subtext">Historical loan portfolio records</div>
-            </div>
+        <!-- ================= TAB 4: PORTFOLIO / HOME DASHBOARD ================= -->
+        <section id="tab-dashboard" class="tab-view active">
 
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span>OVERALL DEFAULT RATE</span>
-                <div class="kpi-icon">🚨</div>
-              </div>
-              <div class="kpi-value" id="kpi-default-rate" style="color: var(--warning-color);">16.5%</div>
-              <div class="kpi-subtext">132 defaults / 668 non-defaults</div>
+          <!-- Metric Pills -->
+          <div class="metric-pills-row">
+            <div class="metric-pill pill-active">
+              <span class="metric-pill-icon">🏦</span>
+              <span class="metric-pill-value">87</span>
+              <span class="metric-pill-label">Health Score</span>
             </div>
-
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span>AVG LOAN AMOUNT</span>
-                <div class="kpi-icon">💵</div>
-              </div>
-              <div class="kpi-value" id="kpi-avg-loan">₹14.64 Lakhs</div>
-              <div class="kpi-subtext">Range: ₹90k - ₹70 Lakhs</div>
+            <div class="metric-pill">
+              <span class="metric-pill-icon">✅</span>
+              <span class="metric-pill-value">84%</span>
+              <span class="metric-pill-label">Approved</span>
             </div>
-
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span>CHAMPION MODEL ROC-AUC</span>
-                <div class="kpi-icon">🏆</div>
-              </div>
-              <div class="kpi-value" id="kpi-roc-auc" style="color: var(--primary);">0.812</div>
-              <div class="kpi-subtext">Random Forest Classifier</div>
+            <div class="metric-pill">
+              <span class="metric-pill-icon">⚡</span>
+              <span class="metric-pill-value">800</span>
+              <span class="metric-pill-label">Total Apps</span>
+            </div>
+            <div class="metric-pill">
+              <span class="metric-pill-icon">🚨</span>
+              <span class="metric-pill-value">16.5%</span>
+              <span class="metric-pill-label">Default Rate</span>
+            </div>
+            <div class="metric-pill">
+              <span class="metric-pill-icon">🏆</span>
+              <span class="metric-pill-value">0.812</span>
+              <span class="metric-pill-label">ROC-AUC</span>
             </div>
           </div>
 
-          <div class="charts-grid">
-            <div class="chart-card">
-              <h3>🏡 Default Rate (%) by Property Location</h3>
-              <div class="chart-container">
-                <canvas id="chart-property"></canvas>
+          <!-- Spotlight scrollable area -->
+          <div class="spotlight-section">
+
+            <div class="spotlight-header">
+              <span class="spotlight-title">Spotlight</span>
+              <button class="spotlight-see-all" onclick="if(window.switchTab)switchTab('tab-evaluator');">See All</button>
+            </div>
+
+            <!-- Score Card with Circular Gauge -->
+            <div class="score-card">
+              <div class="score-card-top">
+                <button class="score-link-btn" onclick="if(window.switchTab)switchTab('tab-evaluator');" title="Open Evaluator">↗</button>
+              </div>
+              <div class="circular-gauge-wrap">
+                <div class="circular-gauge">
+                  <svg class="gauge-svg" viewBox="0 0 152 152">
+                    <defs>
+                      <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#e07a6a"/>
+                        <stop offset="100%" stop-color="#c4627a"/>
+                      </linearGradient>
+                    </defs>
+                    <!-- Tick ring -->
+                    <circle class="gauge-tick-ring" cx="76" cy="76" r="68"
+                      stroke-dasharray="1.5 10" />
+                    <!-- Track -->
+                    <circle class="gauge-track" cx="76" cy="76" r="60" />
+                    <!-- Fill — 87% of circumference (376.99 * 0.87 ≈ 327.98) -->
+                    <circle class="gauge-fill" cx="76" cy="76" r="60"
+                      stroke-dasharray="327.98 376.99"
+                      stroke-dashoffset="0" />
+                  </svg>
+                  <div class="gauge-center">
+                    <span class="gauge-center-crown">👑</span>
+                    <span class="gauge-center-value" id="gauge-main-value">87</span>
+                    <span class="gauge-center-label">Health</span>
+                  </div>
+                </div>
+                <div class="score-verdict">
+                  <div class="score-verdict-title">Strong Portfolio</div>
+                  <div class="score-verdict-sub">Your loan portfolio shows excellent health. High approval rates and controlled default risk indicate a well-managed lending strategy.</div>
+                </div>
               </div>
             </div>
 
-            <div class="chart-card">
-              <h3>🎓 Default Rate (%) by Education Level</h3>
-              <div class="chart-container">
-                <canvas id="chart-education"></canvas>
+            <!-- KPI Quick Stats -->
+            <div class="kpi-grid">
+              <div class="kpi-card">
+                <div class="kpi-header">
+                  <span>Total Applications</span>
+                  <div class="kpi-icon">📋</div>
+                </div>
+                <div class="kpi-value" id="kpi-total-apps">800</div>
+                <div class="kpi-subtext">Historical portfolio records</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-header">
+                  <span>Default Rate</span>
+                  <div class="kpi-icon">🚨</div>
+                </div>
+                <div class="kpi-value" id="kpi-default-rate" style="color: var(--warning-color);">16.5%</div>
+                <div class="kpi-subtext">132 defaults / 668 non-defaults</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-header">
+                  <span>Avg Loan Amount</span>
+                  <div class="kpi-icon">💵</div>
+                </div>
+                <div class="kpi-value" id="kpi-avg-loan">₹14.6L</div>
+                <div class="kpi-subtext">Range: ₹90k – ₹70 Lakhs</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-header">
+                  <span>Model ROC-AUC</span>
+                  <div class="kpi-icon">🏆</div>
+                </div>
+                <div class="kpi-value" id="kpi-roc-auc" style="color: var(--coral-light);">0.812</div>
+                <div class="kpi-subtext">Random Forest Classifier</div>
               </div>
             </div>
 
-            <div class="chart-card">
-              <h3>💳 Default Rate (%) by Credit History</h3>
-              <div class="chart-container">
-                <canvas id="chart-credit"></canvas>
+            <!-- Charts -->
+            <div class="charts-grid">
+              <div class="chart-card">
+                <h3>🏡 Default Rate by Property Location</h3>
+                <div class="chart-container">
+                  <canvas id="chart-property"></canvas>
+                </div>
+              </div>
+              <div class="chart-card">
+                <h3>🎓 Default Rate by Education Level</h3>
+                <div class="chart-container">
+                  <canvas id="chart-education"></canvas>
+                </div>
+              </div>
+              <div class="chart-card">
+                <h3>💳 Default Rate by Credit History</h3>
+                <div class="chart-container">
+                  <canvas id="chart-credit"></canvas>
+                </div>
+              </div>
+              <div class="chart-card">
+                <h3>💰 Default Rate by Income Bracket</h3>
+                <div class="chart-container">
+                  <canvas id="chart-income"></canvas>
+                </div>
               </div>
             </div>
 
-            <div class="chart-card">
-              <h3>💰 Default Rate (%) by Total Income Bracket</h3>
-              <div class="chart-container">
-                <canvas id="chart-income"></canvas>
-              </div>
-            </div>
-          </div>
+          </div><!-- /.spotlight-section -->
         </section>
 
 
 
       </div>
 
-
-
     </main>
+
+    <!-- ====== BOTTOM NAVIGATION DOCK ====== -->
+    <nav class="bottom-nav-dock">
+      <button class="dock-nav-btn active" id="dock-btn-home" data-tab="tab-dashboard">
+        <span class="dock-nav-icon">☀️</span>
+        <span class="dock-nav-label">Home</span>
+      </button>
+      <button class="dock-nav-btn" id="dock-btn-chat" data-tab="tab-chat">
+        <span class="dock-nav-icon">💬</span>
+        <span class="dock-nav-label">Chat</span>
+      </button>
+      <!-- Center mic button -->
+      <button class="dock-mic-btn" id="dock-mic-btn" title="Voice Advisor">
+        🎙️
+      </button>
+      <button class="dock-nav-btn" id="dock-btn-eval" data-tab="tab-evaluator">
+        <span class="dock-nav-icon">⚡</span>
+        <span class="dock-nav-label">Evaluate</span>
+      </button>
+      <button class="dock-nav-btn" id="dock-btn-portfolio" data-tab="tab-dashboard">
+        <span class="dock-nav-icon">📊</span>
+        <span class="dock-nav-label">Portfolio</span>
+      </button>
+    </nav>
 
   </div>
 
@@ -630,7 +738,7 @@
       const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
 
       const navTabs = document.querySelectorAll('.nav-tab');
-      const dockNavBtns = [];
+      const dockNavBtns = document.querySelectorAll('.dock-nav-btn');
       const tabViews = document.querySelectorAll('.tab-view');
       const chatForm = document.getElementById('chat-form');
       const chatInput = document.getElementById('chat-input');
@@ -641,7 +749,7 @@
       const topbarTitle = null;
       const sidebarChatItems = document.querySelectorAll('.sidebar-chat-item');
       const historyItems = document.querySelectorAll('.history-item');
-      const sidebarSearch = null; // removed (search moved to header icon)
+      const sidebarSearch = null;
       const inputTemplatesBtn = document.getElementById('input-templates-btn');
 
 
@@ -663,7 +771,7 @@
 
 
 
-      // Tab Switch Function (Synchronizes sidebar nav & bottom dock)
+      // Tab Switch Function — syncs all dock + nav buttons
       function switchTab(targetTabId) {
         tabViews.forEach(v => v.classList.remove('active'));
         navTabs.forEach(t => t.classList.remove('active'));
@@ -674,15 +782,6 @@
 
         document.querySelectorAll(`[data-tab="${targetTabId}"]`).forEach(el => el.classList.add('active'));
 
-        // Update Topbar Title
-        if (topbarTitle) {
-          if (targetTabId === 'tab-chat') topbarTitle.textContent = 'Chat Assistant';
-          else if (targetTabId === 'tab-voice') topbarTitle.textContent = 'Speaking to ManiLoan';
-          else if (targetTabId === 'tab-evaluator') topbarTitle.textContent = 'Risk Evaluator';
-          else if (targetTabId === 'tab-dashboard') topbarTitle.textContent = 'Portfolio Dashboard';
-        }
-
-
         closeMobileSidebar();
       }
 
@@ -690,27 +789,39 @@
         tab.addEventListener('click', () => switchTab(tab.dataset.tab));
       });
 
+      // Bottom dock nav buttons
+      dockNavBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.tab;
+          if (target) switchTab(target);
+        });
+      });
 
-
-      // Mobile Drawer Handlers
-      function toggleMobileSidebar() {
-        appSidebar.classList.toggle('open');
-        sidebarBackdrop.classList.toggle('active');
-      }
-
-      function closeMobileSidebar() {
-        appSidebar.classList.remove('open');
-        sidebarBackdrop.classList.remove('active');
-        if (mobileDropdownMenu) mobileDropdownMenu.classList.remove('active');
-      }
-
-      if (topbarBackBtn) {
-        topbarBackBtn.addEventListener('click', () => {
-          toggleMobileSidebar();
+      // Center mic dock button → go to voice tab
+      const dockMicBtn = document.getElementById('dock-mic-btn');
+      if (dockMicBtn) {
+        dockMicBtn.addEventListener('click', () => {
+          switchTab('tab-voice');
+          dockMicBtn.classList.add('pulsing');
+          setTimeout(() => dockMicBtn.classList.remove('pulsing'), 900);
         });
       }
 
-      sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+
+
+      // Mobile Drawer Handlers (sidebar hidden in new UI; keep for safety)
+      function toggleMobileSidebar() {
+        if (appSidebar) appSidebar.classList.toggle('open');
+        if (sidebarBackdrop) sidebarBackdrop.classList.toggle('active');
+      }
+
+      function closeMobileSidebar() {
+        if (appSidebar) appSidebar.classList.remove('open');
+        if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+        if (mobileDropdownMenu) mobileDropdownMenu.classList.remove('active');
+      }
+
+      if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeMobileSidebar);
 
       // Mobile 3-Dots Menu Handler
       if (topbarMenuBtn && mobileDropdownMenu) {
