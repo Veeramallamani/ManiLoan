@@ -584,7 +584,7 @@
           </div>
         </div>
         <div class="faq-cta-card">
-          <div class="faq-cta-icon">🤖</div>
+          <div class="faq-cta-icon"><img src="maniloan_robot.jpg" alt="ManiLoan Robot" style="width:38px;height:38px;object-fit:cover;border-radius:50%;"></div>
           <div class="faq-cta-text">
             <strong>Still have questions?</strong>
             <span>Chat with ManiLoan for instant answers or personalised guidance.</span>
@@ -845,7 +845,15 @@ document.addEventListener('DOMContentLoaded', () => {
     msgDiv.className = 'chat-msg ' + role;
     const avatar = document.createElement('div');
     avatar.className = 'msg-avatar';
-    avatar.textContent = role === 'user' ? '👤' : '🤖';
+    if (role === 'user') {
+      avatar.textContent = '👤';
+    } else {
+      const botImg = document.createElement('img');
+      botImg.src = 'maniloan_robot.jpg';
+      botImg.alt = 'ManiLoan';
+      botImg.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+      avatar.appendChild(botImg);
+    }
     const bubble = document.createElement('div');
     bubble.className = 'msg-bubble';
     const cleanContent = typeof content === 'string' ? content.replace(/\[\[LOAN_TYPE:[^\]]+\]\]/g, '') : content;
@@ -864,7 +872,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function appendTyping() {
     const msgDiv = document.createElement('div');
     msgDiv.className = 'chat-msg bot typing-indicator'; msgDiv.id = 'typing-indicator';
-    const avatar = document.createElement('div'); avatar.className = 'msg-avatar'; avatar.textContent = '🤖';
+    const avatar = document.createElement('div'); avatar.className = 'msg-avatar';
+    const botImg = document.createElement('img');
+    botImg.src = 'maniloan_robot.jpg';
+    botImg.alt = 'ManiLoan';
+    botImg.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+    avatar.appendChild(botImg);
     const bubble = document.createElement('div'); bubble.className = 'msg-bubble';
     bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
     msgDiv.appendChild(avatar); msgDiv.appendChild(bubble);
