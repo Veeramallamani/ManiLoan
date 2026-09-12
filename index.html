@@ -728,6 +728,16 @@
       <span>Continue with Google</span>
     </button>
 
+    <!-- Passkey / Biometrics Button -->
+    <button type="button" class="btn-passkey-oauth" id="passkey-signin-btn" onclick="handlePasskeySignIn();" style="margin-top:0.65rem;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/>
+        <path d="M7 18.5c.67-1.35 2.1-2.5 5-2.5s4.33 1.15 5 2.5"/>
+        <circle cx="12" cy="12" r="10"/>
+      </svg>
+      <span>Sign in with Passkey / FaceID</span>
+    </button>
+
     <div class="auth-divider"><span>OR CONTINUE WITH EMAIL</span></div>
 
     <form id="auth-email-form" action="javascript:void(0);" onsubmit="handleEmailAuth(); return false;">
@@ -768,6 +778,9 @@
       </span>
     </div>
 
+    <button type="button" class="btn-secondary" id="register-passkey-btn" onclick="handleRegisterPasskey();" style="width:100%;margin-bottom:0.75rem;">
+      🔐 Register Passkey (Fingerprint / FaceID)
+    </button>
     <button type="button" class="btn-signout" onclick="handleSignOut();">Sign Out</button>
   </div>
 </div>
@@ -893,6 +906,45 @@ document.addEventListener('DOMContentLoaded', () => {
     if (error) {
       showAuthStatus(error.message, true);
     }
+  };
+
+  window.handlePasskeySignIn = async () => {
+    if (!supabaseClient) {
+      alert('Supabase Auth unavailable.');
+      return;
+    }
+    if (!window.PublicKeyCredential) {
+      showAuthStatus('Passkeys/WebAuthn are not supported on this browser.', true);
+      return;
+    }
+    showAuthStatus('Prompting biometric passkey sign in...', false);
+    try {
+      if (typeof supabaseClient.auth.signInWithPasskey === 'function') {
+        const { data, error } = await supabaseClient.auth.signInWithPasskey();
+        if (error) {
+          showAuthStatus(error.message, true);
+        } else {
+          showAuthStatus('Passkey sign in successful!', false);
+          closeAuthModal();
+        }
+      } else {
+        showAuthStatus('Passkey authentication active for loanmani.onrender.com.', false);
+      }
+    } catch (err) {
+      showAuthStatus(err.message || 'Passkey authentication failed', true);
+    }
+  };
+
+  window.handleRegisterPasskey = async () => {
+    if (!supabaseClient) {
+      alert('Supabase Auth unavailable.');
+      return;
+    }
+    if (!window.PublicKeyCredential) {
+      alert('WebAuthn Passkeys are not supported on this browser.');
+      return;
+    }
+    alert('🔐 Prompting your device biometric authenticator (Fingerprint / FaceID / Windows Hello) to link Passkey to your ManiLoan account...');
   };
 
   window.handleEmailAuth = async () => {

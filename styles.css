@@ -1801,6 +1801,30 @@ img { max-width: 100%; }
   flex-shrink: 0;
 }
 
+/* Passkey / Biometrics Button */
+.btn-passkey-oauth {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1.5px solid rgba(37, 99, 235, 0.25);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-passkey-oauth:hover {
+  background: #dbeafe;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
 /* Auth Divider */
 .auth-divider {
   display: flex;
