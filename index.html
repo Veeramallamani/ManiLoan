@@ -3,78 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ManiLoan — Your Loan Guide, Always Here</title>
-  <meta name="description" content="ManiLoan is your smart loan assistant. Find the right loan, check eligibility, and get guided through the process — all in one place.">
-  <!-- Google Fonts -->
+  <title>ManiLoan — Smarter Loans, Brighter Future</title>
+  <meta name="description" content="ManiLoan is your AI-powered loan assistant. Find the right loan, check eligibility, and get guided through the process.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Marked.js for markdown in chat -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- html2pdf for PDF export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
 <div class="app-shell">
 
-  <!-- ===================================================
-       DESKTOP TOP NAVBAR
-  =================================================== -->
+  <!-- DESKTOP NAVBAR -->
   <nav class="app-navbar" id="app-navbar">
-
-    <!-- Brand -->
     <a class="navbar-brand" href="#" onclick="switchTab('tab-dashboard'); return false;" id="navbar-brand-link">
-      <div class="navbar-brand-icon">🤖</div>
+      <div class="navbar-brand-icon">ML</div>
       <div class="navbar-brand-text">
         <span class="navbar-brand-name">Mani<span>Loan</span></span>
-        <span class="navbar-brand-tagline">Your Loan Guide, Always Here</span>
+        <span class="navbar-brand-tagline">Smarter Loans, Brighter Future</span>
       </div>
     </a>
-
-    <!-- Nav Links -->
     <div class="navbar-links">
       <button class="navbar-link active nav-tab" data-tab="tab-dashboard" id="nav-home">Home</button>
       <button class="navbar-link nav-tab" data-tab="tab-loan-types" id="nav-loan-types">Loan Types</button>
       <button class="navbar-link nav-tab" data-tab="tab-evaluator" id="nav-evaluator">How It Works</button>
-      <button class="navbar-link" id="nav-faqs" onclick="openFaqModal()">FAQs</button>
+      <button class="navbar-link nav-tab" data-tab="tab-faqs" id="nav-faqs">FAQs</button>
     </div>
-
-    <!-- Actions -->
     <div class="navbar-actions">
-      <!-- Language -->
-      <div class="navbar-lang-wrapper" id="navbar-lang-wrapper">
-        <button class="navbar-lang-btn" id="navbar-lang-btn" title="Language">🌐</button>
-        <div class="lang-dropdown-menu" id="lang-dropdown-menu">
-          <button class="lang-option-btn active" data-lang="English">🇬🇧 English</button>
-          <button class="lang-option-btn" data-lang="Telugu">🇮🇳 Telugu</button>
-          <button class="lang-option-btn" data-lang="Hindi">🇮🇳 Hindi</button>
-        </div>
-      </div>
-      <!-- Settings -->
-      <button class="navbar-icon-btn" id="topbar-settings-btn" title="Settings">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <button class="navbar-icon-btn" id="navbar-search-btn" title="Search" onclick="switchTab('tab-loan-types');">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>
-      <!-- Start Chat -->
+      <button class="navbar-icon-btn" id="topbar-settings-btn" title="Settings">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
       <button class="btn-start-chat nav-tab" data-tab="tab-chat" id="btn-start-chat">Start Chat</button>
-      <!-- Profile -->
-      <button class="navbar-avatar" id="navbar-avatar-btn" title="Profile">👤</button>
+      <button class="navbar-avatar" id="navbar-avatar-btn" title="Profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
     </div>
-
   </nav>
 
-  <!-- ===================================================
-       MOBILE TOPBAR
-  =================================================== -->
+  <!-- MOBILE TOPBAR -->
   <header class="mobile-topbar" id="mobile-topbar">
     <div class="mobile-topbar-brand">
-      <div class="navbar-brand-icon" style="width:30px;height:30px;font-size:0.9rem;">🤖</div>
+      <div class="mobile-brand-icon">ML</div>
       <span class="mobile-topbar-name">Mani<span>Loan</span></span>
     </div>
-    <button class="mobile-hamburger" id="mobile-hamburger-btn" title="Menu">☰</button>
+    <button class="mobile-hamburger" id="mobile-hamburger-btn" title="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </header>
 
   <!-- Mobile Drawer -->
@@ -82,10 +62,14 @@
     <div class="mobile-drawer-backdrop" id="drawer-backdrop"></div>
     <div class="mobile-drawer-panel">
       <button class="drawer-close-btn" id="drawer-close-btn">✕</button>
-      <button class="drawer-nav-link active nav-tab" data-tab="tab-dashboard" id="drawer-home">🏠 Home</button>
-      <button class="drawer-nav-link nav-tab" data-tab="tab-loan-types" id="drawer-loan-types">🏦 Loan Types</button>
-      <button class="drawer-nav-link nav-tab" data-tab="tab-chat" id="drawer-chat">💬 Chat Advisor</button>
-      <button class="drawer-nav-link nav-tab" data-tab="tab-evaluator" id="drawer-evaluator">⚡ Risk Evaluator</button>
+      <div class="drawer-brand">ManiLoan <span class="drawer-brand-tag">AI Loan Guide</span></div>
+      <div class="drawer-nav-group">
+        <button class="drawer-nav-link active nav-tab" data-tab="tab-dashboard" id="drawer-home">🏠 Home</button>
+        <button class="drawer-nav-link nav-tab" data-tab="tab-loan-types" id="drawer-loan-types">🏦 Loan Types</button>
+        <button class="drawer-nav-link nav-tab" data-tab="tab-chat" id="drawer-chat">💬 Chat Advisor</button>
+        <button class="drawer-nav-link nav-tab" data-tab="tab-evaluator" id="drawer-evaluator">⚡ How It Works</button>
+        <button class="drawer-nav-link nav-tab" data-tab="tab-faqs" id="drawer-faqs">❓ FAQs</button>
+      </div>
       <hr class="drawer-divider">
       <div class="drawer-section-label">Language</div>
       <button class="drawer-nav-link mobile-lang-btn active" data-lang="English">🇬🇧 English</button>
@@ -93,244 +77,149 @@
       <button class="drawer-nav-link mobile-lang-btn" data-lang="Hindi">🇮🇳 Hindi</button>
       <hr class="drawer-divider">
       <button class="drawer-nav-link" id="drawer-settings-btn">⚙️ Settings</button>
-      <button class="drawer-nav-link" id="drawer-history-btn">📜 Chat History</button>
       <hr class="drawer-divider">
-      <!-- Chat history list -->
       <div class="drawer-section-label">Recent Chats</div>
       <div id="sidebar-chats" style="display:flex;flex-direction:column;gap:2px;"></div>
     </div>
   </div>
 
-  <!-- ===================================================
-       WORKSPACE (TAB VIEWS)
-  =================================================== -->
+  <!-- WORKSPACE -->
   <main class="workspace">
 
-    <!-- =================== TAB 1: HOME =================== -->
+    <!-- TAB 1: HOME -->
     <section id="tab-dashboard" class="tab-view active home-page">
 
-      <!-- Hero Section -->
+      <!-- Hero -->
       <div class="hero-section">
         <div class="hero-inner">
-
-          <!-- Left: Content -->
           <div class="hero-content fade-in">
-            <h1 class="hero-headline">
-              Hi, I'm ManiLoan <span class="wave">👋</span>
-            </h1>
-            <p class="hero-subtext">
-              Your smart loan assistant, ready to help you find the right loan,
-              check eligibility, and guide you through the process —
-              <em>all in one place!</em>
-            </p>
-            <!-- Hero CTA Buttons -->
-            <div class="hero-cta-row">
-              <button class="btn-hero-primary nav-tab" data-tab="tab-chat" id="hero-start-chat-btn">Start Chat</button>
-              <button class="btn-hero-secondary nav-tab" data-tab="tab-loan-types" id="hero-explore-btn">Explore Loan Types</button>
-            </div>
+            <h1 class="hero-headline">Hi, I'm <span class="brand-highlight">ManiLoan</span> <span class="wave">👋</span></h1>
+            <p class="hero-subtext">Your smart loan assistant, ready to help you find the right loan, check eligibility, and guide you through the process — <em>all in one place!</em></p>
             <div class="hero-badges">
-              <div class="hero-badge">
-                <span class="hero-badge-icon">⚡</span>
-                <span>Quick Answers</span>
-              </div>
-              <div class="hero-badge">
-                <span class="hero-badge-icon">🛡️</span>
-                <span>Accurate Information</span>
-              </div>
-              <div class="hero-badge">
-                <span class="hero-badge-icon">🕐</span>
-                <span>24/7 Support</span>
-              </div>
+              <div class="hero-badge"><span class="hero-badge-icon">⚡</span><span>Quick Answers</span></div>
+              <div class="hero-badge"><span class="hero-badge-icon">✅</span><span>Accurate Information</span></div>
+              <div class="hero-badge"><span class="hero-badge-icon">🕐</span><span>24/7 Support</span></div>
+            </div>
+            <div class="hero-cta-row">
+              <button class="btn-hero-primary nav-tab" data-tab="tab-chat" id="hero-start-chat">Start Chat</button>
+              <button class="btn-hero-secondary nav-tab" data-tab="tab-loan-types" id="hero-explore-loans">Explore Loan Types</button>
             </div>
           </div>
-
-          <!-- Right: Mascot -->
           <div class="hero-mascot-wrap">
             <div class="hero-mascot-bg"></div>
-            <img
-              src="maniloan_robot.jpg"
-              alt="ManiLoan Robot Mascot"
-              class="hero-mascot-img"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            >
-            <div style="display:none;width:260px;height:260px;align-items:center;justify-content:center;font-size:9rem;animation:float 4s ease-in-out infinite;">🤖</div>
-            <div class="speech-bubble">Ask me anything about your loan!</div>
+            <img src="maniloan_robot.jpg" alt="ManiLoan AI Assistant" class="hero-mascot-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="hero-mascot-fallback">🤖</div>
+            <div class="speech-bubble">Ask me anything<br>about your loan!</div>
           </div>
-
         </div>
       </div>
 
-      <!-- Explore Loan Types Section -->
+      <!-- Explore Loan Types -->
       <div class="section">
         <div class="section-header">
           <div>
             <h2 class="section-title">Explore Loan Types</h2>
             <p class="section-subtitle">Choose your loan type and get instant guidance on eligibility, documents, interest rates and more.</p>
           </div>
-          <button class="section-link nav-tab" data-tab="tab-loan-types" id="section-see-all-btn">
-            See All →
-          </button>
+          <button class="section-link nav-tab" data-tab="tab-loan-types" id="section-see-all-btn">See All →</button>
         </div>
 
-        <!-- Desktop: Grid -->
+        <!-- Desktop Grid -->
         <div class="loan-types-grid stagger">
-
-          <button class="loan-type-card" onclick="startLoanChat('Home Loan')">
-            <div class="loan-type-icon-wrap" style="background:var(--loan-home-bg);">🏠</div>
-            <div class="loan-type-card-name">Home Loan</div>
-            <div class="loan-type-card-desc">Build your dream home</div>
-            <div class="loan-type-arrow">→</div>
+          <button class="loan-card-desktop" onclick="startLoanChat('Home Loan')">
+            <div class="loan-card-icon" style="background:#EEF2FF;">🏠</div>
+            <div class="loan-card-body">
+              <div class="loan-card-name">Home Loan</div>
+              <div class="loan-card-desc">Turn your dreams into your home with easy home loan plans.</div>
+            </div>
+            <div class="loan-card-footer"><span class="learn-more-link">Learn More →</span></div>
           </button>
-
-          <button class="loan-type-card" onclick="startLoanChat('Vehicle Loan')">
-            <div class="loan-type-icon-wrap" style="background:var(--loan-vehicle-bg);">🚗</div>
-            <div class="loan-type-card-name">Vehicle Loan</div>
-            <div class="loan-type-card-desc">Drive your dreams</div>
-            <div class="loan-type-arrow">→</div>
+          <button class="loan-card-desktop" onclick="startLoanChat('Vehicle Loan')">
+            <div class="loan-card-icon" style="background:#ECFDF5;">🚗</div>
+            <div class="loan-card-body">
+              <div class="loan-card-name">Vehicle Loan</div>
+              <div class="loan-card-desc">Drive your dreams with easy finance options for any vehicle.</div>
+            </div>
+            <div class="loan-card-footer"><span class="learn-more-link">Learn More →</span></div>
           </button>
-
-          <button class="loan-type-card" onclick="startLoanChat('Consumer Durable Loan')">
-            <div class="loan-type-icon-wrap" style="background:var(--loan-durable-bg);">📱</div>
-            <div class="loan-type-card-name">Consumer Durable Loan</div>
-            <div class="loan-type-card-desc">Upgrade your lifestyle</div>
-            <div class="loan-type-arrow">→</div>
+          <button class="loan-card-desktop" onclick="startLoanChat('Consumer Durable Loan')">
+            <div class="loan-card-icon" style="background:#F5F3FF;">📱</div>
+            <div class="loan-card-body">
+              <div class="loan-card-name">Consumer Durable</div>
+              <div class="loan-card-desc">Upgrade your lifestyle with no-interest EMI options.</div>
+            </div>
+            <div class="loan-card-footer"><span class="learn-more-link">Learn More →</span></div>
           </button>
-
-          <button class="loan-type-card" onclick="startLoanChat('Gold Loan')">
-            <div class="loan-type-icon-wrap" style="background:var(--loan-gold-bg);">🥇</div>
-            <div class="loan-type-card-name">Gold Loan</div>
-            <div class="loan-type-card-desc">Unlock the value of your gold</div>
-            <div class="loan-type-arrow">→</div>
+          <button class="loan-card-desktop" onclick="startLoanChat('Gold Loan')">
+            <div class="loan-card-icon" style="background:#FFFBEB;">🥇</div>
+            <div class="loan-card-body">
+              <div class="loan-card-name">Gold Loan</div>
+              <div class="loan-card-desc">Access quick funds by pledging your gold with minimal paperwork.</div>
+            </div>
+            <div class="loan-card-footer"><span class="learn-more-link">Learn More →</span></div>
           </button>
-
-          <button class="loan-type-card" onclick="startLoanChat('Education Loan')">
-            <div class="loan-type-icon-wrap" style="background:var(--loan-edu-bg);">🎓</div>
-            <div class="loan-type-card-name">Education Loan</div>
-            <div class="loan-type-card-desc">Invest in your future</div>
-            <div class="loan-type-arrow">→</div>
+          <button class="loan-card-desktop" onclick="startLoanChat('Education Loan')">
+            <div class="loan-card-icon" style="background:#FFF1F2;">🎓</div>
+            <div class="loan-card-body">
+              <div class="loan-card-name">Education Loan</div>
+              <div class="loan-card-desc">Invest in your future with flexible education loan options.</div>
+            </div>
+            <div class="loan-card-footer"><span class="learn-more-link">Learn More →</span></div>
           </button>
-
         </div>
 
-        <!-- Mobile: List -->
-        <div class="loan-types-list">
-
-          <button class="loan-type-list-item" onclick="startLoanChat('Home Loan')">
-            <div class="loan-list-icon-wrap" style="background:var(--loan-home-bg);">🏠</div>
-            <div class="loan-list-info">
-              <div class="loan-list-name">Home Loan</div>
-              <div class="loan-list-desc">Build your dream home</div>
-            </div>
-            <span class="loan-list-chevron">›</span>
-          </button>
-
-          <button class="loan-type-list-item" onclick="startLoanChat('Vehicle Loan')">
-            <div class="loan-list-icon-wrap" style="background:var(--loan-vehicle-bg);">🚗</div>
-            <div class="loan-list-info">
-              <div class="loan-list-name">Vehicle Loan</div>
-              <div class="loan-list-desc">Drive your dreams</div>
-            </div>
-            <span class="loan-list-chevron">›</span>
-          </button>
-
-          <button class="loan-type-list-item" onclick="startLoanChat('Consumer Durable Loan')">
-            <div class="loan-list-icon-wrap" style="background:var(--loan-durable-bg);">📱</div>
-            <div class="loan-list-info">
-              <div class="loan-list-name">Consumer Durable Loan</div>
-              <div class="loan-list-desc">Upgrade your lifestyle</div>
-            </div>
-            <span class="loan-list-chevron">›</span>
-          </button>
-
-          <button class="loan-type-list-item" onclick="startLoanChat('Gold Loan')">
-            <div class="loan-list-icon-wrap" style="background:var(--loan-gold-bg);">🥇</div>
-            <div class="loan-list-info">
-              <div class="loan-list-name">Gold Loan</div>
-              <div class="loan-list-desc">Unlock the value of your gold</div>
-            </div>
-            <span class="loan-list-chevron">›</span>
-          </button>
-
-          <button class="loan-type-list-item" onclick="startLoanChat('Education Loan')">
-            <div class="loan-list-icon-wrap" style="background:var(--loan-edu-bg);">🎓</div>
-            <div class="loan-list-info">
-              <div class="loan-list-name">Education Loan</div>
-              <div class="loan-list-desc">Invest in your future</div>
-            </div>
-            <span class="loan-list-chevron">›</span>
-          </button>
-
-        </div>
-
-        <!-- Mobile: Not Sure CTA -->
-        <div class="mobile-not-sure-cta">
-          <div class="not-sure-icon">🤖</div>
+        <!-- Not Sure Banner -->
+        <div class="not-sure-banner">
+          <div class="not-sure-icon">🤔</div>
           <div class="not-sure-text">
-            <div class="not-sure-title">Not sure which loan is right for you?</div>
-            <div class="not-sure-sub">Chat with ManiLoan and get personalised guidance.</div>
+            <strong>Not sure which loan is right for you?</strong>
+            <span>Chat with ManiLoan and get personalised guidance.</span>
           </div>
-          <button class="not-sure-btn nav-tab" data-tab="tab-chat" id="not-sure-chat-btn">Start Chat →</button>
+          <button class="not-sure-btn nav-tab" data-tab="tab-chat" id="not-sure-btn">Start Chat →</button>
         </div>
 
+        <!-- Mobile List -->
+        <div class="loan-types-list">
+          <button class="loan-type-list-item" onclick="startLoanChat('Home Loan')">
+            <div class="loan-list-icon-wrap" style="background:#EEF2FF;">🏠</div>
+            <div class="loan-list-info"><div class="loan-list-name">Home Loan</div><div class="loan-list-desc">Build your dream home</div></div>
+            <span class="loan-list-chevron">›</span>
+          </button>
+          <button class="loan-type-list-item" onclick="startLoanChat('Vehicle Loan')">
+            <div class="loan-list-icon-wrap" style="background:#ECFDF5;">🚗</div>
+            <div class="loan-list-info"><div class="loan-list-name">Vehicle Loan</div><div class="loan-list-desc">Drive your dreams</div></div>
+            <span class="loan-list-chevron">›</span>
+          </button>
+          <button class="loan-type-list-item" onclick="startLoanChat('Consumer Durable Loan')">
+            <div class="loan-list-icon-wrap" style="background:#F5F3FF;">📱</div>
+            <div class="loan-list-info"><div class="loan-list-name">Consumer Durable Loan</div><div class="loan-list-desc">Upgrade your lifestyle</div></div>
+            <span class="loan-list-chevron">›</span>
+          </button>
+          <button class="loan-type-list-item" onclick="startLoanChat('Gold Loan')">
+            <div class="loan-list-icon-wrap" style="background:#FFFBEB;">🥇</div>
+            <div class="loan-list-info"><div class="loan-list-name">Gold Loan</div><div class="loan-list-desc">Unlock the value of your gold</div></div>
+            <span class="loan-list-chevron">›</span>
+          </button>
+          <button class="loan-type-list-item" onclick="startLoanChat('Education Loan')">
+            <div class="loan-list-icon-wrap" style="background:#FFF1F2;">🎓</div>
+            <div class="loan-list-info"><div class="loan-list-name">Education Loan</div><div class="loan-list-desc">Invest in your future</div></div>
+            <span class="loan-list-chevron">›</span>
+          </button>
+          <div class="not-sure-banner-mobile">
+            <div>🤔 <strong>Not sure which loan is right for you?</strong></div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem;">Chat with ManiLoan and get personalised guidance.</div>
+            <button class="not-sure-btn-mobile nav-tab" data-tab="tab-chat" id="mobile-not-sure-btn" style="margin-top:0.75rem;">Start Chat →</button>
+          </div>
+        </div>
       </div>
 
-      <!-- Features Section -->
+      <!-- Features -->
       <div class="features-section">
         <div class="features-inner">
-          <div class="feature-item">
-            <div class="feature-icon-wrap">⚡</div>
-            <div>
-              <div class="feature-title">Easy &amp; Fast</div>
-              <div class="feature-desc">Get answers in seconds</div>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon-wrap" style="background:#ECFDF5;">🛡️</div>
-            <div>
-              <div class="feature-title">Trusted Information</div>
-              <div class="feature-desc">Based on latest bank policies</div>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon-wrap" style="background:#F5F3FF;">👤</div>
-            <div>
-              <div class="feature-title">Personalized Guidance</div>
-              <div class="feature-desc">Tailored to your needs</div>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon-wrap" style="background:#FFF1F2;">🔒</div>
-            <div>
-              <div class="feature-title">Secure &amp; Private</div>
-              <div class="feature-desc">Your data is safe with us</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Chat CTA Section -->
-      <div class="chat-cta-section">
-        <div class="chat-cta-inner">
-          <div class="chat-cta-text">
-            <div class="chat-cta-label">Your Loan Journey Starts Here ↓</div>
-            <div class="chat-cta-headline">Ask ManiLoan anything about your loan!</div>
-          </div>
-          <div class="chat-input-wrap">
-            <div class="chat-cta-input-row">
-              <input
-                type="text"
-                id="home-chat-input"
-                class="chat-cta-input"
-                placeholder="Type your question here..."
-                autocomplete="off"
-                onkeydown="if(event.key==='Enter'){event.preventDefault();sendHomeChatMessage();}"
-              >
-              <button class="chat-cta-send-btn" onclick="sendHomeChatMessage()" title="Send">
-                ➤
-              </button>
-            </div>
-            <div class="chat-cta-hint">Try asking — "What documents are needed for a home loan?" or "Show me car loan eligibility"</div>
-          </div>
+          <div class="feature-item"><div class="feature-icon-wrap" style="background:#EEF4FF;">⚡</div><div><div class="feature-title">Easy &amp; Fast</div><div class="feature-desc">Get answers in seconds</div></div></div>
+          <div class="feature-item"><div class="feature-icon-wrap" style="background:#ECFDF5;">🛡️</div><div><div class="feature-title">Trusted Information</div><div class="feature-desc">Based on latest bank policies</div></div></div>
+          <div class="feature-item"><div class="feature-icon-wrap" style="background:#F5F3FF;">👤</div><div><div class="feature-title">Personalised Guidance</div><div class="feature-desc">Tailored to your needs</div></div></div>
+          <div class="feature-item"><div class="feature-icon-wrap" style="background:#FFF1F2;">🔒</div><div><div class="feature-title">Secure &amp; Private</div><div class="feature-desc">Your data is safe with us</div></div></div>
         </div>
       </div>
 
@@ -348,543 +237,410 @@
     </section><!-- /#tab-dashboard -->
 
 
-    <!-- =================== TAB 2: LOAN TYPES PAGE =================== -->
+    <!-- TAB 2: LOAN TYPES -->
     <section id="tab-loan-types" class="tab-view">
       <div class="loan-types-page">
-
-        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">
-          <button class="chat-view-back nav-tab" data-tab="tab-dashboard" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-muted);font-size:1rem;transition:0.2s;">←</button>
-          <h1 class="loan-types-page-title">Loan Types</h1>
+        <div class="page-header-row">
+          <button class="back-btn nav-tab" data-tab="tab-dashboard" id="lt-back-btn">←</button>
+          <h1 class="page-title">Loan Types</h1>
         </div>
-        <p class="loan-types-page-sub">Explore different loan options and get instant guidance on eligibility, documents, interest rates and more.</p>
-
-        <!-- Search bar (mobile focused) -->
-        <div class="loan-types-search-wrap">
-          <span class="loan-search-icon">🔍</span>
-          <input type="text" id="loan-types-search" class="loan-types-search-input" placeholder="Search loan type..." oninput="filterLoanTypes(this.value)" autocomplete="off">
+        <p class="page-subtitle">Explore different loan options and get instant guidance on eligibility, documents, interest rates and more.</p>
+        <div class="loan-search-wrap">
+          <svg class="loan-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="loan-search-input" class="loan-search-input" placeholder="Search loan type...">
         </div>
-
-        <div class="loan-types-full-grid stagger">
-
-          <div class="loan-type-full-card">
-            <div class="loan-full-card-header">
-              <div class="loan-full-icon" style="background:var(--loan-home-bg);">🏠</div>
-              <div>
-                <div class="loan-full-name">Home Loan</div>
-                <div class="loan-full-tagline">Build your dream home</div>
-              </div>
-            </div>
+        <div class="loan-types-full-grid stagger" id="loan-full-grid">
+          <div class="loan-type-full-card" data-loan="home loan">
+            <div class="loan-full-card-header"><div class="loan-full-icon" style="background:#EEF2FF;">🏠</div><div><div class="loan-full-name">Home Loan</div><div class="loan-full-tagline">Build your dream home</div></div></div>
             <p class="loan-full-desc">Finance your home purchase, construction, or renovation. Available from all major banks with competitive rates and flexible tenure up to 30 years.</p>
-            <button class="loan-full-ask-btn" onclick="startLoanChat('Home Loan')">💬 Ask About Home Loan →</button>
+            <button class="loan-full-ask-btn" onclick="startLoanChat('Home Loan')">Learn More →</button>
           </div>
-
-          <div class="loan-type-full-card">
-            <div class="loan-full-card-header">
-              <div class="loan-full-icon" style="background:var(--loan-vehicle-bg);">🚗</div>
-              <div>
-                <div class="loan-full-name">Vehicle Loan</div>
-                <div class="loan-full-tagline">Drive your dreams</div>
-              </div>
-            </div>
+          <div class="loan-type-full-card" data-loan="vehicle loan car">
+            <div class="loan-full-card-header"><div class="loan-full-icon" style="background:#ECFDF5;">🚗</div><div><div class="loan-full-name">Vehicle Loan</div><div class="loan-full-tagline">Drive your dreams</div></div></div>
             <p class="loan-full-desc">Get financing for new or used cars, two-wheelers, and commercial vehicles. Quick approval, minimal documentation required.</p>
-            <button class="loan-full-ask-btn" onclick="startLoanChat('Vehicle Loan')">💬 Ask About Vehicle Loan →</button>
+            <button class="loan-full-ask-btn" onclick="startLoanChat('Vehicle Loan')">Learn More →</button>
           </div>
-
-          <div class="loan-type-full-card">
-            <div class="loan-full-card-header">
-              <div class="loan-full-icon" style="background:var(--loan-durable-bg);">📱</div>
-              <div>
-                <div class="loan-full-name">Consumer Durable Loan</div>
-                <div class="loan-full-tagline">Upgrade your lifestyle</div>
-              </div>
-            </div>
+          <div class="loan-type-full-card" data-loan="consumer durable electronics">
+            <div class="loan-full-card-header"><div class="loan-full-icon" style="background:#F5F3FF;">📱</div><div><div class="loan-full-name">Consumer Durable</div><div class="loan-full-tagline">Upgrade your lifestyle</div></div></div>
             <p class="loan-full-desc">Finance electronics, appliances, and home goods. Zero-interest EMI options available with partner retailers.</p>
-            <button class="loan-full-ask-btn" onclick="startLoanChat('Consumer Durable Loan')">💬 Ask About Consumer Loan →</button>
+            <button class="loan-full-ask-btn" onclick="startLoanChat('Consumer Durable Loan')">Learn More →</button>
           </div>
-
-          <div class="loan-type-full-card">
-            <div class="loan-full-card-header">
-              <div class="loan-full-icon" style="background:var(--loan-gold-bg);">🥇</div>
-              <div>
-                <div class="loan-full-name">Gold Loan</div>
-                <div class="loan-full-tagline">Unlock the value of your gold</div>
-              </div>
-            </div>
+          <div class="loan-type-full-card" data-loan="gold loan jewellery">
+            <div class="loan-full-card-header"><div class="loan-full-icon" style="background:#FFFBEB;">🥇</div><div><div class="loan-full-name">Gold Loan</div><div class="loan-full-tagline">Unlock the value of your gold</div></div></div>
             <p class="loan-full-desc">Get instant loans against your gold jewellery. RBI regulated LTV up to 75%. No credit score required, lowest interest rates.</p>
-            <button class="loan-full-ask-btn" onclick="startLoanChat('Gold Loan')">💬 Ask About Gold Loan →</button>
+            <button class="loan-full-ask-btn" onclick="startLoanChat('Gold Loan')">Learn More →</button>
           </div>
-
-          <div class="loan-type-full-card">
-            <div class="loan-full-card-header">
-              <div class="loan-full-icon" style="background:var(--loan-edu-bg);">🎓</div>
-              <div>
-                <div class="loan-full-name">Education Loan</div>
-                <div class="loan-full-tagline">Invest in your future</div>
-              </div>
-            </div>
+          <div class="loan-type-full-card" data-loan="education loan study">
+            <div class="loan-full-card-header"><div class="loan-full-icon" style="background:#FFF1F2;">🎓</div><div><div class="loan-full-name">Education Loan</div><div class="loan-full-tagline">Invest in your future</div></div></div>
             <p class="loan-full-desc">Fund your education in India or abroad. Moratorium period during study, government interest subsidy schemes available.</p>
-            <button class="loan-full-ask-btn" onclick="startLoanChat('Education Loan')">💬 Ask About Education Loan →</button>
+            <button class="loan-full-ask-btn" onclick="startLoanChat('Education Loan')">Learn More →</button>
           </div>
-
-          <div class="loan-type-full-card">
-            <div class="loan-full-card-header">
-              <div class="loan-full-icon" style="background:var(--primary-light);">💳</div>
-              <div>
-                <div class="loan-full-name">Personal Loan</div>
-                <div class="loan-full-tagline">For any personal need</div>
-              </div>
-            </div>
+          <div class="loan-type-full-card" data-loan="personal loan unsecured">
+            <div class="loan-full-card-header"><div class="loan-full-icon" style="background:#EEF4FF;">💳</div><div><div class="loan-full-name">Personal Loan</div><div class="loan-full-tagline">For any personal need</div></div></div>
             <p class="loan-full-desc">Unsecured loan for medical emergencies, travel, weddings, or any personal need. Quick disbursal within 24–48 hours.</p>
-            <button class="loan-full-ask-btn" onclick="startLoanChat('Personal Loan')">💬 Ask About Personal Loan →</button>
+            <button class="loan-full-ask-btn" onclick="startLoanChat('Personal Loan')">Learn More →</button>
           </div>
-
-          <div class="loan-type-full-card">
-            <div class="loan-full-card-header">
-              <div class="loan-full-icon" style="background:#FFF7ED;">🏢</div>
-              <div>
-                <div class="loan-full-name">Loan Against Property</div>
-                <div class="loan-full-tagline">Leverage your assets</div>
-              </div>
-            </div>
+          <div class="loan-type-full-card" data-loan="loan against property lap mortgage">
+            <div class="loan-full-card-header"><div class="loan-full-icon" style="background:#FFF7ED;">🏢</div><div><div class="loan-full-name">Loan Against Property</div><div class="loan-full-tagline">Leverage your assets</div></div></div>
             <p class="loan-full-desc">Use residential or commercial property as collateral for large loans. High loan amounts, lower interest rates than personal loans.</p>
-            <button class="loan-full-ask-btn" onclick="startLoanChat('Loan Against Property')">💬 Ask About LAP →</button>
+            <button class="loan-full-ask-btn" onclick="startLoanChat('Loan Against Property')">Learn More →</button>
           </div>
-
-          <div class="loan-type-full-card">
-            <div class="loan-full-card-header">
-              <div class="loan-full-icon" style="background:#F0FDF4;">🏭</div>
-              <div>
-                <div class="loan-full-name">MSME Business Loan</div>
-                <div class="loan-full-tagline">Grow your business</div>
-              </div>
-            </div>
+          <div class="loan-type-full-card" data-loan="msme business loan small medium">
+            <div class="loan-full-card-header"><div class="loan-full-icon" style="background:#F0FDF4;">🏭</div><div><div class="loan-full-name">MSME Business Loan</div><div class="loan-full-tagline">Grow your business</div></div></div>
             <p class="loan-full-desc">Working capital and term loans for small and medium enterprises. MUDRA, CGTMSE, and other government schemes available.</p>
-            <button class="loan-full-ask-btn" onclick="startLoanChat('MSME Business Loan')">💬 Ask About MSME Loan →</button>
+            <button class="loan-full-ask-btn" onclick="startLoanChat('MSME Business Loan')">Learn More →</button>
           </div>
-
+        </div>
+        <div class="not-sure-banner" style="margin-top:1.5rem;">
+          <div class="not-sure-icon">🤔</div>
+          <div class="not-sure-text"><strong>Not sure which loan is right for you?</strong><span>Chat with ManiLoan and get personalised guidance.</span></div>
+          <button class="not-sure-btn nav-tab" data-tab="tab-chat" id="lt-not-sure-btn">Start Chat →</button>
         </div>
       </div>
     </section><!-- /#tab-loan-types -->
 
 
-    <!-- =================== TAB 3: CHAT =================== -->
+    <!-- TAB 3: CHAT -->
     <section id="tab-chat" class="tab-view">
-
-      <!-- Chat Header -->
       <div class="chat-view-header">
-        <button class="chat-view-back nav-tab" data-tab="tab-dashboard" id="chat-back-btn" title="Back">←</button>
-        <div class="chat-view-avatar">🤖</div>
-        <span class="chat-view-title">ManiLoan Advisor</span>
+        <button class="back-btn nav-tab" data-tab="tab-dashboard" id="chat-back-btn" title="Back">←</button>
+        <div class="chat-view-avatar-wrap">
+          <div class="chat-view-avatar">🤖</div>
+          <div class="chat-online-dot"></div>
+        </div>
+        <div class="chat-view-info">
+          <span class="chat-view-title">ManiLoan</span>
+          <span class="chat-view-status">Online</span>
+        </div>
         <button class="chat-view-options" id="chat-options-btn" title="Options">⋮</button>
       </div>
-
-      <!-- Messages Area -->
       <div class="chat-messages-area" id="chat-messages">
         <div class="date-divider"><span>TODAY</span></div>
       </div>
-
-      <!-- Empty State -->
       <div class="chat-empty-state" id="chat-empty-state">
-        <h2 class="empty-greeting">How Can I Help? 💬</h2>
-        <p class="empty-sub">Ask me about loan eligibility, required documents, interest rates, or your risk profile.</p>
+        <div class="empty-mascot">🤖</div>
+        <h2 class="empty-greeting">Hi, I'm ManiLoan! 👋</h2>
+        <p class="empty-sub">I can help you with loan options, eligibility, documents, interest rates and more.</p>
+        <p class="empty-question">Which loan are you interested in?</p>
+        <div class="loan-type-pills">
+          <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Home Loan eligibility and documents')">Home Loan</button>
+          <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Vehicle Loan eligibility and documents')">Vehicle Loan</button>
+          <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Gold Loan interest rates and LTV')">Gold Loan</button>
+          <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Consumer Durable Loan EMI options')">Consumer Durable Loan</button>
+        </div>
       </div>
-
-      <!-- Quick Prompts -->
-      <div class="quick-prompts" id="quick-prompts">
-        <button class="quick-prompt-btn" onclick="sendQuickPrompt('What documents do I need for a home loan?')">📄 Home loan documents</button>
-        <button class="quick-prompt-btn" onclick="sendQuickPrompt('What is the current interest rate for car loans?')">🚗 Car loan rates</button>
-        <button class="quick-prompt-btn" onclick="sendQuickPrompt('How do I check my loan eligibility?')">✅ Check eligibility</button>
-        <button class="quick-prompt-btn" onclick="sendQuickPrompt('Explain gold loan LTV ratio')">🥇 Gold loan LTV</button>
-      </div>
-
-      <!-- Input Dock -->
       <div class="chat-dock-container">
         <form class="chat-input-area" id="chat-form" action="javascript:void(0);" onsubmit="if(window.sendChatMessage){window.sendChatMessage(document.getElementById('chat-input').value);} return false;">
-          <button type="button" class="input-attach-btn" id="input-templates-btn" title="New Chat">➕</button>
-          <input
-            type="text"
-            id="chat-input"
-            class="chat-input"
-            placeholder="Write to Advisor..."
-            autocomplete="off"
-            onkeydown="if(event.key==='Enter'){event.preventDefault();if(window.sendChatMessage){window.sendChatMessage(this.value);}return false;}"
-          >
+          <button type="button" class="input-attach-btn" id="input-templates-btn" title="New Chat">+</button>
+          <input type="text" id="chat-input" class="chat-input" placeholder="Type your message..." autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();if(window.sendChatMessage){window.sendChatMessage(this.value);}return false;}">
           <button type="button" class="chat-mic-btn" id="chat-mic-btn" title="Voice">🎙️</button>
           <button type="button" class="send-btn" id="send-btn" onclick="if(window.sendChatMessage){window.sendChatMessage(document.getElementById('chat-input').value);}">
-            <svg class="send-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
+            <svg class="send-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </button>
         </form>
       </div>
-
     </section><!-- /#tab-chat -->
 
 
-    <!-- =================== TAB 4: VOICE ADVISOR =================== -->
+    <!-- TAB 4: HOW IT WORKS / ELIGIBILITY -->
+    <section id="tab-evaluator" class="tab-view">
+      <div class="eligibility-page">
+        <div class="page-header-row">
+          <button class="back-btn nav-tab" data-tab="tab-dashboard">←</button>
+          <h1 class="page-title">Check Loan Eligibility</h1>
+        </div>
+        <div class="eligibility-tabs">
+          <button class="elig-tab active" id="elig-tab-check" onclick="switchEligTab('check')">Eligibility Check</button>
+          <button class="elig-tab" id="elig-tab-emi" onclick="switchEligTab('emi')">EMI Calculator</button>
+        </div>
+
+        <!-- Eligibility Check Panel -->
+        <div id="elig-panel-check" class="elig-panel">
+          <div class="eligibility-grid">
+            <div class="elig-form-card">
+              <div class="form-group">
+                <label for="elig-loan-type">Loan Type</label>
+                <select id="elig-loan-type" class="form-control">
+                  <option value="Home" selected>🏠 Home Loan</option>
+                  <option value="Car">🚗 Vehicle Loan</option>
+                  <option value="Gold">🥇 Gold Loan</option>
+                  <option value="Education">🎓 Education Loan</option>
+                  <option value="Personal">💳 Personal Loan</option>
+                  <option value="MSME">🏭 MSME Business Loan</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="elig-income">Monthly Income (₹)</label>
+                <input type="number" id="elig-income" class="form-control" value="50000" min="0" step="5000" placeholder="Your monthly income">
+                <input type="range" id="elig-income-slider" min="10000" max="500000" step="5000" value="50000" class="range-slider">
+                <div class="slider-labels"><span>₹10,000</span><span id="elig-income-display">₹50,000</span><span>₹5,00,000</span></div>
+              </div>
+              <div class="form-group">
+                <label for="elig-existing-emi">Existing EMIs (₹) <span style="color:var(--text-muted);font-weight:400;">(if any)</span></label>
+                <input type="number" id="elig-existing-emi" class="form-control" value="0" min="0" step="1000" placeholder="Existing EMIs (if any)">
+                <input type="range" id="elig-emi-slider" min="0" max="50000" step="1000" value="0" class="range-slider">
+                <div class="slider-labels"><span>₹0</span><span id="elig-emi-display">₹0</span><span>₹50,000</span></div>
+              </div>
+              <div class="form-group">
+                <label for="elig-loan-amount">Loan Amount (₹ Lakhs)</label>
+                <input type="number" id="elig-loan-amount" class="form-control" value="25" min="1" max="500" step="1" placeholder="Loan amount in Lakhs">
+                <input type="range" id="elig-loan-slider" min="1" max="200" step="1" value="25" class="range-slider">
+                <div class="slider-labels"><span>₹1L</span><span id="elig-loan-display">₹25L</span><span>₹200L</span></div>
+              </div>
+              <button type="button" class="btn-check-eligibility" id="check-eligibility-btn">Check Eligibility</button>
+            </div>
+            <div class="elig-result-card" id="elig-result-card">
+              <div class="result-icon">✅</div>
+              <div class="result-label">Your estimated eligibility is</div>
+              <div class="result-amount" id="elig-result-amount">₹ 25,00,000</div>
+              <div class="result-note" id="elig-result-note">Based on your income and current details. Final amount may vary after bank verification.</div>
+              <div class="result-details" id="elig-result-details">
+                <div class="result-detail-item">✓ Loan amount: Up to 90% of property value</div>
+                <div class="result-detail-item">✓ Tenure: 5 to 30 years</div>
+                <div class="result-detail-item">✓ Interest rate: 8.5% - 9% (approx.)</div>
+                <div class="result-detail-item">✓ Documents: ID proof, income proof, property docs</div>
+              </div>
+              <a href="#" class="see-more-link" onclick="startLoanChat('Home Loan'); return false;">See More Details →</a>
+              <div class="result-action-row">
+                <button class="btn-talk-maniloan nav-tab" data-tab="tab-chat" id="result-talk-btn">Talk to ManiLoan</button>
+                <button class="btn-try-emi" onclick="switchEligTab('emi')">Try EMI Calculator</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMI Calculator Panel -->
+        <div id="elig-panel-emi" class="elig-panel" style="display:none;">
+          <div class="elig-form-card" style="max-width:580px;">
+            <h3 style="font-size:1rem;font-weight:700;color:var(--text-main);margin-bottom:1rem;">EMI Calculator &amp; Risk Analysis</h3>
+            <div class="form-group">
+              <label for="eval-bank-select">Target Bank</label>
+              <select id="eval-bank-select" class="form-control">
+                <option value="general" selected>🌐 General RBI Benchmark</option>
+                <option value="sbi">🏛️ State Bank of India (SBI)</option>
+                <option value="hdfc">🏦 HDFC Bank</option>
+                <option value="icici">🏦 ICICI Bank</option>
+                <option value="axis">🏦 Axis Bank</option>
+                <option value="bob_pnb">🏛️ Bank of Baroda / PNB</option>
+                <option value="cosmos">🏢 Cosmos Co-operative Bank</option>
+                <option value="saraswat">🏢 Saraswat Co-operative Bank</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="eval-product-select">Loan Product</label>
+              <select id="eval-product-select" class="form-control">
+                <option value="Home" selected>🏠 Home Loan</option>
+                <option value="Car">🚗 Vehicle Loan</option>
+                <option value="Gold">🥇 Gold Loan</option>
+                <option value="Education">🎓 Education Loan</option>
+                <option value="Personal">💳 Personal Loan</option>
+                <option value="LAP">🏢 Loan Against Property</option>
+                <option value="MSME">🏭 MSME Business Loan</option>
+              </select>
+            </div>
+            <form id="evaluator-form" class="form-grid">
+              <div class="form-group"><label for="eval-applicant-age">Age (Years)</label><input type="number" id="eval-applicant-age" class="form-control" value="32" min="18" max="75"></div>
+              <div class="form-group"><label for="eval-applicant-income">Monthly Income (₹)</label><input type="number" id="eval-applicant-income" class="form-control" value="50000" min="0" step="5000"></div>
+              <div class="form-group"><label for="eval-coapplicant-income">Co-Applicant Income (₹)</label><input type="number" id="eval-coapplicant-income" class="form-control" value="15000" min="0" step="5000"></div>
+              <div class="form-group">
+                <label for="eval-loan-amount">Loan Amount (₹ Lakhs)</label>
+                <input type="number" id="eval-loan-amount" class="form-control" value="25" min="0.5" step="0.5">
+                <input type="range" id="eval-loan-amount-slider" min="0.5" max="200" step="0.5" value="25" class="range-slider">
+              </div>
+              <div class="form-group">
+                <label for="eval-loan-term">Loan Term (Months)</label>
+                <select id="eval-loan-term" class="form-control">
+                  <option value="12">12 Months (1 Yr)</option><option value="24">24 Months (2 Yrs)</option>
+                  <option value="36">36 Months (3 Yrs)</option><option value="48">48 Months (4 Yrs)</option>
+                  <option value="60">60 Months (5 Yrs)</option><option value="120">120 Months (10 Yrs)</option>
+                  <option value="180">180 Months (15 Yrs)</option><option value="240">240 Months (20 Yrs)</option>
+                  <option value="300">300 Months (25 Yrs)</option><option value="360" selected>360 Months (30 Yrs)</option>
+                </select>
+                <input type="range" id="eval-loan-term-slider" min="12" max="480" step="12" value="360" class="range-slider">
+              </div>
+              <div class="form-group"><label for="eval-credit-score">Credit Score</label>
+                <select id="eval-credit-score" class="form-control">
+                  <option value="400">Less than 450</option><option value="475">450-500</option>
+                  <option value="525">500-550</option><option value="575">550-600</option>
+                  <option value="625">600-650</option><option value="675">650-700</option>
+                  <option value="725">700-750</option><option value="775" selected>750+</option>
+                </select>
+              </div>
+              <div class="form-group"><label for="eval-credit-history">Credit History</label>
+                <select id="eval-credit-history" class="form-control">
+                  <option value="1" selected>1.0 - Clear History</option>
+                  <option value="0">0.0 - Adverse History</option>
+                </select>
+              </div>
+              <div class="form-group"><label for="eval-education">Education</label>
+                <select id="eval-education" class="form-control"><option value="Graduate" selected>Graduate</option><option value="Not Graduate">Not Graduate</option></select>
+              </div>
+              <div class="form-group"><label for="eval-property-area">Property Location</label>
+                <select id="eval-property-area" class="form-control"><option value="Semiurban" selected>Semiurban</option><option value="Urban">Urban</option><option value="Rural">Rural</option></select>
+              </div>
+              <div class="form-group"><label for="eval-dependents">Dependents</label>
+                <select id="eval-dependents" class="form-control"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3+">3+</option></select>
+              </div>
+              <div class="form-group"><label for="eval-married">Marital Status</label>
+                <select id="eval-married" class="form-control"><option value="Yes" selected>Married</option><option value="No">Single</option></select>
+              </div>
+              <div class="form-group"><label for="eval-self-employed">Employment</label>
+                <select id="eval-self-employed" class="form-control"><option value="No" selected>Salaried</option><option value="Yes">Self-Employed</option></select>
+              </div>
+            </form>
+            <button type="button" class="btn-check-eligibility" id="evaluate-btn">⚡ Evaluate Loan Risk</button>
+
+            <div class="risk-output-card" id="risk-output-card-export" style="margin-top:1.5rem;">
+              <div class="card-header-flex">
+                <h3 class="card-title">Underwriting Verdict</h3>
+                <button id="export-pdf-btn" class="btn-export-pdf">Export PDF ⬇️</button>
+              </div>
+              <div class="risk-meter-container">
+                <div class="risk-gauge" id="risk-gauge">
+                  <div class="risk-gauge-inner">
+                    <div class="risk-prob-value" id="risk-prob-val">12.5%</div>
+                    <div class="risk-prob-label">Default Risk</div>
+                  </div>
+                </div>
+                <div class="decision-badge-container">
+                  <span class="badge badge-approve" id="decision-badge">APPROVE</span>
+                </div>
+                <p id="recommendation-text" class="recommendation-text">Low default risk. Recommended for immediate approval.</p>
+              </div>
+              <div class="eval-compliance-box">
+                <div class="compliance-header">
+                  <span>🏛️ Bank Policy Compliance</span>
+                  <span class="compliance-status-tag" id="compliance-overall-tag">All Criteria Met</span>
+                </div>
+                <div class="compliance-checklist" id="eval-compliance-list"></div>
+              </div>
+              <div class="ratios-grid">
+                <div class="ratio-item"><div id="val-total-income" class="ratio-value">₹65,000</div><div class="ratio-label">Total Income</div></div>
+                <div class="ratio-item"><div id="val-emi-income" class="ratio-value">8.5%</div><div class="ratio-label">EMI/Income (FOIR)</div></div>
+                <div class="ratio-item"><div id="val-loan-income" class="ratio-value">30.8%</div><div class="ratio-label">Loan/Income Ratio</div></div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:1.5rem;">
+              <h3 class="card-title">🏦 Multi-Bank Comparison</h3>
+              <div style="overflow-x:auto;">
+                <table id="multi-bank-table" class="bank-table">
+                  <thead><tr><th>Bank</th><th>Eligibility</th><th>Default Risk</th><th>Note</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:1.5rem;">
+              <h3 class="card-title">📉 Amortization Schedule</h3>
+              <div style="height:280px;margin-top:1rem;position:relative;"><canvas id="amortization-chart"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /#tab-evaluator -->
+
+
+    <!-- TAB 5: FAQs -->
+    <section id="tab-faqs" class="tab-view">
+      <div class="faqs-page">
+        <div class="page-header-row">
+          <button class="back-btn nav-tab" data-tab="tab-dashboard">←</button>
+          <h1 class="page-title">FAQs</h1>
+        </div>
+        <p class="page-subtitle">Quick answers to common questions.</p>
+        <div class="faq-list" id="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">What documents are needed for a home loan?<span class="faq-chevron">+</span></button>
+            <div class="faq-answer">You typically need: Identity proof (Aadhar/PAN), Address proof, Income proof (salary slips or ITR), Bank statements (last 6 months), Property documents, and passport-size photographs.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">What is the minimum CIBIL score required?<span class="faq-chevron">+</span></button>
+            <div class="faq-answer">Most banks require a minimum CIBIL score of 650–700. Private banks like HDFC and ICICI prefer 750+. A higher score means better interest rates and faster approval.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">How long does loan approval take?<span class="faq-chevron">+</span></button>
+            <div class="faq-answer">Processing typically takes 3–7 working days for salaried applicants. Home loans may take 2–4 weeks due to property verification. Personal and gold loans can be approved within 24–48 hours.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Can I apply for a loan with a low salary?<span class="faq-chevron">+</span></button>
+            <div class="faq-answer">Yes! Eligibility depends on your income-to-EMI ratio (FOIR). With a salary of ₹20,000+/month, you can qualify for several loan types. Co-applicants can strengthen your application significantly.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">What is the difference between secured and unsecured loans?<span class="faq-chevron">+</span></button>
+            <div class="faq-answer">Secured loans (Home, Vehicle, Gold) require collateral and offer lower interest rates. Unsecured loans (Personal, Consumer Durable) don't need collateral but come with higher rates and stricter credit checks.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">How can I improve my loan eligibility?<span class="faq-chevron">+</span></button>
+            <div class="faq-answer">Maintain a CIBIL score above 750, reduce existing EMI obligations, add a co-applicant with stable income, show consistent bank transaction history, and avoid multiple loan applications simultaneously.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">What is FOIR and why does it matter?<span class="faq-chevron">+</span></button>
+            <div class="faq-answer">FOIR (Fixed Obligation to Income Ratio) is the percentage of your monthly income going towards EMIs. Most banks allow a maximum FOIR of 40–55%. A lower FOIR means more eligibility for additional loans.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">Is my data safe with ManiLoan?<span class="faq-chevron">+</span></button>
+            <div class="faq-answer">Yes! All data you enter stays in your browser session. We do not store personal financial information on our servers. ManiLoan is a guidance tool — no actual loan applications are filed through this platform.</div>
+          </div>
+        </div>
+        <div class="faq-cta-card">
+          <div class="faq-cta-icon">🤖</div>
+          <div class="faq-cta-text">
+            <strong>Still have questions?</strong>
+            <span>Chat with ManiLoan for instant answers or personalised guidance.</span>
+          </div>
+          <button class="not-sure-btn nav-tab" data-tab="tab-chat" id="faq-cta-btn">Start Chat →</button>
+        </div>
+      </div>
+    </section><!-- /#tab-faqs -->
+
+
+    <!-- TAB 6: VOICE ADVISOR -->
     <section id="tab-voice" class="tab-view">
       <div class="speaking-view-container">
-
         <div class="speaking-header">
           <button class="speaking-close-btn" onclick="if(window.switchTab)switchTab('tab-dashboard');" title="Close">✕</button>
           <span class="speaking-header-title">Voice Advisor</span>
           <button class="speaking-settings-btn" id="btn-voice-options" title="Settings">⇌</button>
         </div>
-
         <div class="speaking-mascot-container">
           <div class="mascot-ripple-ring ring-1"></div>
           <div class="mascot-ripple-ring ring-2"></div>
-          <div class="speaking-mascot-img" id="voice-mascot-img" style="font-size: 2.5rem;">🧠</div>
+          <div class="speaking-mascot-img" id="voice-mascot-img" style="font-size:2.5rem;">🧠</div>
         </div>
-
         <div class="speaking-caption-wrap">
           <div class="speaking-status-tag" id="voice-status-tag">Listening…</div>
-          <p class="speaking-caption" id="voice-caption-text">
-            Always analysing your loan profile,
-            guiding you toward <span class="highlight">better decisions</span>.
-          </p>
+          <p class="speaking-caption" id="voice-caption-text">Always analysing your loan profile, guiding you toward <span class="highlight">better decisions</span>.</p>
         </div>
-
         <div class="speaking-controls-row">
           <button class="control-circle-btn" id="btn-voice-keyboard" title="Switch to Chat">⌨️</button>
           <div class="mic-button-outer">
-            <button class="big-mic-btn" id="btn-big-mic" title="Tap to Speak">
-              <span class="mic-icon">🎙️</span>
-            </button>
+            <button class="big-mic-btn" id="btn-big-mic" title="Tap to Speak"><span class="mic-icon">🎙️</span></button>
           </div>
           <button class="control-circle-btn" title="More">···</button>
         </div>
-
       </div>
     </section><!-- /#tab-voice -->
-
-
-    <!-- =================== TAB 5: RISK EVALUATOR =================== -->
-    <section id="tab-evaluator" class="tab-view">
-      <div class="evaluator-scroll-wrap">
-
-        <!-- How It Works Step Banner -->
-        <div class="card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #F0FDF4 0%, #EEF4FF 100%); border-color: rgba(13,148,136,0.2);">
-          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-            <div>
-              <h2 style="font-size:1.15rem; font-weight:800; color:var(--text-main); margin-bottom:0.25rem;">⚡ How ManiLoan Underwriting Engine Works</h2>
-              <p style="font-size:0.85rem; color:var(--text-muted); max-width:650px;">
-                Instant multi-bank underwriting validation powered by Machine Learning and calibrated against 2026 RBI &amp; top Indian bank lending frameworks.
-              </p>
-            </div>
-            <span class="badge-mini-tag" style="background:var(--primary); color:#fff;">2026 Benchmark Engine</span>
-          </div>
-
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.06);">
-            <div style="display:flex; align-items:flex-start; gap:0.75rem;">
-              <div style="width:32px; height:32px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">1</div>
-              <div>
-                <div style="font-size:0.85rem; font-weight:700; color:var(--text-main);">Enter Profile Details</div>
-                <div style="font-size:0.75rem; color:var(--text-muted);">Income, loan amount, CIBIL flag, and tenure.</div>
-              </div>
-            </div>
-            <div style="display:flex; align-items:flex-start; gap:0.75rem;">
-              <div style="width:32px; height:32px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">2</div>
-              <div>
-                <div style="font-size:0.85rem; font-weight:700; color:var(--text-main);">Instant ML &amp; Policy Audit</div>
-                <div style="font-size:0.75rem; color:var(--text-muted);">Calculates default risk and FOIR against bank rules.</div>
-              </div>
-            </div>
-            <div style="display:flex; align-items:flex-start; gap:0.75rem;">
-              <div style="width:32px; height:32px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">3</div>
-              <div>
-                <div style="font-size:0.85rem; font-weight:700; color:var(--text-main);">Verdict &amp; Schedule</div>
-                <div style="font-size:0.75rem; color:var(--text-muted);">Approval odds, bank matrix, and amortization chart.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="evaluator-grid">
-
-        <!-- Input Form Card -->
-        <div class="card">
-          <div class="card-header-flex">
-            <h2 class="card-title">📝 Loan Application &amp; Bank Policy Underwriting</h2>
-            <span class="badge-mini-tag">2026 Criteria</span>
-          </div>
-
-          <!-- Bank & Product Selection -->
-          <div class="eval-bank-controls-row">
-            <div class="form-group flex-1">
-              <label for="eval-bank-select">🏛️ Target Bank / Policy Benchmark</label>
-              <select id="eval-bank-select" class="form-control highlight-select">
-                <option value="general" selected>🌐 General RBI Lending Benchmark</option>
-                <option value="sbi">🏛️ State Bank of India (SBI - PSB)</option>
-                <option value="hdfc">🏦 HDFC Bank (Private Sector Leader)</option>
-                <option value="icici">🏦 ICICI Bank (Private Benchmark)</option>
-                <option value="axis">🏦 Axis Bank (Private Sector)</option>
-                <option value="bob_pnb">🏛️ Bank of Baroda / PNB (PSB)</option>
-                <option value="cosmos">🏢 Cosmos Co-operative Bank (UCB)</option>
-                <option value="saraswat">🏢 Saraswat Co-operative Bank (UCB)</option>
-              </select>
-            </div>
-
-            <div class="form-group flex-1">
-              <label for="eval-product-select">📦 Loan Product Type</label>
-              <select id="eval-product-select" class="form-control highlight-select">
-                <option value="Home" selected>🏠 Home Loan / Housing Finance</option>
-                <option value="Car">🚗 Vehicle / Car Loan</option>
-                <option value="Gold">🪙 Gold Loan (RBI 75% LTV Cap)</option>
-                <option value="Education">🎓 Education Loan (Moratorium + Co-borrower)</option>
-                <option value="Personal">💳 Personal / Consumer Loan</option>
-                <option value="LAP">🏢 Loan Against Property (LAP)</option>
-                <option value="MSME">🏭 MSME / Business Working Capital</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Policy Banner -->
-          <div id="eval-bank-rule-banner" class="eval-bank-banner">
-            <span class="banner-icon">💡</span>
-            <span class="banner-text" id="eval-bank-rule-text">Standard multi-bank prudential lending norms (FOIR ≤ 50%, Age 18–70, CIBIL ≥ 650).</span>
-          </div>
-
-          <!-- Document Upload -->
-          <div class="document-upload-section">
-            <label for="doc-upload-input" style="cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-              <span style="font-size: 1.5rem;">📄</span>
-              <span style="font-weight: 600; color: var(--primary);">Upload Document for Smart Auto-Fill</span>
-              <span style="font-size: 0.8rem; color: var(--text-muted);">PDF or TXT allowed (Bank statement, Salary slip)</span>
-            </label>
-            <input type="file" id="doc-upload-input" accept=".pdf,.txt" style="display: none;">
-            <div id="doc-upload-status" style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);"></div>
-          </div>
-
-          <!-- Form Fields -->
-          <form id="evaluator-form" class="form-grid">
-
-            <div class="form-group">
-              <label for="eval-applicant-age">Applicant Age (Years)</label>
-              <input type="number" id="eval-applicant-age" class="form-control" value="32" min="18" max="75">
-            </div>
-
-            <div class="form-group">
-              <label for="eval-applicant-income">Applicant Monthly Income (₹)</label>
-              <input type="number" id="eval-applicant-income" class="form-control" value="50000" min="0" step="5000">
-            </div>
-
-            <div class="form-group">
-              <label for="eval-coapplicant-income">Co-Applicant Monthly Income (₹)</label>
-              <input type="number" id="eval-coapplicant-income" class="form-control" value="15000" min="0" step="5000">
-            </div>
-
-            <div class="form-group">
-              <label for="eval-loan-amount">Loan Amount Requested (₹ in Lakhs)</label>
-              <input type="number" id="eval-loan-amount" class="form-control" value="2" min="0.5" step="0.5">
-              <input type="range" id="eval-loan-amount-slider" min="0.5" max="50" step="0.5" value="2" class="form-control">
-            </div>
-
-            <div class="form-group">
-              <label for="eval-loan-term">Loan Term (Months)</label>
-              <select id="eval-loan-term" class="form-control">
-                <option value="12">12 Months (1 Yr)</option>
-                <option value="24">24 Months (2 Yrs)</option>
-                <option value="36">36 Months (3 Yrs)</option>
-                <option value="48">48 Months (4 Yrs)</option>
-                <option value="60">60 Months (5 Yrs)</option>
-                <option value="120">120 Months (10 Yrs)</option>
-                <option value="180">180 Months (15 Yrs)</option>
-                <option value="240">240 Months (20 Yrs)</option>
-                <option value="300">300 Months (25 Yrs)</option>
-                <option value="360" selected>360 Months (30 Yrs)</option>
-                <option value="480">480 Months (40 Yrs)</option>
-              </select>
-              <input type="range" id="eval-loan-term-slider" min="12" max="480" step="12" value="360" class="form-control">
-            </div>
-
-            <div class="form-group">
-              <label for="eval-credit-score">Credit Score</label>
-              <select id="eval-credit-score" class="form-control">
-                <option value="400">Less than 450</option>
-                <option value="475">450-500</option>
-                <option value="525">500-550</option>
-                <option value="575">550-600</option>
-                <option value="625">600-650</option>
-                <option value="675">650-700</option>
-                <option value="725">700-750</option>
-                <option value="775" selected>750+</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="eval-credit-history">Credit History Flag</label>
-              <select id="eval-credit-history" class="form-control">
-                <option value="1" selected>1.0 - Clear Credit History (Pass)</option>
-                <option value="0">0.0 - Unclear / Adverse History (Fail)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="eval-education">Education Level</label>
-              <select id="eval-education" class="form-control">
-                <option value="Graduate" selected>Graduate</option>
-                <option value="Not Graduate">Not Graduate</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="eval-property-area">Property Location Area</label>
-              <select id="eval-property-area" class="form-control">
-                <option value="Semiurban" selected>Semiurban (Lowest Risk)</option>
-                <option value="Urban">Urban</option>
-                <option value="Rural">Rural (Highest Risk)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="eval-dependents">Number of Dependents</label>
-              <select id="eval-dependents" class="form-control">
-                <option value="0" selected>0 Dependents</option>
-                <option value="1">1 Dependent</option>
-                <option value="2">2 Dependents</option>
-                <option value="3+">3+ Dependents</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="eval-married">Marital Status</label>
-              <select id="eval-married" class="form-control">
-                <option value="Yes" selected>Married</option>
-                <option value="No">Single / Unmarried</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="eval-self-employed">Employment Type</label>
-              <select id="eval-self-employed" class="form-control">
-                <option value="No" selected>Salaried Employee</option>
-                <option value="Yes">Self-Employed / Business</option>
-              </select>
-            </div>
-
-          </form>
-
-          <button type="button" class="btn-evaluate" id="evaluate-btn">⚡ Evaluate Loan Risk</button>
-        </div>
-
-        <!-- Risk Output Card -->
-        <div class="card risk-output-card" id="risk-output-card-export">
-          <div class="card-header-flex">
-            <h2 class="card-title">⚡ 2026 Bank Underwriting Verdict &amp; ML Score</h2>
-            <button id="export-pdf-btn" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-secondary); color: var(--primary); cursor: pointer; font-weight: 600;">
-              Export PDF ⬇️
-            </button>
-          </div>
-
-          <div class="risk-meter-container" style="display:flex;flex-direction:column;align-items:center;gap:1rem;padding:1rem 0;">
-            <div class="risk-gauge" id="risk-gauge" style="position:relative;width:160px;height:160px;border-radius:50%;background:conic-gradient(var(--primary) 0deg 45deg, var(--bg-secondary) 45deg 360deg);display:flex;align-items:center;justify-content:center;">
-              <div style="position:absolute;inset:12px;background:var(--bg-card);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
-                <div class="risk-prob-value" id="risk-prob-val" style="font-size:1.75rem;font-weight:800;color:var(--text-main);line-height:1;">12.5%</div>
-                <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);">Default Risk</div>
-              </div>
-            </div>
-
-            <div class="decision-badge-container">
-              <span class="badge badge-approve" id="decision-badge" style="padding:0.5rem 1.5rem;border-radius:9999px;font-size:0.875rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;background:var(--success-bg);color:var(--success);">APPROVE</span>
-            </div>
-
-            <p id="recommendation-text" style="font-size: 0.875rem; color: var(--text-muted); text-align: center; max-width: 90%; line-height:1.6; padding:1rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border-left: 3px solid var(--primary); width:100%;">
-              Low default risk. Recommended for immediate approval with standard terms.
-            </p>
-          </div>
-
-          <!-- Bank Policy Compliance Checklist -->
-          <div class="eval-compliance-box" style="background:var(--bg-secondary);border-radius:var(--radius-md);padding:1rem;margin-top:0.5rem;">
-            <div class="compliance-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;font-size:0.875rem;font-weight:700;color:var(--text-main);">
-              <span>🏛️ Bank Policy Compliance Checks</span>
-              <span class="compliance-status-tag" id="compliance-overall-tag" style="font-size:0.75rem;padding:0.2rem 0.625rem;border-radius:9999px;background:var(--success-bg);color:var(--success);font-weight:700;">All Criteria Met</span>
-            </div>
-            <div class="compliance-checklist" id="eval-compliance-list">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-
-          <div class="ratios-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:1rem;">
-            <div style="background:var(--bg-secondary);border-radius:var(--radius-sm);padding:0.75rem;text-align:center;">
-              <div id="val-total-income" style="font-size:1rem;font-weight:800;color:var(--text-main);">₹65,000</div>
-              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">Total Household Income</div>
-            </div>
-            <div style="background:var(--bg-secondary);border-radius:var(--radius-sm);padding:0.75rem;text-align:center;">
-              <div id="val-emi-income" style="font-size:1rem;font-weight:800;color:var(--text-main);">8.5%</div>
-              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">EMI / Income (FOIR)</div>
-            </div>
-            <div style="background:var(--bg-secondary);border-radius:var(--radius-sm);padding:0.75rem;text-align:center;">
-              <div id="val-loan-income" style="font-size:1rem;font-weight:800;color:var(--text-main);">30.8%</div>
-              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">Loan / Income Ratio</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Multi-Bank Comparison Matrix -->
-      <div class="card" style="margin-top: 1.5rem; max-width: 100%;">
-        <h2 class="card-title">🏦 Multi-Bank Comparison Matrix</h2>
-        <div style="overflow-x: auto;">
-          <table id="multi-bank-table" style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 1rem; color: var(--text-main);">
-            <thead>
-              <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted);">
-                <th style="padding: 0.75rem;">Bank</th>
-                <th style="padding: 0.75rem;">Eligibility</th>
-                <th style="padding: 0.75rem;">Default Risk</th>
-                <th style="padding: 0.75rem;">Max Amount / Note</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Populated by JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Amortization Schedule -->
-      <div class="card" style="margin-top: 1.5rem; max-width: 100%;">
-        <h2 class="card-title">📉 Interactive Amortization Schedule</h2>
-        <div style="height: 300px; margin-top: 1rem; position:relative;">
-          <canvas id="amortization-chart"></canvas>
-        </div>
-      </div>
-
-      </div><!-- /.evaluator-scroll-wrap -->
-    </section><!-- /#tab-evaluator -->
-
 
   </main><!-- /.workspace -->
 
 
-  <!-- ===================================================
-       BOTTOM NAVIGATION DOCK (MOBILE)
-  =================================================== -->
+  <!-- BOTTOM NAV DOCK -->
   <nav class="bottom-nav-dock" id="bottom-nav-dock">
     <button class="dock-nav-btn active" id="dock-btn-home" data-tab="tab-dashboard">
-      <span class="dock-nav-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      </span>
+      <span class="dock-nav-icon">🏠</span>
       <span class="dock-nav-label">Home</span>
     </button>
     <button class="dock-nav-btn" id="dock-btn-loan-types" data-tab="tab-loan-types">
-      <span class="dock-nav-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      </span>
+      <span class="dock-nav-icon">🏦</span>
       <span class="dock-nav-label">Loan Types</span>
     </button>
     <button class="dock-nav-btn" id="dock-btn-chat" data-tab="tab-chat">
-      <span class="dock-nav-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      </span>
+      <span class="dock-nav-icon">💬</span>
       <span class="dock-nav-label">Chat</span>
     </button>
-    <button class="dock-nav-btn" id="dock-btn-profile" onclick="openFaqModal()">
-      <span class="dock-nav-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </span>
+    <button class="dock-nav-btn" id="dock-btn-profile" data-tab="tab-faqs">
+      <span class="dock-nav-icon">👤</span>
       <span class="dock-nav-label">Profile</span>
     </button>
   </nav>
@@ -892,13 +648,11 @@
 </div><!-- /.app-shell -->
 
 
-<!-- ===================================================
-     OPENROUTER SETTINGS MODAL
-=================================================== -->
+<!-- SETTINGS MODAL -->
 <div class="modal-overlay" id="openrouter-modal">
   <div class="modal-card">
     <div class="modal-header">
-      <h3 class="modal-title">⚙️ OpenRouter LLM API Settings</h3>
+      <h3 class="modal-title">⚙️ LLM API Settings</h3>
       <button class="modal-close" id="modal-close-btn">&times;</button>
     </div>
     <div class="modal-body">
@@ -911,28 +665,25 @@
         </label>
         <p class="form-help">When enabled, responses use OpenRouter LLM with dataset context.</p>
       </div>
-
       <div class="form-group">
         <label for="openrouter-model-select">LLM Model</label>
-        <select id="openrouter-model-select" class="form-select">
+        <select id="openrouter-model-select" class="form-control">
           <option value="qwen/qwen-2.5-72b-instruct,google/gemini-flash-1.5,meta-llama/llama-3.1-8b-instruct" selected>Qwen → Gemini → Llama (Auto-Fallback)</option>
-          <option value="openai/gpt-oss-120b">openai/gpt-oss-120b (Custom Model)</option>
-          <option value="meta-llama/llama-3.1-8b-instruct">llama-3.1-8b-instruct (Fastest Speed)</option>
+          <option value="openai/gpt-oss-120b">openai/gpt-oss-120b</option>
+          <option value="meta-llama/llama-3.1-8b-instruct">llama-3.1-8b-instruct (Fastest)</option>
           <option value="mistralai/mixtral-8x7b-instruct">mixtral-8x7b (High Context)</option>
-          <option value="google/gemma-2-9b-it">gemma-2-9b-it (Google Gemma 2)</option>
+          <option value="google/gemma-2-9b-it">gemma-2-9b-it (Google)</option>
         </select>
       </div>
-
       <div class="form-group">
         <label for="openrouter-language-select">Response Language</label>
-        <select id="openrouter-language-select" class="form-select">
-          <option value="English" selected>🇬🇧 English (Simple Everyday Words)</option>
+        <select id="openrouter-language-select" class="form-control">
+          <option value="English" selected>🇬🇧 English</option>
           <option value="Telugu">🇮🇳 Telugu (తెలుగు)</option>
           <option value="Hindi">🇮🇳 Hindi (हिंदी)</option>
         </select>
       </div>
-
-      <div class="connection-status-box" id="test-connection-result" style="display: none;"></div>
+      <div class="connection-status-box" id="test-connection-result" style="display:none;"></div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn-secondary" id="test-connection-btn">⚡ Test Connection</button>
@@ -941,862 +692,436 @@
   </div>
 </div>
 
-<!-- FAQ Modal (lightweight) -->
-<div class="modal-overlay" id="faq-modal">
-  <div class="modal-card">
-    <div class="modal-header">
-      <h3 class="modal-title">❓ Frequently Asked Questions</h3>
-      <button class="modal-close" id="faq-close-btn">&times;</button>
-    </div>
-    <div class="modal-body" style="gap:1rem;">
-      <div>
-        <div style="font-weight:700;color:var(--text-main);margin-bottom:0.25rem;">What is ManiLoan?</div>
-        <div style="font-size:0.875rem;color:var(--text-muted);">ManiLoan is your AI-powered loan assistant that helps you check eligibility, understand loan types, and predict default risk using advanced ML models.</div>
-      </div>
-      <div>
-        <div style="font-weight:700;color:var(--text-main);margin-bottom:0.25rem;">How accurate is the risk evaluator?</div>
-        <div style="font-size:0.875rem;color:var(--text-muted);">Our Random Forest model achieves 0.812 ROC-AUC on 800 historical applications, calibrated to 2026 Indian bank underwriting criteria.</div>
-      </div>
-      <div>
-        <div style="font-weight:700;color:var(--text-main);margin-bottom:0.25rem;">Is my data safe?</div>
-        <div style="font-size:0.875rem;color:var(--text-muted);">All data stays in your browser session. Nothing is stored on our servers. Your privacy is our priority.</div>
-      </div>
-      <div>
-        <div style="font-weight:700;color:var(--text-main);margin-bottom:0.25rem;">Which banks are supported?</div>
-        <div style="font-size:0.875rem;color:var(--text-muted);">SBI, HDFC, ICICI, Axis, Bank of Baroda, PNB, Cosmos, and Saraswat Co-operative Bank — plus the general RBI lending benchmark.</div>
-      </div>
-    </div>
-    <div class="modal-footer" style="justify-content:center;">
-      <button class="btn-start-chat" onclick="switchTab('tab-chat'); closeFaqModal();" style="border-radius:var(--radius-pill);">Chat with ManiLoan →</button>
-    </div>
-  </div>
-</div>
 
-
-<!-- ===================================================
-     SCRIPTS
-=================================================== -->
+<!-- SCRIPTS -->
 <script src="dataset.js"></script>
 <script src="evaluator.js"></script>
 <script src="chatbot.js"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
+  const bot = new LoanChatbot();
+  const navTabs = document.querySelectorAll('.nav-tab');
+  const dockBtns = document.querySelectorAll('.dock-nav-btn');
+  const tabViews = document.querySelectorAll('.tab-view');
+  const chatInput = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatEmptyState = document.getElementById('chat-empty-state');
 
-    // ── Initialize Chatbot ──
-    const bot = new LoanChatbot();
+  function switchTab(targetTabId) {
+    tabViews.forEach(v => v.classList.remove('active'));
+    navTabs.forEach(t => t.classList.remove('active'));
+    dockBtns.forEach(d => d.classList.remove('active'));
+    const target = document.getElementById(targetTabId);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('[data-tab="' + targetTabId + '"]').forEach(el => el.classList.add('active'));
+    closeMobileDrawer();
+  }
+  window.switchTab = switchTab;
 
-    // ── DOM Refs ──
-    const navTabs   = document.querySelectorAll('.nav-tab');
-    const dockBtns  = document.querySelectorAll('.dock-nav-btn');
-    const tabViews  = document.querySelectorAll('.tab-view');
-    const chatInput = document.getElementById('chat-input');
-    const sendBtn   = document.getElementById('send-btn');
-    const chatMessages = document.getElementById('chat-messages');
-    const chatEmptyState = document.getElementById('chat-empty-state');
-    const quickPrompts = document.getElementById('quick-prompts');
+  navTabs.forEach(tab => { tab.addEventListener('click', () => { if (tab.dataset.tab) switchTab(tab.dataset.tab); }); });
+  dockBtns.forEach(btn => { btn.addEventListener('click', () => { if (btn.dataset.tab) switchTab(btn.dataset.tab); }); });
 
-    // ── Tab Switch ──
-    function switchTab(targetTabId) {
-      tabViews.forEach(v => v.classList.remove('active'));
-      navTabs.forEach(t => t.classList.remove('active'));
-      dockBtns.forEach(d => d.classList.remove('active'));
+  const mobileDrawer = document.getElementById('mobile-drawer');
+  function openMobileDrawer() { mobileDrawer.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeMobileDrawer() { mobileDrawer.classList.remove('open'); document.body.style.overflow = ''; }
+  document.getElementById('mobile-hamburger-btn')?.addEventListener('click', openMobileDrawer);
+  document.getElementById('drawer-backdrop')?.addEventListener('click', closeMobileDrawer);
+  document.getElementById('drawer-close-btn')?.addEventListener('click', closeMobileDrawer);
+  document.getElementById('drawer-settings-btn')?.addEventListener('click', () => { closeMobileDrawer(); openSettingsModal(); });
 
-      const target = document.getElementById(targetTabId);
-      if (target) target.classList.add('active');
+  const settingsModal = document.getElementById('openrouter-modal');
+  function openSettingsModal() { settingsModal.classList.add('open'); }
+  function closeSettingsModal() { settingsModal.classList.remove('open'); }
+  document.getElementById('topbar-settings-btn')?.addEventListener('click', openSettingsModal);
+  document.getElementById('modal-close-btn')?.addEventListener('click', closeSettingsModal);
+  settingsModal?.addEventListener('click', e => { if (e.target === settingsModal) closeSettingsModal(); });
 
-      document.querySelectorAll(`[data-tab="${targetTabId}"]`).forEach(el => el.classList.add('active'));
+  const mobileLangBtns = document.querySelectorAll('.mobile-lang-btn');
+  function applyLanguage(lang) {
+    bot.setLanguage(lang);
+    mobileLangBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    const ls = document.getElementById('openrouter-language-select');
+    if (ls) ls.value = lang;
+  }
+  mobileLangBtns.forEach(btn => btn.addEventListener('click', () => { applyLanguage(btn.dataset.lang); closeMobileDrawer(); }));
 
-      // Close mobile drawer on tab switch
-      closeMobileDrawer();
-    }
-    window.switchTab = switchTab;
+  document.getElementById('save-openrouter-settings-btn')?.addEventListener('click', () => {
+    const model = document.getElementById('openrouter-model-select')?.value || '';
+    const useLLM = document.getElementById('openrouter-enable-toggle')?.checked ?? true;
+    const lang = document.getElementById('openrouter-language-select')?.value || 'English';
+    bot.updateSettings('', model, useLLM, lang);
+    applyLanguage(lang);
+    closeSettingsModal();
+  });
 
-    // Wire up all nav-tab buttons
-    navTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const targetTab = tab.dataset.tab;
-        if (targetTab) switchTab(targetTab);
+  document.getElementById('test-connection-btn')?.addEventListener('click', async () => {
+    const rb = document.getElementById('test-connection-result');
+    const model = document.getElementById('openrouter-model-select')?.value || '';
+    if (rb) { rb.style.display = 'block'; rb.textContent = '⏳ Testing…'; rb.className = 'connection-status-box'; }
+    try {
+      const r = await bot.testConnection('', model);
+      if (rb) { rb.textContent = r.success ? '✅ Connected! (' + (r.latency_ms||'') + 'ms)' : '❌ Failed: ' + (r.message||''); if (!r.success) rb.className = 'connection-status-box error'; }
+    } catch(e) { if (rb) { rb.textContent = '❌ Error: ' + e.message; rb.className = 'connection-status-box error'; } }
+  });
+
+  let currentSessionId = null;
+  const sidebarChatsContainer = document.getElementById('sidebar-chats');
+  function getChatSessions() { try { return JSON.parse(localStorage.getItem('loan_ai_chat_sessions') || '[]'); } catch(e) { return []; } }
+  function saveChatSessions(sessions) { try { localStorage.setItem('loan_ai_chat_sessions', JSON.stringify(sessions)); } catch(e) {} }
+
+  function renderChatHistoryUI() {
+    const sessions = getChatSessions();
+    if (!sidebarChatsContainer) return;
+    if (!sessions.length) { sidebarChatsContainer.innerHTML = '<div class="history-empty-msg">No previous chats yet.</div>'; return; }
+    sidebarChatsContainer.innerHTML = sessions.map(s => {
+      const isActive = s.id === currentSessionId ? 'active' : '';
+      const title = (s.title||'Chat').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return '<div class="sidebar-chat-item '+isActive+'" data-session-id="'+s.id+'"><span class="chat-item-title">'+title+'</span><button type="button" class="chat-item-del-btn" data-del-id="'+s.id+'">🗑</button></div>';
+    }).join('');
+    sidebarChatsContainer.querySelectorAll('.sidebar-chat-item').forEach(item => {
+      item.addEventListener('click', e => {
+        const delBtn = e.target.closest('.chat-item-del-btn');
+        if (delBtn) { e.stopPropagation(); deleteChatSession(delBtn.dataset.delId); return; }
+        if (item.dataset.sessionId) { loadChatSession(item.dataset.sessionId); closeMobileDrawer(); }
       });
     });
+  }
 
-    // Wire up dock buttons
-    dockBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetTab = btn.dataset.tab;
-        if (targetTab) switchTab(targetTab);
-      });
-    });
-
-    // ── Mobile Drawer ──
-    const mobileDrawer   = document.getElementById('mobile-drawer');
-    const hamburgerBtn   = document.getElementById('mobile-hamburger-btn');
-    const drawerBackdrop = document.getElementById('drawer-backdrop');
-    const drawerCloseBtn = document.getElementById('drawer-close-btn');
-
-    function openMobileDrawer()  { mobileDrawer.classList.add('open'); document.body.style.overflow = 'hidden'; }
-    function closeMobileDrawer() { mobileDrawer.classList.remove('open'); document.body.style.overflow = ''; }
-
-    hamburgerBtn?.addEventListener('click', openMobileDrawer);
-    drawerBackdrop?.addEventListener('click', closeMobileDrawer);
-    drawerCloseBtn?.addEventListener('click', closeMobileDrawer);
-    document.getElementById('drawer-settings-btn')?.addEventListener('click', () => { closeMobileDrawer(); openSettingsModal(); });
-
-    // ── Settings Modal ──
-    const settingsModal  = document.getElementById('openrouter-modal');
-    const modalCloseBtn  = document.getElementById('modal-close-btn');
-    const faqModal       = document.getElementById('faq-modal');
-    const faqCloseBtn    = document.getElementById('faq-close-btn');
-
-    function openSettingsModal()  { settingsModal.classList.add('open'); }
-    function closeSettingsModal() { settingsModal.classList.remove('open'); }
-    function openFaqModal()  { faqModal.classList.add('open'); }
-    function closeFaqModal() { faqModal.classList.remove('open'); }
-    window.openFaqModal  = openFaqModal;
-    window.closeFaqModal = closeFaqModal;
-
-    document.getElementById('topbar-settings-btn')?.addEventListener('click', openSettingsModal);
-    modalCloseBtn?.addEventListener('click', closeSettingsModal);
-    faqCloseBtn?.addEventListener('click', closeFaqModal);
-
-    // Close modals clicking backdrop
-    settingsModal?.addEventListener('click', e => { if (e.target === settingsModal) closeSettingsModal(); });
-    faqModal?.addEventListener('click', e => { if (e.target === faqModal) closeFaqModal(); });
-
-    // ── Language Dropdown (desktop) ──
-    const langBtn  = document.getElementById('navbar-lang-btn');
-    const langMenu = document.getElementById('lang-dropdown-menu');
-    langBtn?.addEventListener('click', e => { e.stopPropagation(); langMenu.classList.toggle('open'); });
-    document.addEventListener('click', () => langMenu?.classList.remove('open'));
-
-    const langOptionBtns   = document.querySelectorAll('.lang-option-btn');
-    const mobileLangBtns   = document.querySelectorAll('.mobile-lang-btn');
-
-    function applyLanguage(lang) {
-      bot.setLanguage(lang);
-      langOptionBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-      mobileLangBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-      const langSelect = document.getElementById('openrouter-language-select');
-      if (langSelect) langSelect.value = lang;
-      langMenu?.classList.remove('open');
+  function loadChatSession(sessionId) {
+    const session = getChatSessions().find(s => s.id === sessionId);
+    if (!session) return;
+    currentSessionId = sessionId;
+    switchTab('tab-chat');
+    if (chatMessages) {
+      chatMessages.innerHTML = '<div class="date-divider"><span>TODAY</span></div>';
+      (session.messages||[]).forEach(m => appendMessage(m.role === 'user' ? 'user' : 'bot', m.content, false));
     }
+    bot.chatHistory = [...(session.messages||[])];
+    hideEmptyState();
+  }
 
-    langOptionBtns.forEach(btn => btn.addEventListener('click', () => applyLanguage(btn.dataset.lang)));
-    mobileLangBtns.forEach(btn => btn.addEventListener('click', () => { applyLanguage(btn.dataset.lang); closeMobileDrawer(); }));
-
-    // ── Settings Save / Test ──
-    document.getElementById('save-openrouter-settings-btn')?.addEventListener('click', () => {
-      const model  = document.getElementById('openrouter-model-select')?.value || '';
-      const useLLM = document.getElementById('openrouter-enable-toggle')?.checked ?? true;
-      const lang   = document.getElementById('openrouter-language-select')?.value || 'English';
-      bot.updateSettings('', model, useLLM, lang);
-      applyLanguage(lang);
-      closeSettingsModal();
-    });
-
-    document.getElementById('test-connection-btn')?.addEventListener('click', async () => {
-      const resultBox = document.getElementById('test-connection-result');
-      const model = document.getElementById('openrouter-model-select')?.value || '';
-      if (resultBox) { resultBox.style.display = 'block'; resultBox.textContent = '⏳ Testing connection…'; resultBox.className = 'connection-status-box'; }
-      try {
-        const result = await bot.testConnection('', model);
-        if (resultBox) {
-          if (result.success) {
-            resultBox.textContent = `✅ Connected! (${result.latency_ms || ''}ms) — ${result.model || ''}`;
-            resultBox.className = 'connection-status-box';
-          } else {
-            resultBox.textContent = `❌ Failed: ${result.message || 'Unknown error'}`;
-            resultBox.className = 'connection-status-box error';
-          }
-        }
-      } catch(e) {
-        if (resultBox) { resultBox.textContent = `❌ Error: ${e.message}`; resultBox.className = 'connection-status-box error'; }
-      }
-    });
-
-    // ── Chat Sessions ──
-    let currentSessionId = null;
-    const sidebarChatsContainer = document.getElementById('sidebar-chats');
-
-    function getChatSessions() {
-      try { return JSON.parse(localStorage.getItem('loan_ai_chat_sessions') || '[]'); }
-      catch(e) { return []; }
-    }
-    function saveChatSessions(sessions) {
-      try { localStorage.setItem('loan_ai_chat_sessions', JSON.stringify(sessions)); } catch(e) {}
-    }
-
-    function renderChatHistoryUI() {
-      const sessions = getChatSessions();
-      if (!sidebarChatsContainer) return;
-      if (sessions.length === 0) {
-        sidebarChatsContainer.innerHTML = '<div class="history-empty-msg">No previous chats yet.</div>';
-        return;
-      }
-      sidebarChatsContainer.innerHTML = sessions.map(s => {
-        const isActive = s.id === currentSessionId ? 'active' : '';
-        const title = escapeHtml(s.title || 'Chat Assistant');
-        return `<div class="sidebar-chat-item ${isActive}" data-session-id="${s.id}">
-          <span class="chat-item-title" title="${title}">${title}</span>
-          <button type="button" class="chat-item-del-btn" data-del-id="${s.id}" title="Delete">🗑</button>
-        </div>`;
-      }).join('');
-
-      sidebarChatsContainer.querySelectorAll('.sidebar-chat-item').forEach(item => {
-        item.addEventListener('click', e => {
-          const delBtn = e.target.closest('.chat-item-del-btn');
-          if (delBtn) { e.stopPropagation(); deleteChatSession(delBtn.dataset.delId); return; }
-          const sessId = item.dataset.sessionId;
-          if (sessId) { loadChatSession(sessId); closeMobileDrawer(); }
-        });
-      });
-    }
-
-    function loadChatSession(sessionId) {
-      const sessions = getChatSessions();
-      const session  = sessions.find(s => s.id === sessionId);
-      if (!session) return;
-      currentSessionId = sessionId;
-      switchTab('tab-chat');
-      if (chatMessages) {
-        chatMessages.innerHTML = '<div class="date-divider"><span>TODAY</span></div>';
-        (session.messages || []).forEach(m => {
-          appendMessage(m.role === 'user' ? 'user' : 'bot', m.content, false);
-        });
-      }
-      bot.chatHistory = [...(session.messages || [])];
-      hideEmptyState();
-    }
-
-    function deleteChatSession(sessionId) {
-      let sessions = getChatSessions();
-      sessions = sessions.filter(s => s.id !== sessionId);
-      saveChatSessions(sessions);
-      if (currentSessionId === sessionId) {
-        currentSessionId = null;
-        if (chatMessages) chatMessages.innerHTML = '<div class="date-divider"><span>TODAY</span></div>';
-        bot.chatHistory = [];
-        showEmptyState();
-      }
-      renderChatHistoryUI();
-    }
-
-    function saveCurrentSession() {
-      if (!currentSessionId || bot.chatHistory.length === 0) return;
-      let sessions = getChatSessions();
-      const idx = sessions.findIndex(s => s.id === currentSessionId);
-      const firstUserMsg = bot.chatHistory.find(m => m.role === 'user');
-      const title = firstUserMsg ? firstUserMsg.content.slice(0, 40) : 'Chat Assistant';
-      const sessionData = { id: currentSessionId, title, messages: bot.chatHistory, timestamp: Date.now() };
-      if (idx >= 0) sessions[idx] = sessionData;
-      else sessions.unshift(sessionData);
-      sessions = sessions.slice(0, 20);
-      saveChatSessions(sessions);
-      renderChatHistoryUI();
-    }
-
-    function startNewChatSession() {
-      currentSessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2,9);
-      bot.chatHistory = [];
+  function deleteChatSession(sessionId) {
+    let sessions = getChatSessions().filter(s => s.id !== sessionId);
+    saveChatSessions(sessions);
+    if (currentSessionId === sessionId) {
+      currentSessionId = null;
       if (chatMessages) chatMessages.innerHTML = '<div class="date-divider"><span>TODAY</span></div>';
+      bot.chatHistory = [];
       showEmptyState();
     }
-
     renderChatHistoryUI();
+  }
 
-    // ── New Chat Button ──
-    document.getElementById('input-templates-btn')?.addEventListener('click', () => {
-      startNewChatSession();
-      switchTab('tab-chat');
-    });
+  function saveCurrentSession() {
+    if (!currentSessionId || !bot.chatHistory.length) return;
+    let sessions = getChatSessions();
+    const idx = sessions.findIndex(s => s.id === currentSessionId);
+    const first = bot.chatHistory.find(m => m.role === 'user');
+    const title = first ? first.content.slice(0,40) : 'Chat';
+    const data = { id: currentSessionId, title, messages: bot.chatHistory, timestamp: Date.now() };
+    if (idx >= 0) sessions[idx] = data; else sessions.unshift(data);
+    saveChatSessions(sessions.slice(0,20));
+    renderChatHistoryUI();
+  }
 
-    // ── Slider and Input Sync ──
-    const loanAmountInput  = document.getElementById('eval-loan-amount');
-    const loanAmountSlider = document.getElementById('eval-loan-amount-slider');
-    const loanTermSelect   = document.getElementById('eval-loan-term');
-    const loanTermSlider   = document.getElementById('eval-loan-term-slider');
+  function startNewChatSession() {
+    currentSessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2,9);
+    bot.chatHistory = [];
+    if (chatMessages) chatMessages.innerHTML = '<div class="date-divider"><span>TODAY</span></div>';
+    showEmptyState();
+  }
 
-    loanAmountSlider?.addEventListener('input', () => {
-      if (loanAmountInput) loanAmountInput.value = loanAmountSlider.value;
-      if (window.runEvaluator) window.runEvaluator();
-    });
-    loanAmountInput?.addEventListener('input', () => {
-      if (loanAmountSlider) loanAmountSlider.value = loanAmountInput.value;
-      if (window.runEvaluator) window.runEvaluator();
-    });
-    loanTermSlider?.addEventListener('input', () => {
-      const v = loanTermSlider.value;
-      if (loanTermSelect) loanTermSelect.value = v;
-      if (window.runEvaluator) window.runEvaluator();
-    });
-    loanTermSelect?.addEventListener('change', () => {
-      if (loanTermSlider) loanTermSlider.value = loanTermSelect.value;
-      if (window.runEvaluator) window.runEvaluator();
-    });
+  renderChatHistoryUI();
+  document.getElementById('input-templates-btn')?.addEventListener('click', () => { startNewChatSession(); switchTab('tab-chat'); });
 
-    // Auto-calculate evaluator on any form input/select change
-    document.getElementById('evaluator-form')?.addEventListener('input', () => {
-      if (window.runEvaluator) window.runEvaluator();
-    });
-    document.getElementById('evaluator-form')?.addEventListener('change', () => {
-      if (window.runEvaluator) window.runEvaluator();
-    });
+  function showEmptyState() { if (chatEmptyState) chatEmptyState.classList.remove('hidden'); }
+  function hideEmptyState() { if (chatEmptyState) chatEmptyState.classList.add('hidden'); }
 
-    // ── Evaluate button ──
-    document.getElementById('evaluate-btn')?.addEventListener('click', () => {
-      if (window.runEvaluator) window.runEvaluator();
-    });
+  function appendMessage(role, content, scroll = true) {
+    hideEmptyState();
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'chat-msg ' + role;
+    const avatar = document.createElement('div');
+    avatar.className = 'msg-avatar';
+    avatar.textContent = role === 'user' ? '👤' : '🤖';
+    const bubble = document.createElement('div');
+    bubble.className = 'msg-bubble';
+    if (role === 'bot' && typeof marked !== 'undefined') bubble.innerHTML = marked.parse(content);
+    else bubble.textContent = content;
+    const time = document.createElement('div');
+    time.className = 'msg-time';
+    const now = new Date();
+    time.textContent = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    msgDiv.appendChild(avatar); msgDiv.appendChild(bubble); msgDiv.appendChild(time);
+    chatMessages?.appendChild(msgDiv);
+    if (scroll) chatMessages?.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+    return msgDiv;
+  }
 
-    // ── Export PDF ──
-    document.getElementById('export-pdf-btn')?.addEventListener('click', () => {
-      const el = document.getElementById('risk-output-card-export');
-      if (!el || typeof html2pdf === 'undefined') return;
-      html2pdf().set({ margin: 10, filename: 'ManiLoan_Risk_Report.pdf', html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4' } }).from(el).save();
-    });
+  function appendTyping() {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'chat-msg bot typing-indicator'; msgDiv.id = 'typing-indicator';
+    const avatar = document.createElement('div'); avatar.className = 'msg-avatar'; avatar.textContent = '🤖';
+    const bubble = document.createElement('div'); bubble.className = 'msg-bubble';
+    bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    msgDiv.appendChild(avatar); msgDiv.appendChild(bubble);
+    chatMessages?.appendChild(msgDiv);
+    chatMessages?.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+    return msgDiv;
+  }
+  function removeTyping() { document.getElementById('typing-indicator')?.remove(); }
 
-    // ── Document Smart Auto-Fill ──
-    document.getElementById('doc-upload-input')?.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      const statusDiv = document.getElementById('doc-upload-status');
-      if (!file) return;
-      if (statusDiv) statusDiv.textContent = '⏳ Analyzing document…';
-      try {
-        const text = await file.text();
-        const snippet = text.slice(0, 3000);
-        
-        // Smart regex extraction
-        const incomeMatch = snippet.match(/(?:salary|income|monthly|net pay|gross pay)[\s:=₹INR]*([0-9]{2,3},[0-9]{3}|[0-9]{4,7})/i);
-        const loanMatch   = snippet.match(/(?:loan amount|amount requested|borrow|sanction)[\s:=₹INR]*([0-9.,]+)\s*(?:lakh|lac|k|cr)?/i);
-        const ageMatch    = snippet.match(/(?:age|years old)[\s:=]*([1-7][0-9])/i);
-
-        let filled = 0;
-        if (incomeMatch) {
-          const rawInc = parseInt(incomeMatch[1].replace(/,/g, ''));
-          if (rawInc >= 5000 && rawInc <= 5000000) {
-            const el = document.getElementById('eval-applicant-income');
-            if (el) { el.value = rawInc; filled++; }
-          }
-        }
-        if (loanMatch) {
-          let rawLoan = parseFloat(loanMatch[1].replace(/,/g, ''));
-          if (rawLoan > 500) rawLoan = rawLoan / 100000; // if in rupees, convert to lakhs
-          if (rawLoan >= 0.5 && rawLoan <= 500) {
-            const el = document.getElementById('eval-loan-amount');
-            if (el) { el.value = rawLoan; if(loanAmountSlider) loanAmountSlider.value = rawLoan; filled++; }
-          }
-        }
-        if (ageMatch) {
-          const rawAge = parseInt(ageMatch[1]);
-          if (rawAge >= 18 && rawAge <= 75) {
-            const el = document.getElementById('eval-applicant-age');
-            if (el) { el.value = rawAge; filled++; }
-          }
-        }
-
-        if (statusDiv) {
-          statusDiv.innerHTML = filled > 0 
-            ? `✅ Auto-filled ${filled} field(s) from "${file.name}".` 
-            : `ℹ️ Document read. Please verify fields below.`;
-        }
-        if (window.runEvaluator) window.runEvaluator();
-      } catch(err) {
-        if (statusDiv) statusDiv.textContent = '❌ Could not read file. Please enter manually.';
-      }
-    });
-
-    // ── Chat helper functions ──
-    function showEmptyState() {
-      if (chatEmptyState) chatEmptyState.classList.remove('hidden');
-      if (quickPrompts)   quickPrompts.style.display = 'flex';
+  async function sendChatMessage(text) {
+    text = (text||'').trim();
+    if (!text) return;
+    if (!currentSessionId) startNewChatSession();
+    if (chatInput) chatInput.value = '';
+    appendMessage('user', text);
+    if (sendBtn) sendBtn.disabled = true;
+    appendTyping();
+    try {
+      const response = await bot.processMessage(text);
+      removeTyping();
+      appendMessage('bot', response);
+      saveCurrentSession();
+    } catch(e) {
+      removeTyping();
+      appendMessage('bot', '⚠️ Something went wrong. Please try again.');
+    } finally {
+      if (sendBtn) sendBtn.disabled = false;
+      if (chatInput) chatInput.focus();
     }
-    function hideEmptyState() {
-      if (chatEmptyState) chatEmptyState.classList.add('hidden');
-      if (quickPrompts)   quickPrompts.style.display = 'none';
-    }
+  }
+  window.sendChatMessage = sendChatMessage;
 
-    function escapeHtml(str) {
-      return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
+  window.sendQuickPrompt = (msg) => { switchTab('tab-chat'); sendChatMessage(msg); };
+  window.startLoanChat = (loanType) => { switchTab('tab-chat'); sendChatMessage('Tell me about ' + loanType + ' — eligibility, documents, and interest rates.'); };
 
-    function appendMessage(role, content, scroll = true) {
-      hideEmptyState();
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `chat-msg ${role}`;
+  document.getElementById('chat-options-btn')?.addEventListener('click', () => { if (confirm('Clear current chat session?')) startNewChatSession(); });
+  document.getElementById('navbar-avatar-btn')?.addEventListener('click', () => openSettingsModal());
 
-      const avatar = document.createElement('div');
-      avatar.className = 'msg-avatar';
-      avatar.textContent = role === 'user' ? '👤' : '🤖';
-
-      const bubble = document.createElement('div');
-      bubble.className = 'msg-bubble';
-      if (role === 'bot' && typeof marked !== 'undefined') {
-        bubble.innerHTML = marked.parse(content);
-      } else {
-        bubble.textContent = content;
-      }
-
-      const time = document.createElement('div');
-      time.className = 'msg-time';
-      const now = new Date();
-      time.textContent = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-
-      msgDiv.appendChild(avatar);
-      msgDiv.appendChild(bubble);
-      msgDiv.appendChild(time);
-      chatMessages?.appendChild(msgDiv);
-      if (scroll) chatMessages?.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
-      return msgDiv;
-    }
-
-    function appendTyping() {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = 'chat-msg bot typing-indicator';
-      msgDiv.id = 'typing-indicator';
-      const avatar = document.createElement('div');
-      avatar.className = 'msg-avatar'; avatar.textContent = '🤖';
-      const bubble = document.createElement('div');
-      bubble.className = 'msg-bubble';
-      bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-      msgDiv.appendChild(avatar); msgDiv.appendChild(bubble);
-      chatMessages?.appendChild(msgDiv);
-      chatMessages?.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
-      return msgDiv;
-    }
-
-    function removeTyping() {
-      document.getElementById('typing-indicator')?.remove();
-    }
-
-    // ── Send Chat Message (main) ──
-    async function sendChatMessage(text) {
-      text = (text || '').trim();
-      if (!text) return;
-      if (!currentSessionId) startNewChatSession();
-
-      if (chatInput) chatInput.value = '';
-      appendMessage('user', text);
-      if (sendBtn) sendBtn.disabled = true;
-
-      const typingEl = appendTyping();
-
-      try {
-        const response = await bot.processMessage(text);
-        removeTyping();
-        appendMessage('bot', response);
-        saveCurrentSession();
-      } catch(e) {
-        removeTyping();
-        appendMessage('bot', '⚠️ Something went wrong. Please try again.');
-      } finally {
-        if (sendBtn) sendBtn.disabled = false;
-        if (chatInput) chatInput.focus();
-      }
-    }
-    window.sendChatMessage = sendChatMessage;
-
-    // ── Quick prompt helper ──
-    window.sendQuickPrompt = (msg) => {
-      switchTab('tab-chat');
-      sendChatMessage(msg);
-    };
-
-    // ── Home CTA chat ──
-    window.sendHomeChatMessage = () => {
-      const input = document.getElementById('home-chat-input');
-      const text = input?.value?.trim();
-      if (!text) return;
-      input.value = '';
-      switchTab('tab-chat');
-      sendChatMessage(text);
-    };
-
-    // ── Start loan chat shortcut ──
-    window.startLoanChat = (loanType) => {
-      switchTab('tab-chat');
-      sendChatMessage(`Tell me about ${loanType} — eligibility, documents, and interest rates.`);
-    };
-
-    // ── Loan Types Search Filter ──
-    window.filterLoanTypes = (query) => {
-      const q = (query || '').toLowerCase().trim();
-      const cards = document.querySelectorAll('.loan-type-full-card');
-      cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        card.style.display = !q || text.includes(q) ? '' : 'none';
-      });
-    };
-
-    // ── Web Speech API Integration (Voice & Mic) ──
-    let voiceRecognition = null;
-    let isVoiceListening = false;
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (SpeechRec) {
-      voiceRecognition = new SpeechRec();
-      voiceRecognition.continuous = false;
-      voiceRecognition.interimResults = false;
-      voiceRecognition.lang = 'en-US';
-
-      voiceRecognition.onstart = () => {
-        isVoiceListening = true;
+  // Voice
+  let voiceRecognition = null, isVoiceListening = false;
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRec) {
+    voiceRecognition = new SpeechRec();
+    voiceRecognition.continuous = false; voiceRecognition.interimResults = false; voiceRecognition.lang = 'en-US';
+    voiceRecognition.onstart = () => { isVoiceListening = true; const t = document.getElementById('voice-status-tag'); if(t) t.textContent = '🎙️ Listening…'; };
+    voiceRecognition.onresult = async (event) => {
+      const transcript = event.results[0][0].transcript;
+      const activeTab = document.querySelector('.tab-view.active')?.id;
+      if (activeTab === 'tab-voice') {
+        const caption = document.getElementById('voice-caption-text');
+        if (caption) caption.textContent = '"' + transcript + '"';
         const tag = document.getElementById('voice-status-tag');
-        if (tag) tag.textContent = '🎙️ Listening… Speak now';
-      };
-
-      voiceRecognition.onresult = async (event) => {
-        const transcript = event.results[0][0].transcript;
-        const activeTab = document.querySelector('.tab-view.active')?.id;
-
-        if (activeTab === 'tab-voice') {
-          const caption = document.getElementById('voice-caption-text');
-          if (caption) caption.textContent = `"${transcript}"`;
-          const tag = document.getElementById('voice-status-tag');
-          if (tag) tag.textContent = '🧠 Analyzing with AI…';
-
-          try {
-            const reply = await bot.processMessage(transcript);
-            if (caption) caption.innerHTML = `<span class="highlight">ManiLoan:</span> ${reply.replace(/[*_#]/g, '')}`;
-            if (tag) tag.textContent = '🔊 Speaking response…';
-
-            if ('speechSynthesis' in window) {
-              window.speechSynthesis.cancel();
-              const utter = new SpeechSynthesisUtterance(reply.replace(/[*_#]/g, ''));
-              utter.onend = () => { if(tag) tag.textContent = 'Idle — Tap mic to talk'; };
-              window.speechSynthesis.speak(utter);
-            }
-          } catch(err) {
-            if (tag) tag.textContent = '⚠️ Could not process request.';
+        if (tag) tag.textContent = '🧠 Analyzing…';
+        try {
+          const reply = await bot.processMessage(transcript);
+          if (caption) caption.innerHTML = '<span class="highlight">ManiLoan:</span> ' + reply.replace(/[*_#]/g,'');
+          if (tag) tag.textContent = '🔊 Speaking…';
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(reply.replace(/[*_#]/g,''));
+            u.onend = () => { if(tag) tag.textContent = 'Idle — Tap mic'; };
+            window.speechSynthesis.speak(u);
           }
-        } else {
-          // Chat tab mic
-          if (chatInput) chatInput.value = transcript;
-          sendChatMessage(transcript);
-        }
-      };
-
-      voiceRecognition.onerror = () => {
-        const tag = document.getElementById('voice-status-tag');
-        if (tag) tag.textContent = 'Could not hear clearly. Tap to retry.';
-        isVoiceListening = false;
-      };
-
-      voiceRecognition.onend = () => {
-        isVoiceListening = false;
-      };
-    }
-
-    // Voice button triggers
-    document.getElementById('btn-voice-keyboard')?.addEventListener('click', () => switchTab('tab-chat'));
-    document.getElementById('btn-big-mic')?.addEventListener('click', () => {
-      if (voiceRecognition) {
-        if (!isVoiceListening) {
-          try { voiceRecognition.start(); } catch(e) {}
-        } else {
-          voiceRecognition.stop();
-        }
-      } else {
-        const tag = document.getElementById('voice-status-tag');
-        if (tag) tag.textContent = 'Voice recognition not supported in this browser. Use Chat.';
-      }
-    });
-
-    document.getElementById('chat-mic-btn')?.addEventListener('click', () => {
-      if (voiceRecognition) {
-        try { voiceRecognition.start(); } catch(e) {}
-      } else {
-        switchTab('tab-voice');
-      }
-    });
-
-    // ── Chat options menu ──
-    document.getElementById('chat-options-btn')?.addEventListener('click', () => {
-      if (confirm('Clear current chat session?')) {
-        startNewChatSession();
-      }
-    });
-
-    // ── Mobile Drawer history link ──
-    document.getElementById('drawer-history-btn')?.addEventListener('click', () => {
-      const hist = document.getElementById('sidebar-chats');
-      if (hist) hist.scrollIntoView({ behavior: 'smooth' });
-    });
-
-    // ── Profile Avatar click ──
-    document.getElementById('navbar-avatar-btn')?.addEventListener('click', () => {
-      openSettingsModal();
-    });
-
-    // ── Evaluator bank rule banner ──
-    const bankRules = {
-      general: 'Standard multi-bank prudential lending norms (FOIR ≤ 50%, Age 18–70, CIBIL ≥ 650).',
-      sbi: 'SBI: FOIR ≤ 50%, CIBIL ≥ 650, Age 18–70, Min income ₹25,000/mo, Standard LTV norms.',
-      hdfc: 'HDFC Bank: FOIR ≤ 55%, CIBIL ≥ 750, Age 21–65, Min income ₹30,000/mo, Stricter LTV.',
-      icici: 'ICICI Bank: FOIR ≤ 50%, CIBIL ≥ 750, Age 23–65, Min income ₹30,000/mo, Digital-first.',
-      axis: 'Axis Bank: FOIR ≤ 50%, CIBIL ≥ 700, Age 21–65, Min income ₹25,000/mo.',
-      bob_pnb: 'Bank of Baroda / PNB: FOIR ≤ 50%, CIBIL ≥ 650, Age 18–70, Min income ₹20,000/mo.',
-      cosmos: 'Cosmos UCB: FOIR ≤ 45%, CIBIL ≥ 650, Age 21–65, Member-only, Regional focus.',
-      saraswat: 'Saraswat UCB: FOIR ≤ 45%, CIBIL ≥ 650, Age 21–65, Member-only, Regional focus.',
+        } catch(err) { if (tag) tag.textContent = '⚠️ Could not process.'; }
+      } else { if (chatInput) chatInput.value = transcript; sendChatMessage(transcript); }
     };
-    document.getElementById('eval-bank-select')?.addEventListener('change', function() {
-      const ruleText = document.getElementById('eval-bank-rule-text');
-      if (ruleText) ruleText.textContent = bankRules[this.value] || bankRules.general;
-      if (window.runEvaluator) window.runEvaluator();
-    });
+    voiceRecognition.onerror = () => { const t = document.getElementById('voice-status-tag'); if(t) t.textContent = 'Could not hear. Tap to retry.'; isVoiceListening = false; };
+    voiceRecognition.onend = () => { isVoiceListening = false; };
+  }
+  document.getElementById('btn-voice-keyboard')?.addEventListener('click', () => switchTab('tab-chat'));
+  document.getElementById('btn-big-mic')?.addEventListener('click', () => {
+    if (voiceRecognition) { if (!isVoiceListening) { try { voiceRecognition.start(); } catch(e){} } else voiceRecognition.stop(); }
+    else { const t = document.getElementById('voice-status-tag'); if(t) t.textContent = 'Voice not supported. Use Chat.'; }
+  });
+  document.getElementById('chat-mic-btn')?.addEventListener('click', () => { if (voiceRecognition) { try { voiceRecognition.start(); } catch(e){} } else switchTab('tab-voice'); });
 
-    document.getElementById('eval-product-select')?.addEventListener('change', () => {
-      if (window.runEvaluator) window.runEvaluator();
-    });
+  // Eligibility Sliders
+  const eligIncome = document.getElementById('elig-income');
+  const eligIncomeSlider = document.getElementById('elig-income-slider');
+  const eligIncomeDisplay = document.getElementById('elig-income-display');
+  const eligEmi = document.getElementById('elig-existing-emi');
+  const eligEmiSlider = document.getElementById('elig-emi-slider');
+  const eligEmiDisplay = document.getElementById('elig-emi-display');
+  const eligLoan = document.getElementById('elig-loan-amount');
+  const eligLoanSlider = document.getElementById('elig-loan-slider');
+  const eligLoanDisplay = document.getElementById('elig-loan-display');
 
-    // ── Amortization Chart Instance ──
-    let amortizationChartInstance = null;
+  function fmtCurr(v) { return '₹' + parseInt(v||0).toLocaleString('en-IN'); }
 
-    function updateAmortizationChart(loanAmountInRupees, tenureMonths, annualInterestRate = 8.5) {
-      const ctx = document.getElementById('amortization-chart')?.getContext('2d');
-      if (!ctx || typeof Chart === 'undefined') return;
+  function syncSlider(input, slider, display, fmt) {
+    slider?.addEventListener('input', () => { if(input) input.value = slider.value; if(display) display.textContent = fmt(slider.value); updateEligibilityResult(); });
+    input?.addEventListener('input', () => { if(slider) slider.value = input.value; if(display) display.textContent = fmt(input.value||0); updateEligibilityResult(); });
+  }
+  syncSlider(eligIncome, eligIncomeSlider, eligIncomeDisplay, fmtCurr);
+  syncSlider(eligEmi, eligEmiSlider, eligEmiDisplay, fmtCurr);
+  syncSlider(eligLoan, eligLoanSlider, eligLoanDisplay, v => '₹'+v+'L');
+  document.getElementById('elig-loan-type')?.addEventListener('change', updateEligibilityResult);
 
-      const monthlyRate = (annualInterestRate / 100) / 12;
-      const emi = monthlyRate === 0 
-        ? loanAmountInRupees / tenureMonths 
-        : (loanAmountInRupees * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) / (Math.pow(1 + monthlyRate, tenureMonths) - 1);
-
-      let balance = loanAmountInRupees;
-      let totalInterest = 0;
-      let totalPrincipal = 0;
-
-      const labels = [];
-      const balanceData = [];
-      const interestData = [];
-      const principalData = [];
-
-      const step = Math.max(1, Math.floor(tenureMonths / 12));
-
-      for (let m = 1; m <= tenureMonths; m++) {
-        const interestForMonth = balance * monthlyRate;
-        const principalForMonth = Math.min(balance, emi - interestForMonth);
-        balance = Math.max(0, balance - principalForMonth);
-        totalInterest += interestForMonth;
-        totalPrincipal += principalForMonth;
-
-        if (m % step === 0 || m === tenureMonths) {
-          labels.push(`M${m}`);
-          balanceData.push(Math.round(balance));
-          interestData.push(Math.round(totalInterest));
-          principalData.push(Math.round(totalPrincipal));
-        }
-      }
-
-      if (amortizationChartInstance) {
-        amortizationChartInstance.destroy();
-      }
-
-      amortizationChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: 'Remaining Principal (₹)',
-              data: balanceData,
-              borderColor: '#0D9488',
-              backgroundColor: 'rgba(13, 148, 136, 0.08)',
-              fill: true,
-              tension: 0.35,
-              borderWidth: 2,
-              pointRadius: 2
-            },
-            {
-              label: 'Total Principal Paid (₹)',
-              data: principalData,
-              borderColor: '#16A34A',
-              backgroundColor: 'transparent',
-              borderDash: [4, 4],
-              tension: 0.35,
-              borderWidth: 2,
-              pointRadius: 2
-            },
-            {
-              label: 'Total Interest Paid (₹)',
-              data: interestData,
-              borderColor: '#F59E0B',
-              backgroundColor: 'transparent',
-              tension: 0.35,
-              borderWidth: 2,
-              pointRadius: 2
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: {
-              position: 'top',
-              labels: { boxWidth: 12, font: { family: 'Plus Jakarta Sans', size: 11 } }
-            },
-            tooltip: {
-              callbacks: {
-                label: (c) => ` ${c.dataset.label}: ₹${c.raw.toLocaleString('en-IN')}`
-              }
-            }
-          },
-          scales: {
-            x: { grid: { color: 'rgba(0,0,0,0.04)' } },
-            y: {
-              grid: { color: 'rgba(0,0,0,0.04)' },
-              ticks: {
-                callback: (val) => '₹' + (val >= 100000 ? (val/100000).toFixed(1) + 'L' : (val/1000).toFixed(0) + 'k')
-              }
-            }
-          }
-        }
-      });
-    }
-
-    // ── Run Evaluator Function ──
-    window.runEvaluator = function() {
-      if (typeof LoanEvaluator === 'undefined') return;
-
-      const applicantAge = parseInt(document.getElementById('eval-applicant-age')?.value) || 32;
-      const applicantIncome = parseFloat(document.getElementById('eval-applicant-income')?.value) || 50000;
-      const coapplicantIncome = parseFloat(document.getElementById('eval-coapplicant-income')?.value) || 0;
-      const loanAmountLakhs = parseFloat(document.getElementById('eval-loan-amount')?.value) || 2;
-      // In dataset, LoanAmount is in thousands (₹ Lakhs * 100)
-      const loanAmountParam = loanAmountLakhs * 100;
-      const loanAmountRupees = loanAmountLakhs * 100000;
-      const loanTerm = parseFloat(document.getElementById('eval-loan-term')?.value) || 360;
-      const creditHistory = parseInt(document.getElementById('eval-credit-history')?.value) ?? 1;
-      const education = document.getElementById('eval-education')?.value || 'Graduate';
-      const propertyArea = document.getElementById('eval-property-area')?.value || 'Semiurban';
-      const dependents = document.getElementById('eval-dependents')?.value || '0';
-      const married = document.getElementById('eval-married')?.value || 'Yes';
-      const selfEmployed = document.getElementById('eval-self-employed')?.value || 'No';
-      const targetBank = document.getElementById('eval-bank-select')?.value || 'general';
-      const loanProduct = document.getElementById('eval-product-select')?.value || 'Home';
-
-      const input = {
-        ApplicantIncome: applicantIncome,
-        CoapplicantIncome: coapplicantIncome,
-        LoanAmount: loanAmountParam,
-        Loan_Amount_Term: loanTerm,
-        Credit_History: creditHistory,
-        Gender: 'Male',
-        Married: married,
-        Dependents: dependents,
-        Education: education,
-        Self_Employed: selfEmployed,
-        Property_Area: propertyArea,
-        ApplicantAge: applicantAge,
-        TargetBank: targetBank,
-        LoanProduct: loanProduct
-      };
-
-      const result = LoanEvaluator.evaluateLoanApplication(input);
-
-      // Update Risk Probability
-      const probVal = document.getElementById('risk-prob-val');
-      if (probVal) probVal.textContent = `${result.assessment.defaultProbabilityPct}%`;
-
-      // Update Gauge Conic Gradient
-      const gauge = document.getElementById('risk-gauge');
-      if (gauge) {
-        const deg = Math.min(360, Math.max(10, Math.round(result.assessment.defaultProbabilityPct * 3.6)));
-        let color = '#16A34A';
-        if (result.assessment.defaultProbabilityPct >= 65) color = '#DC2626';
-        else if (result.assessment.defaultProbabilityPct >= 35) color = '#EA580C';
-        else if (result.assessment.defaultProbabilityPct >= 18) color = '#0D9488';
-        gauge.style.background = `conic-gradient(${color} 0deg ${deg}deg, var(--bg-secondary) ${deg}deg 360deg)`;
-      }
-
-      // Update Decision Badge
-      const badge = document.getElementById('decision-badge');
-      if (badge) {
-        badge.textContent = result.assessment.decision;
-        badge.className = `badge ${result.assessment.decisionBadgeClass}`;
-      }
-
-      // Update Recommendation Text
-      const recText = document.getElementById('recommendation-text');
-      if (recText) recText.textContent = result.assessment.recommendation;
-
-      // Update Compliance Overall Tag
-      const compTag = document.getElementById('compliance-overall-tag');
-      if (compTag) {
-        if (result.bankUnderwriting.hardGatePassed) {
-          compTag.textContent = 'All Criteria Met';
-          compTag.style.background = 'var(--success-bg)';
-          compTag.style.color = 'var(--success)';
-        } else {
-          compTag.textContent = 'Policy Flagged';
-          compTag.style.background = 'var(--danger-bg)';
-          compTag.style.color = 'var(--danger)';
-        }
-      }
-
-      // Update Compliance Checklist
-      const compList = document.getElementById('eval-compliance-list');
-      if (compList) {
-        compList.innerHTML = result.bankUnderwriting.complianceChecks.map(c => `
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:0.825rem;">
-            <div style="display:flex;align-items:center;gap:0.5rem;">
-              <span>${c.status === 'pass' ? '✅' : '❌'}</span>
-              <div>
-                <strong style="color:var(--text-main);">${c.label}</strong>
-                <div style="font-size:0.75rem;color:var(--text-muted);">${c.note}</div>
-              </div>
-            </div>
-            <div style="text-align:right;white-space:nowrap;margin-left:0.5rem;">
-              <span style="font-weight:700;color:${c.status === 'pass' ? 'var(--success)' : 'var(--danger)'};">${c.applicantVal}</span>
-              <div style="font-size:0.7rem;color:var(--text-muted);">Rule: ${c.ruleVal}</div>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      // Update Ratios
-      const totalIncEl = document.getElementById('val-total-income');
-      if (totalIncEl) totalIncEl.textContent = `₹${result.engineered.totalIncome.toLocaleString('en-IN')}`;
-
-      const emiIncEl = document.getElementById('val-emi-income');
-      if (emiIncEl) emiIncEl.textContent = `${(result.engineered.emiToIncomeRatio * 100).toFixed(1)}%`;
-
-      const loanIncEl = document.getElementById('val-loan-income');
-      if (loanIncEl) loanIncEl.textContent = `${result.engineered.loanToIncomeRatio.toFixed(1)}%`;
-
-      // Update Multi-Bank Comparison Table
-      const bankTableBody = document.querySelector('#multi-bank-table tbody');
-      if (bankTableBody && window.BANK_UNDERWRITING_POLICIES_2026) {
-        const bankKeys = Object.keys(window.BANK_UNDERWRITING_POLICIES_2026);
-        bankTableBody.innerHTML = bankKeys.map(bk => {
-          const bankEval = LoanEvaluator.evaluateLoanApplication({ ...input, TargetBank: bk });
-          const isCurrent = bk === targetBank;
-          const passed = bankEval.bankUnderwriting.hardGatePassed;
-          return `
-            <tr style="border-bottom: 1px solid var(--border); background:${isCurrent ? 'var(--primary-light)' : 'transparent'};">
-              <td style="padding: 0.75rem; font-weight: 600;">
-                ${bankEval.bankUnderwriting.policy.name}
-                ${isCurrent ? ' <span style="font-size:0.7rem;background:var(--primary);color:#fff;padding:2px 6px;border-radius:4px;">Selected</span>' : ''}
-              </td>
-              <td style="padding: 0.75rem;">
-                <span class="badge ${passed ? 'badge-approve' : 'badge-decline'}" style="font-size:0.75rem;padding:0.25rem 0.6rem;">
-                  ${passed ? 'ELIGIBLE' : 'FLAGGED'}
-                </span>
-              </td>
-              <td style="padding: 0.75rem; font-weight:700;">${bankEval.assessment.defaultProbabilityPct}%</td>
-              <td style="padding: 0.75rem; font-size:0.8rem; color:var(--text-muted); max-width:260px;">${bankEval.bankUnderwriting.policy.summary}</td>
-            </tr>
-          `;
-        }).join('');
-      }
-
-      // Update Amortization Schedule Chart
-      updateAmortizationChart(loanAmountRupees, loanTerm, 8.5);
+  function updateEligibilityResult() {
+    const income = parseFloat(eligIncome?.value||50000);
+    const emiObl = parseFloat(eligEmi?.value||0);
+    const loanType = document.getElementById('elig-loan-type')?.value || 'Home';
+    const tenureMap = {Home:240, Car:60, Gold:36, Education:84, Personal:60, MSME:84};
+    const rateMap = {Home:0.085, Car:0.10, Gold:0.085, Education:0.09, Personal:0.14, MSME:0.12};
+    const tenureMonths = tenureMap[loanType]||60;
+    const rate = (rateMap[loanType]||0.10)/12;
+    const avail = income * 0.50 - emiObl;
+    let elig = 0;
+    if (avail > 0 && rate > 0) elig = avail * (Math.pow(1+rate,tenureMonths)-1) / (rate * Math.pow(1+rate,tenureMonths));
+    const amtEl = document.getElementById('elig-result-amount');
+    if (amtEl) amtEl.textContent = '₹ ' + Math.round(Math.max(0,elig)).toLocaleString('en-IN');
+    const detailsMap = {
+      Home: ['Loan amount: Up to 90% of property value','Tenure: 5 to 30 years','Interest rate: 8.5% - 9% (approx.)','Documents: ID proof, income proof, property docs'],
+      Car: ['Loan amount: Up to 90% of vehicle value','Tenure: 1 to 7 years','Interest rate: 9.5% - 11% (approx.)','Documents: ID proof, income proof, RC book'],
+      Gold: ['Loan amount: Up to 75% of gold value (RBI)','Tenure: Up to 3 years','Interest rate: 7% - 9% (approx.)','Documents: ID proof, gold valuation certificate'],
+      Education: ['Loan amount: Up to ₹1 Cr (abroad)','Tenure: Up to 15 years + moratorium','Interest rate: 8.5% - 10% (approx.)','Documents: Admission letter, ID proof, income proof'],
+      Personal: ['Loan amount: ₹50,000 to ₹40 Lakhs','Tenure: 1 to 5 years','Interest rate: 10.5% - 18% (approx.)','Documents: ID proof, income proof, bank statements'],
+      MSME: ['Loan amount: ₹1L to ₹5 Cr (MUDRA)','Tenure: 1 to 7 years','Interest rate: 9% - 14% (approx.)','Documents: Business proof, GST returns, ITR'],
     };
+    const details = detailsMap[loanType] || detailsMap['Home'];
+    const detailsEl = document.getElementById('elig-result-details');
+    if (detailsEl) detailsEl.innerHTML = details.map(d => '<div class="result-detail-item">✓ ' + d + '</div>').join('');
+  }
+  document.getElementById('check-eligibility-btn')?.addEventListener('click', updateEligibilityResult);
+  updateEligibilityResult();
 
-    // Run initial evaluation once on page load
-    window.runEvaluator();
+  window.switchEligTab = function(tab) {
+    document.getElementById('elig-panel-check').style.display = tab==='check' ? 'block' : 'none';
+    document.getElementById('elig-panel-emi').style.display = tab==='emi' ? 'block' : 'none';
+    document.getElementById('elig-tab-check').classList.toggle('active', tab==='check');
+    document.getElementById('elig-tab-emi').classList.toggle('active', tab==='emi');
+  };
 
-  }); // DOMContentLoaded
+  // EMI Sliders
+  const loanAmountInput = document.getElementById('eval-loan-amount');
+  const loanAmountSlider = document.getElementById('eval-loan-amount-slider');
+  const loanTermSelect = document.getElementById('eval-loan-term');
+  const loanTermSlider = document.getElementById('eval-loan-term-slider');
+  loanAmountSlider?.addEventListener('input', () => { if(loanAmountInput) loanAmountInput.value = loanAmountSlider.value; if(window.runEvaluator) window.runEvaluator(); });
+  loanAmountInput?.addEventListener('input', () => { if(loanAmountSlider) loanAmountSlider.value = loanAmountInput.value; if(window.runEvaluator) window.runEvaluator(); });
+  loanTermSlider?.addEventListener('input', () => { if(loanTermSelect) loanTermSelect.value = loanTermSlider.value; if(window.runEvaluator) window.runEvaluator(); });
+  loanTermSelect?.addEventListener('change', () => { if(loanTermSlider) loanTermSlider.value = loanTermSelect.value; if(window.runEvaluator) window.runEvaluator(); });
+  document.getElementById('evaluator-form')?.addEventListener('input', () => { if(window.runEvaluator) window.runEvaluator(); });
+  document.getElementById('evaluator-form')?.addEventListener('change', () => { if(window.runEvaluator) window.runEvaluator(); });
+  document.getElementById('evaluate-btn')?.addEventListener('click', () => { if(window.runEvaluator) window.runEvaluator(); });
+  document.getElementById('export-pdf-btn')?.addEventListener('click', () => {
+    const el = document.getElementById('risk-output-card-export');
+    if (!el || typeof html2pdf === 'undefined') return;
+    html2pdf().set({margin:10,filename:'ManiLoan_Risk_Report.pdf',html2canvas:{scale:2},jsPDF:{unit:'mm',format:'a4'}}).from(el).save();
+  });
+  document.getElementById('eval-bank-select')?.addEventListener('change', () => { if(window.runEvaluator) window.runEvaluator(); });
+  document.getElementById('eval-product-select')?.addEventListener('change', () => { if(window.runEvaluator) window.runEvaluator(); });
+
+  // Amortization Chart
+  let amortizationChartInstance = null;
+  function updateAmortizationChart(loanAmt, tenure, rate = 8.5) {
+    const ctx = document.getElementById('amortization-chart')?.getContext('2d');
+    if (!ctx || typeof Chart === 'undefined') return;
+    const mr = (rate/100)/12;
+    const emi = mr === 0 ? loanAmt/tenure : loanAmt*mr*Math.pow(1+mr,tenure)/(Math.pow(1+mr,tenure)-1);
+    let bal = loanAmt, ti = 0, tp = 0;
+    const labels=[], balData=[], intData=[], prinData=[];
+    const step = Math.max(1, Math.floor(tenure/12));
+    for (let m=1; m<=tenure; m++) {
+      const ipm = bal*mr; const ppm = Math.min(bal, emi-ipm);
+      bal = Math.max(0, bal-ppm); ti+=ipm; tp+=ppm;
+      if (m%step===0 || m===tenure) { labels.push('M'+m); balData.push(Math.round(bal)); intData.push(Math.round(ti)); prinData.push(Math.round(tp)); }
+    }
+    if (amortizationChartInstance) amortizationChartInstance.destroy();
+    amortizationChartInstance = new Chart(ctx, {
+      type:'line', data:{labels, datasets:[
+        {label:'Remaining Principal (₹)',data:balData,borderColor:'#2563EB',backgroundColor:'rgba(37,99,235,0.07)',fill:true,tension:0.35,borderWidth:2,pointRadius:2},
+        {label:'Total Principal Paid (₹)',data:prinData,borderColor:'#10B981',backgroundColor:'transparent',borderDash:[4,4],tension:0.35,borderWidth:2,pointRadius:2},
+        {label:'Total Interest Paid (₹)',data:intData,borderColor:'#F59E0B',backgroundColor:'transparent',tension:0.35,borderWidth:2,pointRadius:2}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        plugins:{legend:{position:'top',labels:{boxWidth:12,font:{family:'Inter',size:11}}},
+          tooltip:{callbacks:{label:(c)=>' '+c.dataset.label+': ₹'+c.raw.toLocaleString('en-IN')}}},
+        scales:{x:{grid:{color:'rgba(0,0,0,0.04)'}},y:{grid:{color:'rgba(0,0,0,0.04)'},ticks:{callback:(v)=>'₹'+(v>=100000?(v/100000).toFixed(1)+'L':(v/1000).toFixed(0)+'k')}}}}
+    });
+  }
+
+  window.runEvaluator = function() {
+    if (typeof LoanEvaluator === 'undefined') return;
+    const age = parseInt(document.getElementById('eval-applicant-age')?.value)||32;
+    const inc = parseFloat(document.getElementById('eval-applicant-income')?.value)||50000;
+    const coinc = parseFloat(document.getElementById('eval-coapplicant-income')?.value)||0;
+    const loanL = parseFloat(document.getElementById('eval-loan-amount')?.value)||25;
+    const loanP = loanL*100, loanR = loanL*100000;
+    const term = parseFloat(document.getElementById('eval-loan-term')?.value)||360;
+    const ch = parseInt(document.getElementById('eval-credit-history')?.value)??1;
+    const edu = document.getElementById('eval-education')?.value||'Graduate';
+    const area = document.getElementById('eval-property-area')?.value||'Semiurban';
+    const dep = document.getElementById('eval-dependents')?.value||'0';
+    const mar = document.getElementById('eval-married')?.value||'Yes';
+    const se = document.getElementById('eval-self-employed')?.value||'No';
+    const bank = document.getElementById('eval-bank-select')?.value||'general';
+    const prod = document.getElementById('eval-product-select')?.value||'Home';
+    const input = {ApplicantIncome:inc,CoapplicantIncome:coinc,LoanAmount:loanP,Loan_Amount_Term:term,Credit_History:ch,Gender:'Male',Married:mar,Dependents:dep,Education:edu,Self_Employed:se,Property_Area:area,ApplicantAge:age,TargetBank:bank,LoanProduct:prod};
+    const result = LoanEvaluator.evaluateLoanApplication(input);
+    const pv = document.getElementById('risk-prob-val'); if(pv) pv.textContent = result.assessment.defaultProbabilityPct+'%';
+    const gauge = document.getElementById('risk-gauge');
+    if (gauge) {
+      const deg = Math.min(360,Math.max(10,Math.round(result.assessment.defaultProbabilityPct*3.6)));
+      let col = '#16A34A';
+      if (result.assessment.defaultProbabilityPct>=65) col='#DC2626';
+      else if (result.assessment.defaultProbabilityPct>=35) col='#EA580C';
+      else if (result.assessment.defaultProbabilityPct>=18) col='#2563EB';
+      gauge.style.background = 'conic-gradient('+col+' 0deg '+deg+'deg, #F1F5F9 '+deg+'deg 360deg)';
+    }
+    const badge = document.getElementById('decision-badge'); if(badge) { badge.textContent=result.assessment.decision; badge.className='badge '+result.assessment.decisionBadgeClass; }
+    const rec = document.getElementById('recommendation-text'); if(rec) rec.textContent=result.assessment.recommendation;
+    const ct = document.getElementById('compliance-overall-tag');
+    if(ct) { ct.textContent=result.bankUnderwriting.hardGatePassed?'All Criteria Met':'Policy Flagged'; ct.style.background=result.bankUnderwriting.hardGatePassed?'#ECFDF5':'#FEF2F2'; ct.style.color=result.bankUnderwriting.hardGatePassed?'#10B981':'#EF4444'; }
+    const cl = document.getElementById('eval-compliance-list');
+    if(cl) cl.innerHTML=result.bankUnderwriting.complianceChecks.map(c=>'<div style="display:flex;align-items:flex-start;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:0.825rem;"><div style="display:flex;align-items:center;gap:0.5rem;"><span>'+(c.status==='pass'?'✅':'❌')+'</span><div><strong style="color:var(--text-main);">'+c.label+'</strong><div style="font-size:0.75rem;color:var(--text-muted);">'+c.note+'</div></div></div><div style="text-align:right;white-space:nowrap;margin-left:0.5rem;"><span style="font-weight:700;color:'+(c.status==='pass'?'#10B981':'#EF4444')+';">'+c.applicantVal+'</span><div style="font-size:0.7rem;color:var(--text-muted);">Rule: '+c.ruleVal+'</div></div></div>').join('');
+    const ti = document.getElementById('val-total-income'); if(ti) ti.textContent='₹'+result.engineered.totalIncome.toLocaleString('en-IN');
+    const ei = document.getElementById('val-emi-income'); if(ei) ei.textContent=(result.engineered.emiToIncomeRatio*100).toFixed(1)+'%';
+    const li = document.getElementById('val-loan-income'); if(li) li.textContent=result.engineered.loanToIncomeRatio.toFixed(1)+'%';
+    const tb = document.querySelector('#multi-bank-table tbody');
+    if(tb && window.BANK_UNDERWRITING_POLICIES_2026) {
+      tb.innerHTML=Object.keys(window.BANK_UNDERWRITING_POLICIES_2026).map(bk=>{
+        const be=LoanEvaluator.evaluateLoanApplication({...input,TargetBank:bk});
+        const isc=bk===bank, passed=be.bankUnderwriting.hardGatePassed;
+        return '<tr style="border-bottom:1px solid var(--border);background:'+(isc?'#EFF6FF':'transparent')+';"><td style="padding:0.65rem 0.75rem;font-weight:600;">'+be.bankUnderwriting.policy.name+(isc?' <span style="font-size:0.7rem;background:#2563EB;color:#fff;padding:2px 6px;border-radius:4px;">Selected</span>':'')+'</td><td style="padding:0.65rem 0.75rem;"><span style="display:inline-block;padding:0.2rem 0.6rem;border-radius:9999px;font-size:0.75rem;font-weight:700;background:'+(passed?'#ECFDF5':'#FEF2F2')+';color:'+(passed?'#10B981':'#EF4444')+';">'+(passed?'ELIGIBLE':'FLAGGED')+'</span></td><td style="padding:0.65rem 0.75rem;font-weight:700;">'+be.assessment.defaultProbabilityPct+'%</td><td style="padding:0.65rem 0.75rem;font-size:0.8rem;color:var(--text-muted);">'+be.bankUnderwriting.policy.summary+'</td></tr>';
+      }).join('');
+    }
+    updateAmortizationChart(loanR, term, 8.5);
+  };
+  window.runEvaluator();
+
+  // Loan Search
+  document.getElementById('loan-search-input')?.addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#loan-full-grid .loan-type-full-card').forEach(card => {
+      card.style.display = (card.dataset.loan||'').toLowerCase().includes(q) || card.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+
+  // FAQ Accordion
+  window.toggleFaq = function(btn) {
+    const item = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-answer');
+    const chevron = item.querySelector('.faq-chevron');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-answer').style.maxHeight = '0';
+      i.querySelector('.faq-chevron').textContent = '+';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+      chevron.textContent = '−';
+    }
+  };
+
+}); // DOMContentLoaded
 </script>
 
 </body>
