@@ -123,6 +123,11 @@
               check eligibility, and guide you through the process —
               <em>all in one place!</em>
             </p>
+            <!-- Hero CTA Buttons -->
+            <div class="hero-cta-row">
+              <button class="btn-hero-primary nav-tab" data-tab="tab-chat" id="hero-start-chat-btn">Start Chat</button>
+              <button class="btn-hero-secondary nav-tab" data-tab="tab-loan-types" id="hero-explore-btn">Explore Loan Types</button>
+            </div>
             <div class="hero-badges">
               <div class="hero-badge">
                 <span class="hero-badge-icon">⚡</span>
@@ -256,6 +261,17 @@
           </button>
 
         </div>
+
+        <!-- Mobile: Not Sure CTA -->
+        <div class="mobile-not-sure-cta">
+          <div class="not-sure-icon">🤖</div>
+          <div class="not-sure-text">
+            <div class="not-sure-title">Not sure which loan is right for you?</div>
+            <div class="not-sure-sub">Chat with ManiLoan and get personalised guidance.</div>
+          </div>
+          <button class="not-sure-btn nav-tab" data-tab="tab-chat" id="not-sure-chat-btn">Start Chat →</button>
+        </div>
+
       </div>
 
       <!-- Features Section -->
@@ -338,9 +354,15 @@
 
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">
           <button class="chat-view-back nav-tab" data-tab="tab-dashboard" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-muted);font-size:1rem;transition:0.2s;">←</button>
-          <h1 class="loan-types-page-title">All Loan Types</h1>
+          <h1 class="loan-types-page-title">Loan Types</h1>
         </div>
-        <p class="loan-types-page-sub">Choose your loan type and get instant AI guidance on eligibility, documents, interest rates and more.</p>
+        <p class="loan-types-page-sub">Explore different loan options and get instant guidance on eligibility, documents, interest rates and more.</p>
+
+        <!-- Search bar (mobile focused) -->
+        <div class="loan-types-search-wrap">
+          <span class="loan-search-icon">🔍</span>
+          <input type="text" id="loan-types-search" class="loan-types-search-input" placeholder="Search loan type..." oninput="filterLoanTypes(this.value)" autocomplete="off">
+        </div>
 
         <div class="loan-types-full-grid stagger">
 
@@ -842,20 +864,28 @@
   =================================================== -->
   <nav class="bottom-nav-dock" id="bottom-nav-dock">
     <button class="dock-nav-btn active" id="dock-btn-home" data-tab="tab-dashboard">
-      <span class="dock-nav-icon">🏠</span>
+      <span class="dock-nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </span>
       <span class="dock-nav-label">Home</span>
     </button>
     <button class="dock-nav-btn" id="dock-btn-loan-types" data-tab="tab-loan-types">
-      <span class="dock-nav-icon">🏦</span>
+      <span class="dock-nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </span>
       <span class="dock-nav-label">Loan Types</span>
     </button>
     <button class="dock-nav-btn" id="dock-btn-chat" data-tab="tab-chat">
-      <span class="dock-nav-icon">💬</span>
+      <span class="dock-nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </span>
       <span class="dock-nav-label">Chat</span>
     </button>
-    <button class="dock-nav-btn" id="dock-btn-eval" data-tab="tab-evaluator">
-      <span class="dock-nav-icon">⚡</span>
-      <span class="dock-nav-label">Evaluate</span>
+    <button class="dock-nav-btn" id="dock-btn-profile" onclick="openFaqModal()">
+      <span class="dock-nav-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </span>
+      <span class="dock-nav-label">Profile</span>
     </button>
   </nav>
 
@@ -1384,6 +1414,16 @@
     window.startLoanChat = (loanType) => {
       switchTab('tab-chat');
       sendChatMessage(`Tell me about ${loanType} — eligibility, documents, and interest rates.`);
+    };
+
+    // ── Loan Types Search Filter ──
+    window.filterLoanTypes = (query) => {
+      const q = (query || '').toLowerCase().trim();
+      const cards = document.querySelectorAll('.loan-type-full-card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = !q || text.includes(q) ? '' : 'none';
+      });
     };
 
     // ── Web Speech API Integration (Voice & Mic) ──
