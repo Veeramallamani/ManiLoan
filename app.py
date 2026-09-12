@@ -149,9 +149,15 @@ SYSTEM_PROMPT = get_system_prompt_for_language("English")
 
 @app.after_request
 def add_header(response):
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = '0'
+    path = request.path
+    if path.startswith('/api/'):
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+    elif any(path.endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.ico', '.css', '.js', '.woff2']):
+        response.headers['Cache-Control'] = 'public, max-age=86400'
+    else:
+        response.headers['Cache-Control'] = 'public, max-age=3600'
     return response
 
 @app.route('/')
@@ -302,27 +308,19 @@ def chat_endpoint():
                             updated_history = updated_history[-50:]
                             messages_json = json.dumps(updated_history)
 
-                            # Select-first approach: works without UNIQUE constraint on session_id
-                            existing = supabase.table("chat_history") \
-                                .select("id") \
-                                .eq("session_id", session_id) \
-                                .limit(1) \
-                                .execute()
-
-                            existing_rows = _cast(list[dict], existing.data or [])
-                            if existing_rows:
-                                # Row exists — update it
-                                row_id = existing_rows[0]["id"]
-                                supabase.table("chat_history") \
-                                    .update({"messages": messages_json}) \
-                                    .eq("id", row_id) \
-                                    .execute()
-                            else:
-                                # No row yet — insert a fresh one
-                                supabase.table("chat_history").insert({
-                                    "session_id": session_id,
-                                    "messages": messages_json
-                                }).execute()
+                            # Atomic Upsert (O(1)) with automatic fallback
+                            try:
+                                supabase.table("chat_history").upsert(
+                                    {"session_id": session_id, "messages": messages_json},
+                                    on_conflict="session_id"
+                                ).execute()
+                            except Exception:
+                                existing = supabase.table("chat_history").select("id").eq("session_id", session_id).limit(1).execute()
+                                existing_rows = _cast(list[dict], existing.data or [])
+                                if existing_rows:
+                                    supabase.table("chat_history").update({"messages": messages_json}).eq("id", existing_rows[0]["id"]).execute()
+                                else:
+                                    supabase.table("chat_history").insert({"session_id": session_id, "messages": messages_json}).execute()
                         except Exception as e:
                             print("Supabase chat logging error:", repr(e))
 
