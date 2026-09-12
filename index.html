@@ -851,17 +851,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.openAuthModal = () => {
-    document.getElementById('auth-modal')?.classList.add('active');
+    const modal = document.getElementById('auth-modal');
+    if (modal) { modal.classList.add('open'); modal.classList.add('active'); }
   };
   window.closeAuthModal = () => {
-    document.getElementById('auth-modal')?.classList.remove('active');
+    const modal = document.getElementById('auth-modal');
+    if (modal) { modal.classList.remove('open'); modal.classList.remove('active'); }
   };
   window.openProfileModal = () => {
-    document.getElementById('user-profile-modal')?.classList.add('active');
+    const modal = document.getElementById('user-profile-modal');
+    if (modal) { modal.classList.add('open'); modal.classList.add('active'); }
   };
   window.closeProfileModal = () => {
-    document.getElementById('user-profile-modal')?.classList.remove('active');
+    const modal = document.getElementById('user-profile-modal');
+    if (modal) { modal.classList.remove('open'); modal.classList.remove('active'); }
   };
+
+  // Close modals on overlay backdrop click
+  document.getElementById('auth-modal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'auth-modal') closeAuthModal();
+  });
+  document.getElementById('user-profile-modal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'user-profile-modal') closeProfileModal();
+  });
 
   window.handleGoogleSignIn = async () => {
     if (!supabaseClient) {
