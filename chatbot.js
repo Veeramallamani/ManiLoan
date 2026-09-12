@@ -639,44 +639,101 @@ For MSME / Business Loan:
   handleProductCriteriaQuery(q) {
     if (q.includes('gold')) {
       return {
-        text: `### 🪙 Gold Loan Criteria (2026 India Benchmark)
+        text: `### 🪙 Gold Loan Criteria & Interest Rates (2026 All Banks Benchmark)
 - **RBI Regulatory Cap**: Maximum **75% LTV** on pledged gold jewellery (18K–22K purity).
-- **SBI**: ₹20,000 to ₹50 Lakh | Up to 36 months (EMI, Bullet, OD) | Income proof optional for retail gold loan.
-- **HDFC**: Age 18–75 | 6 to 42 months tenure | Term, OD, and bullet repayment.
-- **Cosmos Bank**: Maximum 70% finance against appraised gold value.`,
+
+**Interest Rates Across All Major Banks**:
+- **SBI (State Bank of India)**: 8.75% – 9.30% p.a.
+- **HDFC Bank**: 9.00% – 16.00% p.a.
+- **ICICI Bank**: 9.15% – 16.50% p.a.
+- **Axis Bank**: 9.25% – 15.50% p.a.
+- **Bank of Baroda (BoB)**: 8.70% – 9.25% p.a.
+- **Punjab National Bank (PNB)**: 8.75% – 9.35% p.a.
+- **Canara Bank**: 8.65% – 9.20% p.a.
+- **Union Bank of India**: 8.70% – 9.30% p.a.
+- **Kotak Mahindra Bank**: 9.10% – 15.00% p.a.
+- **Bank of India (BoI)**: 8.60% – 9.15% p.a.
+- **Central Bank of India**: 8.65% – 9.20% p.a.
+- **IndusInd Bank**: 9.50% – 16.00% p.a.
+- **Cosmos Cooperative Bank**: 9.25% – 10.50% p.a. (up to 70% LTV)
+- **Saraswat Cooperative Bank**: 9.15% – 10.25% p.a.`,
         source: 'local',
         quickActions: ['SBI Gold Loan', 'HDFC Gold Loan', 'Home Loan Criteria', 'Education Loan Criteria']
       };
     }
     if (q.includes('vehicle') || q.includes('car') || q.includes('auto') || q.includes('bike') || q.includes('two-wheeler')) {
       return {
-        text: `### 🚗 Vehicle & Car Loan Criteria (2026 India Benchmark)
-- **HDFC**: Salaried min annual income ₹3 Lakh, 2 yrs exp (1 yr current).
-- **Axis Bank**: Salaried min net salary ₹2.40 Lakh/yr | Self-employed min ₹1.80L–₹2.0L/yr with 3 yrs vintage.
-- **Cosmos Bank**: Up to 90% of on-road car value | Two-wheeler loans up to ₹10 Lakh.
-- **Security**: Primary hypothecation of vehicle, comprehensive insurance mandatory.`,
+        text: `### 🚗 Vehicle & Car Loan Overview & All Banks Interest Rates (2026)
+- **Tenure & Limits**: Min 1 to Max 8 Years (12 to 96 Months) | Up to 90% on-road financing.
+
+**Interest Rates Across All Major Banks**:
+- **SBI (State Bank of India)**: 8.75% – 9.60% p.a.
+- **HDFC Bank**: 8.90% – 10.50% p.a.
+- **ICICI Bank**: 8.95% – 10.75% p.a.
+- **Axis Bank**: 9.00% – 10.80% p.a.
+- **Bank of Baroda (BoB)**: 8.70% – 9.45% p.a.
+- **Punjab National Bank (PNB)**: 8.75% – 9.50% p.a.
+- **Canara Bank**: 8.70% – 9.35% p.a.
+- **Union Bank of India**: 8.65% – 9.40% p.a.
+- **Kotak Mahindra Bank**: 8.95% – 10.25% p.a.
+- **Bank of India (BoI)**: 8.65% – 9.30% p.a.
+- **Central Bank of India**: 8.70% – 9.35% p.a.
+- **IndusInd Bank**: 9.25% – 11.50% p.a.
+- **Cosmos Cooperative Bank**: 9.50% – 10.75% p.a. (up to 90% on-road)
+- **Saraswat Cooperative Bank**: 9.35% – 10.50% p.a.`,
         source: 'local',
         quickActions: ['Car Loan Eligibility', 'HDFC Car Loan', 'Home Loan Criteria', 'Gold Loan Rules']
       };
     }
     if (q.includes('education') || q.includes('student')) {
       return {
-        text: `### 🎓 Education Loan Criteria (2026 India Benchmark)
-- **Eligibility**: Confirmed admission in recognized Indian or overseas institutions.
-- **Co-Applicant**: Parent/guardian mandatory as co-borrower for regular full-time courses.
-- **Tenure**: Up to 15 years repayment + moratorium (course period + 6–12 months).
-- **Expenses**: Tuition, hostel, books, equipment, travel. Premier institutes get zero-collateral limits.`,
+        text: `### 🎓 Education Loan Overview & All Banks Interest Rates (2026)
+- **Tenure & Moratorium**: Up to 15 years repayment + Moratorium (course duration + 6–12 months).
+
+**Interest Rates Across All Major Banks**:
+- **SBI (State Bank of India)**: 8.15% – 11.15% p.a.
+- **HDFC Bank**: 9.50% – 13.25% p.a.
+- **ICICI Bank**: 9.75% – 13.50% p.a.
+- **Axis Bank**: 9.80% – 13.75% p.a.
+- **Bank of Baroda (BoB)**: 8.25% – 11.00% p.a.
+- **Punjab National Bank (PNB)**: 8.30% – 10.95% p.a.
+- **Canara Bank**: 8.20% – 10.85% p.a.
+- **Union Bank of India**: 8.25% – 10.90% p.a.
+- **Kotak Mahindra Bank**: 9.60% – 12.85% p.a.
+- **Bank of India (BoI)**: 8.20% – 10.75% p.a.
+- **Central Bank of India**: 8.25% – 10.80% p.a.
+- **IndusInd Bank**: 10.25% – 14.00% p.a.
+- **Cosmos Cooperative Bank**: 9.75% – 11.50% p.a.
+- **Saraswat Cooperative Bank**: 9.65% – 11.25% p.a.`,
         source: 'local',
         quickActions: ['SBI Education Loan', 'HDFC Education Loan', 'Home Loan Criteria', 'Gold Loan Rules']
       };
     }
     if (q.includes('home') || q.includes('house') || q.includes('housing')) {
       return {
-        text: `### 🏠 Home Loan Criteria (2026 India Benchmark)
-- **Age & Tenure**: Age 18–70 | Repayment tenure up to 30 years.
-- **Income Thresholds**: Salaried min ₹25,000/mo; Self-employed min ₹30,000/mo (ICICI/HDFC).
-- **FOIR / EMI Cap**: Total monthly EMI obligations capped at 40%–50% of net income.
-- **Due Diligence**: Legal title clearance, technical valuation, approved building plans.`,
+        text: `### 🏠 Home Loan Overview & All Banks Interest Rates (2026 Benchmark)
+- **Eligibility**: Age 18–70 years | Repayment tenure up to 30 years (12–360 months) | Min Salary ₹25,000/mo | CIBIL 750+
+
+**Interest Rates Across All Major Indian Banks**:
+- **SBI (State Bank of India)**: 8.50% – 9.15% p.a.
+- **HDFC Bank**: 8.70% – 9.60% p.a.
+- **ICICI Bank**: 8.75% – 9.60% p.a.
+- **Axis Bank**: 8.75% – 9.35% p.a.
+- **Bank of Baroda (BoB)**: 8.40% – 9.10% p.a.
+- **Punjab National Bank (PNB)**: 8.45% – 9.00% p.a.
+- **Canara Bank**: 8.40% – 8.90% p.a.
+- **Union Bank of India**: 8.35% – 9.00% p.a.
+- **Kotak Mahindra Bank**: 8.70% – 9.25% p.a.
+- **Bank of India (BoI)**: 8.30% – 8.85% p.a.
+- **Central Bank of India**: 8.35% – 8.95% p.a.
+- **IndusInd Bank**: 8.75% – 9.95% p.a.
+- **Cosmos Cooperative Bank**: 8.90% – 9.75% p.a. (up to ₹3 Crore)
+- **Saraswat Cooperative Bank**: 8.85% – 9.65% p.a.
+
+- **Required Documents**:
+  - Identity & Address Proof (Aadhaar, PAN, Passport)
+  - Income Proof (3 months salary slips, 6 months bank statement, Form 16 / ITR)
+  - Property Documents (Title Deed, Sale Agreement, Building Plan)`,
         source: 'local',
         quickActions: ['SBI Home Loan', 'HDFC Home Loan', 'ICICI Home Loan', 'Default Rate']
       };
