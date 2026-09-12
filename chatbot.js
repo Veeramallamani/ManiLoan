@@ -247,8 +247,8 @@ class LoanChatbot {
 - All numbers and currency must be in Indian Rupees (₹) (e.g. ₹50,000, ₹15 Lakhs, ₹12,500/month). Never use dollar ($).
 
 ### 2026 INDIAN BANK UNDERWRITING BENCHMARKS & TENURE RANGES (REFERENCE):
-- **Home Loan**: Tenure Min 1–5 Years to Max 30 Years (12–360 Months), Age 18–70, Min Salary ₹25k–₹30k/mo (ICICI/HDFC), FOIR/EMI burden <= 45–50%, CIBIL 750+ prime cutoff.
-- **Vehicle Loan**: Tenure Min 1 Year to Max 7–8 Years (12–96 Months), Age 21–60/65, Min Annual Income ₹2.4L–₹3.0L (Axis/HDFC), Cosmos up to 90% on-road.
+- **Home Loan**: Tenure Min 1–5 Years to Max 30 Years (12–360 Months), Age 18–70, Min Salary ₹25k–₹30k/mo, FOIR/EMI burden <= 45–50%, CIBIL 750+ prime cutoff.
+- **Vehicle Loan**: Tenure Min 1 Year to Max 7–8 Years (12–96 Months), Age 21–60/65, Min Annual Income ₹2.4L–₹3.0L, Cosmos up to 90% on-road.
 - **Gold Loan**: Tenure Min 6 Months to Max 36 Months (3 Years), RBI mandatory max 75% LTV, 18K–22K gold, SBI ₹20k–₹50L, Cosmos 70% LTV.
 - **Education Loan**: Tenure Min 1 Year to Max 15 Years (12–180 Months) + Moratorium course+6/12 mo, Co-applicant mandatory.
 - **Consumer Durable Loan**: Tenure Min 3 Months to Max 24–36 Months, low/0% down payment.
