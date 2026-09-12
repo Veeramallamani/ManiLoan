@@ -26,6 +26,7 @@ DEFAULT_MODELS = [m.strip() for m in DEFAULT_MODELS_STR.split(",")] if DEFAULT_M
 # Supabase configuration
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 RENDER_DEPLOY_URL = os.environ.get("RENDER_DEPLOY_URL", "")
 
 supabase = None
@@ -169,6 +170,13 @@ def health_check():
         "openrouter_configured": bool(DEFAULT_OPENROUTER_API_KEY),
         "default_api_key": DEFAULT_OPENROUTER_API_KEY,
         "default_models": DEFAULT_MODELS
+    })
+
+@app.route('/api/config', methods=['GET'])
+def get_config():
+    return jsonify({
+        "supabaseUrl": SUPABASE_URL,
+        "supabaseAnonKey": SUPABASE_ANON_KEY
     })
 
 @app.route('/api/test-openrouter', methods=['POST'])
