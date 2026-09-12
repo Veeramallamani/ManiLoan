@@ -813,7 +813,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (res.ok) {
         const config = await res.json();
         if (config.supabaseUrl && config.supabaseAnonKey && typeof supabase !== 'undefined') {
-          supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+          supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseAnonKey, {
+            auth: {
+              experimental: {
+                passkey: true
+              }
+            }
+          });
           
           // Check initial session
           const { data: { session } } = await supabaseClient.auth.getSession();
@@ -868,6 +874,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.openAuthModal = () => {
+    const alertBox = document.getElementById('auth-status-msg');
+    if (alertBox) { alertBox.style.display = 'none'; alertBox.textContent = ''; }
     const modal = document.getElementById('auth-modal');
     if (modal) { modal.classList.add('open'); modal.classList.add('active'); }
   };
