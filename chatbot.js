@@ -135,6 +135,29 @@ class LoanChatbot {
     };
   }
 
+  async processMessage(userQuery) {
+    try {
+      const res = await this.processQueryAsync(userQuery);
+      if (typeof res === 'string') return res;
+      if (res && typeof res === 'object') {
+        let output = res.text || '';
+        if (res.warning) {
+          output += `\n\n> ⚠️ *${res.warning}*`;
+        }
+        return output || 'I apologize, I could not process your query at this moment.';
+      }
+      return 'I apologize, I could not process your query at this moment.';
+    } catch (err) {
+      console.error('Error in processMessage:', err);
+      try {
+        const fallback = this.processLocalQuery(userQuery);
+        return (typeof fallback === 'string' ? fallback : fallback?.text) || 'I apologize, I could not process your query at this moment.';
+      } catch (e) {
+        return '⚠️ Sorry, something went wrong while processing your request. Please try again.';
+      }
+    }
+  }
+
   async processQueryAsync(userQuery) {
     const query = (userQuery || '').trim();
     if (!query) {

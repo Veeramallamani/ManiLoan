@@ -848,8 +848,9 @@ document.addEventListener('DOMContentLoaded', () => {
     avatar.textContent = role === 'user' ? '👤' : '🤖';
     const bubble = document.createElement('div');
     bubble.className = 'msg-bubble';
-    if (role === 'bot' && typeof marked !== 'undefined') bubble.innerHTML = marked.parse(content);
-    else bubble.textContent = content;
+    const cleanContent = typeof content === 'string' ? content.replace(/\[\[LOAN_TYPE:[^\]]+\]\]/g, '') : content;
+    if (role === 'bot' && typeof marked !== 'undefined') bubble.innerHTML = marked.parse(cleanContent);
+    else bubble.textContent = cleanContent;
     const time = document.createElement('div');
     time.className = 'msg-time';
     const now = new Date();
