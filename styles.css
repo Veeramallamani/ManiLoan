@@ -1762,11 +1762,28 @@ img { max-width: 100%; }
   .faqs-page { padding: 1.25rem 1rem; }
 
   /* Chat */
-  .tab-view#tab-chat {
-    height: calc(100dvh - 56px - var(--bottom-dock-h));
-    height: calc(100vh - 56px - var(--bottom-dock-h));
+  .tab-view#tab-chat.active {
+    position: fixed;
+    top: 56px;
+    bottom: var(--bottom-dock-h);
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
     padding-bottom: 0;
+    margin-bottom: 0;
+    background: var(--bg-body);
     overflow: hidden;
+  }
+  .chat-dock-container {
+    padding: 0.65rem 0.85rem;
+    background: #ffffff;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    width: 100%;
   }
   .chat-messages-area { padding: 0.75rem 1rem; }
   .chat-empty-state { padding: 0.75rem 0.5rem; }
