@@ -65,9 +65,19 @@
       <div class="mobile-brand-icon">ML</div>
       <span class="mobile-topbar-name">Mani<span>Loan</span></span>
     </div>
-    <button class="mobile-hamburger" id="mobile-hamburger-btn" title="Menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
+    <div class="mobile-topbar-actions">
+      <button class="btn-auth-nav mobile-auth-btn" id="mobile-nav-sign-in-btn" onclick="openAuthModal();">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        <span>Sign In</span>
+      </button>
+      <div class="user-profile-badge mobile-user-badge" id="mobile-nav-user-badge" style="display:none;" onclick="openProfileModal();">
+        <img src="maniloan_robot.jpg" alt="User Avatar" class="user-avatar-img" id="mobile-nav-user-avatar">
+        <span class="user-name-text" id="mobile-nav-user-name">User</span>
+      </div>
+      <button class="mobile-hamburger" id="mobile-hamburger-btn" title="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
   </header>
 
   <!-- Mobile Drawer -->
@@ -76,6 +86,21 @@
     <div class="mobile-drawer-panel">
       <button class="drawer-close-btn" id="drawer-close-btn">✕</button>
       <div class="drawer-brand">ManiLoan <span class="drawer-brand-tag">AI Loan Guide</span></div>
+      <!-- Drawer Auth / Profile Box -->
+      <div class="drawer-user-box" id="drawer-user-box">
+        <button class="btn-auth-nav drawer-auth-btn" id="drawer-sign-in-btn" onclick="closeMobileDrawer(); openAuthModal();">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <span>Sign In / Register</span>
+        </button>
+        <div class="drawer-user-badge" id="drawer-user-badge" style="display:none;" onclick="closeMobileDrawer(); openProfileModal();">
+          <img src="maniloan_robot.jpg" alt="User Avatar" class="user-avatar-img" id="drawer-user-avatar">
+          <div class="drawer-user-info">
+            <span class="user-name-text" id="drawer-user-name">User</span>
+            <span class="drawer-user-sub">View Account & Profile</span>
+          </div>
+        </div>
+      </div>
+      <hr class="drawer-divider">
       <div class="drawer-nav-group">
         <button class="drawer-nav-link active nav-tab" data-tab="tab-dashboard" id="drawer-home">🏠 Home</button>
         <button class="drawer-nav-link nav-tab" data-tab="tab-loan-types" id="drawer-loan-types">🏦 Loan Types</button>
@@ -652,9 +677,9 @@
       <span class="dock-nav-icon">💬</span>
       <span class="dock-nav-label">Chat</span>
     </button>
-    <button class="dock-nav-btn" id="dock-btn-profile" data-tab="tab-faqs">
-      <span class="dock-nav-icon">👤</span>
-      <span class="dock-nav-label">Profile</span>
+    <button class="dock-nav-btn" id="dock-btn-profile">
+      <span class="dock-nav-icon" id="dock-profile-icon">👤</span>
+      <span class="dock-nav-label" id="dock-profile-label">Sign In</span>
     </button>
   </nav>
 
@@ -836,11 +861,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  let currentUserSession = null;
+
   function updateAuthUI(session) {
+    currentUserSession = session;
+
+    // Desktop elements
     const signInBtn = document.getElementById('nav-sign-in-btn');
     const userBadge = document.getElementById('nav-user-badge');
     const userNameEl = document.getElementById('nav-user-name');
     const userAvatarEl = document.getElementById('nav-user-avatar');
+
+    // Mobile Topbar elements
+    const mobileSignInBtn = document.getElementById('mobile-nav-sign-in-btn');
+    const mobileUserBadge = document.getElementById('mobile-nav-user-badge');
+    const mobileUserName = document.getElementById('mobile-nav-user-name');
+    const mobileUserAvatar = document.getElementById('mobile-nav-user-avatar');
+
+    // Mobile Drawer elements
+    const drawerSignInBtn = document.getElementById('drawer-sign-in-btn');
+    const drawerUserBadge = document.getElementById('drawer-user-badge');
+    const drawerUserName = document.getElementById('drawer-user-name');
+    const drawerUserAvatar = document.getElementById('drawer-user-avatar');
+
+    // Bottom Dock elements
+    const dockProfileLabel = document.getElementById('dock-profile-label');
 
     if (session && session.user) {
       const user = session.user;
@@ -850,9 +895,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (userNameEl) userNameEl.textContent = name;
       if (userAvatarEl) userAvatarEl.src = avatarUrl;
+      if (mobileUserName) mobileUserName.textContent = name;
+      if (mobileUserAvatar) mobileUserAvatar.src = avatarUrl;
+      if (drawerUserName) drawerUserName.textContent = name;
+      if (drawerUserAvatar) drawerUserAvatar.src = avatarUrl;
 
       if (signInBtn) signInBtn.style.display = 'none';
       if (userBadge) userBadge.style.display = 'inline-flex';
+
+      if (mobileSignInBtn) mobileSignInBtn.style.display = 'none';
+      if (mobileUserBadge) mobileUserBadge.style.display = 'inline-flex';
+
+      if (drawerSignInBtn) drawerSignInBtn.style.display = 'none';
+      if (drawerUserBadge) drawerUserBadge.style.display = 'flex';
+
+      if (dockProfileLabel) dockProfileLabel.textContent = 'Profile';
 
       // Update Profile Modal Details
       const profileName = document.getElementById('profile-user-name');
@@ -870,6 +927,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       if (signInBtn) signInBtn.style.display = 'inline-flex';
       if (userBadge) userBadge.style.display = 'none';
+
+      if (mobileSignInBtn) mobileSignInBtn.style.display = 'inline-flex';
+      if (mobileUserBadge) mobileUserBadge.style.display = 'none';
+
+      if (drawerSignInBtn) drawerSignInBtn.style.display = 'inline-flex';
+      if (drawerUserBadge) drawerUserBadge.style.display = 'none';
+
+      if (dockProfileLabel) dockProfileLabel.textContent = 'Sign In';
     }
   }
 
@@ -1032,7 +1097,19 @@ document.addEventListener('DOMContentLoaded', () => {
   window.switchTab = switchTab;
 
   navTabs.forEach(tab => { tab.addEventListener('click', () => { if (tab.dataset.tab) switchTab(tab.dataset.tab); }); });
-  dockBtns.forEach(btn => { btn.addEventListener('click', () => { if (btn.dataset.tab) switchTab(btn.dataset.tab); }); });
+  dockBtns.forEach(btn => { 
+    btn.addEventListener('click', () => { 
+      if (btn.id === 'dock-btn-profile') {
+        if (currentUserSession) {
+          openProfileModal();
+        } else {
+          openAuthModal();
+        }
+      } else if (btn.dataset.tab) {
+        switchTab(btn.dataset.tab); 
+      }
+    }); 
+  });
 
   const mobileDrawer = document.getElementById('mobile-drawer');
   function openMobileDrawer() { mobileDrawer.classList.add('open'); document.body.style.overflow = 'hidden'; }
