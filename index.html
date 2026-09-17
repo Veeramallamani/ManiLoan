@@ -352,19 +352,21 @@
         </div>
         <button class="chat-view-options" id="chat-options-btn" title="Options">⋮</button>
       </div>
-      <div class="chat-messages-area" id="chat-messages">
-        <div class="date-divider"><span>TODAY</span></div>
-      </div>
-      <div class="chat-empty-state" id="chat-empty-state">
-        <div class="empty-mascot"><img src="maniloan_robot.jpg" alt="ManiLoan Assistant" style="width:84px;height:84px;object-fit:contain;border-radius:18px;"></div>
-        <h2 class="empty-greeting">Hi, I'm ManiLoan! 👋</h2>
-        <p class="empty-sub">I can help you with loan options, eligibility, documents, interest rates and more.</p>
-        <p class="empty-question">Which loan are you interested in?</p>
-        <div class="loan-type-pills">
-          <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Home Loan eligibility and documents')">Home Loan</button>
-          <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Vehicle Loan eligibility and documents')">Vehicle Loan</button>
-          <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Gold Loan interest rates and LTV')">Gold Loan</button>
-          <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Consumer Durable Loan EMI options')">Consumer Durable Loan</button>
+      <div class="chat-scroll-area">
+        <div class="chat-messages-area" id="chat-messages">
+          <div class="date-divider"><span>TODAY</span></div>
+        </div>
+        <div class="chat-empty-state" id="chat-empty-state">
+          <div class="empty-mascot"><img src="maniloan_robot.jpg" alt="ManiLoan Assistant" style="width:72px;height:72px;object-fit:contain;border-radius:18px;"></div>
+          <h2 class="empty-greeting">Hi, I'm ManiLoan! 👋</h2>
+          <p class="empty-sub">I can help you with loan options, eligibility, documents, interest rates and more.</p>
+          <p class="empty-question">Which loan are you interested in?</p>
+          <div class="loan-type-pills">
+            <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Home Loan eligibility and documents')">Home Loan</button>
+            <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Vehicle Loan eligibility and documents')">Vehicle Loan</button>
+            <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Gold Loan interest rates and LTV')">Gold Loan</button>
+            <button class="loan-pill" onclick="sendQuickPrompt('Tell me about Consumer Durable Loan EMI options')">Consumer Durable Loan</button>
+          </div>
         </div>
       </div>
       <div class="chat-dock-container">

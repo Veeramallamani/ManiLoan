@@ -885,14 +885,20 @@ img { max-width: 100%; }
 .chat-view-options { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); color: var(--text-muted); font-size: 1.25rem; transition: var(--transition); }
 .chat-view-options:hover { background: var(--bg-secondary); }
 
-.chat-messages-area {
+.chat-scroll-area {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chat-messages-area {
   padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  -webkit-overflow-scrolling: touch;
 }
 
 /* Empty State */
@@ -901,9 +907,9 @@ img { max-width: 100%; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1.25rem;
   text-align: center;
-  flex-shrink: 0;
+  margin: auto 0;
 }
 .chat-empty-state.hidden { display: none; }
 .empty-mascot { font-size: 3rem; margin-bottom: 0.75rem; }
@@ -1710,7 +1716,8 @@ img { max-width: 100%; }
   .mobile-topbar { display: flex; }
   .bottom-nav-dock { display: flex; }
 
-  .workspace { padding-bottom: var(--bottom-dock-h); }
+  .workspace { padding-bottom: 0; }
+  .tab-view:not(#tab-chat) { padding-bottom: var(--bottom-dock-h); }
 
   /* Hero */
   .hero-section { padding: 1.5rem 1rem 1.25rem; }
@@ -1755,8 +1762,18 @@ img { max-width: 100%; }
   .faqs-page { padding: 1.25rem 1rem; }
 
   /* Chat */
-  .tab-view#tab-chat { height: calc(100vh - 56px - var(--bottom-dock-h)); }
+  .tab-view#tab-chat {
+    height: calc(100dvh - 56px - var(--bottom-dock-h));
+    height: calc(100vh - 56px - var(--bottom-dock-h));
+    padding-bottom: 0;
+    overflow: hidden;
+  }
   .chat-messages-area { padding: 0.75rem 1rem; }
+  .chat-empty-state { padding: 0.75rem 0.5rem; }
+  .empty-greeting { font-size: 1.05rem; margin-bottom: 0.35rem; }
+  .empty-sub { font-size: 0.8rem; margin-bottom: 0.5rem; }
+  .empty-question { font-size: 0.8rem; margin-bottom: 0.65rem; }
+  .loan-pill { padding: 0.35rem 0.75rem; font-size: 0.78rem; }
   .chat-msg { max-width: 92%; }
 
   /* Section header */
