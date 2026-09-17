@@ -1761,7 +1761,7 @@ img { max-width: 100%; }
   /* FAQ Page */
   .faqs-page { padding: 1.25rem 1rem; }
 
-  /* Chat */
+  /* Chat Mobile Alignment to Bottom Taskbar */
   .tab-view#tab-chat.active {
     position: fixed;
     top: 56px;
@@ -1779,11 +1779,24 @@ img { max-width: 100%; }
     overflow: hidden;
   }
   .chat-dock-container {
-    padding: 0.65rem 0.85rem;
+    width: 100%;
+    padding: 0.65rem 1rem;
     background: #ffffff;
     border-top: 1px solid var(--border);
+    border-bottom: none;
     flex-shrink: 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+  }
+  .chat-input-area {
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 0.4rem 0.6rem 0.4rem 0.85rem;
+    transition: var(--transition);
   }
   .chat-messages-area { padding: 0.75rem 1rem; }
   .chat-empty-state { padding: 0.75rem 0.5rem; }
