@@ -895,6 +895,9 @@ img { max-width: 100%; }
 }
 
 .chat-messages-area {
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
   padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
@@ -903,13 +906,15 @@ img { max-width: 100%; }
 
 /* Empty State */
 .chat-empty-state {
+  max-width: 860px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1.5rem 1.25rem;
   text-align: center;
-  margin: auto 0;
+  margin: auto auto;
 }
 .chat-empty-state.hidden { display: none; }
 .empty-mascot { font-size: 3rem; margin-bottom: 0.75rem; }
@@ -1010,8 +1015,12 @@ img { max-width: 100%; }
   background: #fff;
   border-top: 1px solid var(--border);
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
 }
 .chat-input-area {
+  max-width: 860px;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 0.5rem;
